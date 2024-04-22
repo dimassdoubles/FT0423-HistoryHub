@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/text_weights.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:photo_view/photo_view.dart';
 
 class PostItem extends HookConsumerWidget {
   const PostItem({super.key});
@@ -75,11 +77,39 @@ class PostItem extends HookConsumerWidget {
           style: AppTexts.primary,
         ),
         Gap(16.h),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(10.w),
-          child: Image.network(
-            'https://img.inews.co.id/media/600/files/networks/2022/11/17/00876_kapal-uap-voc.jpg',
-            fit: BoxFit.cover,
+        InkWell(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => Stack(
+                children: [
+                  PhotoView(
+                    imageProvider: const NetworkImage(
+                      'https://img.inews.co.id/media/600/files/networks/2022/11/17/00876_kapal-uap-voc.jpg',
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      context.pop();
+                    },
+                    style: IconButton.styleFrom(
+                      backgroundColor: AppColors.black.withOpacity(0.1),
+                    ),
+                    icon: const Icon(
+                      Icons.clear_rounded,
+                      color: AppColors.white,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.w),
+            child: Image.network(
+              'https://img.inews.co.id/media/600/files/networks/2022/11/17/00876_kapal-uap-voc.jpg',
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         Gap(24.h),
