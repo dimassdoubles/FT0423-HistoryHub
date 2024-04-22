@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/login/presentation/login_screen.dart';
+import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:history_hub/src/features/splash_screen.dart';
 
 final GoRouter routerProvider = GoRouter(
@@ -25,6 +26,11 @@ final GoRouter routerProvider = GoRouter(
       path: '/forgot-password',
       name: ForgotPasswordScreen.routeName,
       builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
+      path: '/register',
+      name: RegisterScreen.routeName,
+      builder: (context, state) => const RegisterScreen(),
     ),
   ],
 );

@@ -11,6 +11,7 @@ import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
 import 'package:history_hub/src/core/widgets/input/input_password.dart';
 import 'package:history_hub/src/features/forgot_password/presentation/forgot_password_screen.dart';
+import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginScreen extends HookConsumerWidget {
@@ -116,7 +117,8 @@ class LoginScreen extends HookConsumerWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.pushNamed(RegisterScreen.routeName),
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.w),
