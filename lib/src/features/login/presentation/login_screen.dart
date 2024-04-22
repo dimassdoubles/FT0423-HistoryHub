@@ -11,6 +11,7 @@ import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
 import 'package:history_hub/src/core/widgets/input/input_password.dart';
 import 'package:history_hub/src/features/forgot_password/presentation/forgot_password_screen.dart';
+import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -79,6 +80,7 @@ class LoginScreen extends HookConsumerWidget {
             InputPassword(
               focusNode: useFocusPassword.value,
               textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) => context.goNamed(HomeScreen.routeName),
             ),
             Gap(4.h),
             TextButton(
@@ -100,7 +102,7 @@ class LoginScreen extends HookConsumerWidget {
             ),
             Gap(12.h),
             PrimaryButton(
-              onPressed: () {},
+              onPressed: () => context.goNamed(HomeScreen.routeName),
               name: 'Masuk',
             ),
             Gap(16.h),
