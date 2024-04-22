@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -22,12 +23,15 @@ class SplashScreen extends HookConsumerWidget {
         children: [
           Image.asset(
             'assets/images/splash_bg.webp',
-            width: double.infinity,
-            height: double.infinity,
+            width: 1.sw,
+            height: 1.sh,
             fit: BoxFit.cover,
           ),
           Center(
-            child: Image.asset('assets/images/splash_logo.webp'),
+            child: Image.asset(
+              'assets/images/splash_logo.webp',
+              width: 299.w,
+            ),
           ),
         ],
       ),
