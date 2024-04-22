@@ -34,5 +34,5 @@ class NavigationAppBar extends HookConsumerWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(72.h);
+  Size get preferredSize => Size.fromHeight(64.h);
 }
