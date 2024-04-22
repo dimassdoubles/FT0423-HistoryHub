@@ -10,5 +10,6 @@ class AppColors {
   static const neutral300 = Color(0xffBDBDBD);
   static const neutral400 = Color.fromARGB(255, 97, 97, 97);
 
+  static const primary100 = Color(0xffDFF8FF);
   static const primary500 = Color(0xff00B7E9);
 }
