@@ -3,6 +3,7 @@ import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InputEmail extends HookConsumerWidget {
+  final Function(String)? onFieldSubmitted;
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final FocusNode? nextFocusNode;
@@ -13,6 +14,7 @@ class InputEmail extends HookConsumerWidget {
     this.focusNode,
     this.nextFocusNode,
     this.textInputAction,
+    this.onFieldSubmitted,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,6 +25,7 @@ class InputEmail extends HookConsumerWidget {
       nextFocusNode: nextFocusNode,
       keyboardType: TextInputType.emailAddress,
       textInputAction: textInputAction,
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 }
