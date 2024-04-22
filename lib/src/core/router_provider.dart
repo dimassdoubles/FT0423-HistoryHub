@@ -3,6 +3,7 @@ import 'package:history_hub/src/features/forgot_password/presentation/forgot_pas
 import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/login/presentation/login_screen.dart';
 import 'package:history_hub/src/features/register/presentation/register_screen.dart';
+import 'package:history_hub/src/features/register/presentation/select_address_screen.dart';
 import 'package:history_hub/src/features/splash_screen.dart';
 
 final GoRouter routerProvider = GoRouter(
@@ -31,6 +32,13 @@ final GoRouter routerProvider = GoRouter(
       path: '/register',
       name: RegisterScreen.routeName,
       builder: (context, state) => const RegisterScreen(),
+      routes: [
+        GoRoute(
+          path: 'select-address',
+          name: SelectAddressScreen.routeName,
+          builder: (context, state) => const SelectAddressScreen(),
+        ),
+      ],
     ),
   ],
 );

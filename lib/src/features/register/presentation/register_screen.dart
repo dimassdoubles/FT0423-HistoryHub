@@ -11,6 +11,7 @@ import 'package:history_hub/src/core/widgets/input/input_phone.dart';
 import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:history_hub/src/core/widgets/scaffold/app_scaffold.dart';
 import 'package:history_hub/src/features/login/presentation/login_screen.dart';
+import 'package:history_hub/src/features/register/presentation/select_address_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RegisterScreen extends HookConsumerWidget {
@@ -43,6 +44,9 @@ class RegisterScreen extends HookConsumerWidget {
                   Gap(CommonSizes.formGap),
                   InputText(
                     name: 'Alamat',
+                    readOnly: true,
+                    onTap: () =>
+                        context.pushNamed(SelectAddressScreen.routeName),
                     focusNode: useFocusAlamat.value,
                     nextFocusNode: useFocusEmail.value,
                     textInputAction: TextInputAction.next,

@@ -16,6 +16,10 @@ class InputText extends HookConsumerWidget {
   final TextInputAction? textInputAction;
   final Widget? suffixIcon;
   final bool obsecureText;
+  final bool autoFocus;
+  final bool readOnly;
+  final VoidCallback? onTap;
+
   const InputText({
     super.key,
     this.controller,
@@ -28,6 +32,9 @@ class InputText extends HookConsumerWidget {
     this.suffixIcon,
     this.obsecureText = false,
     required this.name,
+    this.autoFocus = false,
+    this.readOnly = false,
+    this.onTap,
   });
 
   static final border = OutlineInputBorder(
@@ -48,6 +55,9 @@ class InputText extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
+      readOnly: readOnly,
+      autofocus: autoFocus,
+      onTap: onTap,
       controller: controller,
       focusNode: focusNode,
       onFieldSubmitted: (value) {
