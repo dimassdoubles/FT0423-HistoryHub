@@ -7,7 +7,7 @@ import 'package:history_hub/src/features/navigation/presentation/navigation_scre
 import 'package:history_hub/src/features/post/presentation/create_post_screen.dart';
 import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:history_hub/src/features/register/presentation/select_address_screen.dart';
-import 'package:history_hub/src/features/splash_screen.dart';
+import 'package:history_hub/src/features/starter/presentation/splash_screen.dart';
 import 'package:history_hub/src/features/transaction/presentation/transaction_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
