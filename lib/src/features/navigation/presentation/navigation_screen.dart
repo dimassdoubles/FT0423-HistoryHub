@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:history_hub/src/core/styles/app_colors.dart';
+import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/navigation/presentation/widgets/navigation_app_bar.dart';
 import 'package:history_hub/src/features/transaction/presentation/transaction_screen.dart';
@@ -19,37 +21,49 @@ class NavigationScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: const NavigationAppBar(),
       body: body,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: useCurrentIndex.value,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              context.goNamed(HomeScreen.routeName);
-              useCurrentIndex.value = 0;
-              break;
-            case 1:
-              context.goNamed(TransactionScreen.routeName);
-              useCurrentIndex.value = 1;
-              break;
-            default:
-              context.goNamed(HomeScreen.routeName);
-              useCurrentIndex.value = 0;
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(
-              Icons.home,
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: AppColors.neutral200,
             ),
           ),
-          BottomNavigationBarItem(
-            label: 'Transaksi',
-            icon: Icon(
-              Icons.airplane_ticket,
+        ),
+        child: BottomNavigationBar(
+          currentIndex: useCurrentIndex.value,
+          fixedColor: AppColors.primary500,
+          selectedLabelStyle: AppTexts.primary,
+          unselectedLabelStyle: AppTexts.primary,
+          onTap: (index) {
+            switch (index) {
+              case 0:
+                context.goNamed(HomeScreen.routeName);
+                useCurrentIndex.value = 0;
+                break;
+              case 1:
+                context.goNamed(TransactionScreen.routeName);
+                useCurrentIndex.value = 1;
+                break;
+              default:
+                context.goNamed(HomeScreen.routeName);
+                useCurrentIndex.value = 0;
+            }
+          },
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(
+                Icons.home,
+              ),
             ),
-          ),
-        ],
+            BottomNavigationBarItem(
+              label: 'Transaksi',
+              icon: Icon(
+                Icons.airplane_ticket,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
