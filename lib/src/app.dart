@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:history_hub/src/core/router_provider.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           routerConfig: routerProvider,
+          builder: EasyLoading.init(),
         );
       },
     );
