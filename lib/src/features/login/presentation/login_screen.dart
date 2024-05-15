@@ -12,6 +12,7 @@ import 'package:history_hub/src/core/widgets/input/input_email.dart';
 import 'package:history_hub/src/core/widgets/input/input_password.dart';
 import 'package:history_hub/src/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:history_hub/src/features/home/presentation/home_screen.dart';
+import 'package:history_hub/src/features/login/presentation/login_controller.dart';
 import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -24,6 +25,11 @@ class LoginScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final useFocusEmail = useState(FocusNode());
     final useFocusPassword = useState(FocusNode());
+
+    final useCtrlEmail = useTextEditingController();
+    final useCtrlPassword = useTextEditingController();
+
+    final controller = ref.read(loginControllerProvider);
 
     return Scaffold(
       body: Padding(
@@ -73,12 +79,14 @@ class LoginScreen extends HookConsumerWidget {
             Gap(16.h),
             InputEmail(
               focusNode: useFocusEmail.value,
+              controller: useCtrlEmail,
               nextFocusNode: useFocusPassword.value,
               textInputAction: TextInputAction.next,
             ),
             Gap(12.h),
             InputPassword(
               focusNode: useFocusPassword.value,
+              controller: useCtrlPassword,
               textInputAction: TextInputAction.done,
               onFieldSubmitted: (_) => context.goNamed(HomeScreen.routeName),
             ),
@@ -102,7 +110,17 @@ class LoginScreen extends HookConsumerWidget {
             ),
             Gap(12.h),
             PrimaryButton(
-              onPressed: () => context.goNamed(HomeScreen.routeName),
+              onPressed: () async {
+                final success = await controller.login(
+                  useCtrlEmail.text,
+                  useCtrlPassword.text,
+                );
+
+                if (success) {
+                  // ignore: use_build_context_synchronously
+                  context.goNamed(HomeScreen.routeName);
+                }
+              },
               name: 'Masuk',
             ),
             Gap(16.h),

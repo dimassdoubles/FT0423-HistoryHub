@@ -1,4 +1,5 @@
 import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
+import 'package:history_hub/src/core/data/models/app_user.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/error/app_failure.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -45,6 +46,29 @@ class SupabaseDatasources implements AppRemoteDatasources {
       });
 
       return (null, null);
+    } catch (e) {
+      return (AppFailure(e.toString()), null);
+    }
+  }
+
+  @override
+  Future<(AppFailure?, AppUser?)> login(String email, String password) async {
+    try {
+      final response = await _supabaseClient.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      // response to AppUser
+      final userProfile = await _supabaseClient
+          .from('user_profiles')
+          .select()
+          .eq('user_id', response.user!.id);
+
+      // convert userProfile to AppUser
+      final appUser = AppUser.fromJson(userProfile.first);
+
+      return (null, appUser);
     } catch (e) {
       return (AppFailure(e.toString()), null);
     }
