@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -9,6 +10,7 @@ import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/scaffold/app_scaffold.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+@RoutePage()
 class SelectAddressScreen extends HookConsumerWidget {
   const SelectAddressScreen({super.key});
   static const routeName = 'select-address-screen';
