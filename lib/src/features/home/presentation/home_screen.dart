@@ -2,11 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/features/home/presentation/widgets/post_item.dart';
-import 'package:history_hub/src/features/post/presentation/create_post_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -63,7 +62,7 @@ class HomeScreen extends HookConsumerWidget {
           child: Padding(
             padding: EdgeInsets.all(CommonSizes.pagePadding),
             child: FloatingActionButton(
-              onPressed: () => context.pushNamed(CreatePostScreen.routeName),
+              onPressed: () => context.pushRoute(const CreatePostRoute()),
               shape: const CircleBorder(),
               backgroundColor: AppColors.primary500,
               foregroundColor: AppColors.white,

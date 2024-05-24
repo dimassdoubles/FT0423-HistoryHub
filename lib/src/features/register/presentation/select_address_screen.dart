@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/core/widgets/app_dropdown.dart';
@@ -100,7 +99,7 @@ class SelectAddressScreen extends HookConsumerWidget {
           ),
           Gap(16.h),
           PrimaryButton(
-            onPressed: () => context.pop(),
+            onPressed: () => context.back(),
             name: 'Konfirmasi',
           ),
         ],

@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:history_hub/src/features/photo_editor/presentation/photo_editor_screen.dart';
-import 'package:history_hub/src/features/post/presentation/widges/editted_image.dart';
-import 'package:history_hub/src/features/post/presentation/widges/input_place.dart';
+import 'package:history_hub/src/features/post/presentation/widgets/editted_image.dart';
+import 'package:history_hub/src/features/post/presentation/widgets/input_place.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -37,7 +36,7 @@ class CreatePostScreen extends HookConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () => context.pop(),
+                    onPressed: () => context.back(),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
@@ -49,7 +48,7 @@ class CreatePostScreen extends HookConsumerWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () => context.pop(),
+                    onPressed: () => context.back(),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary500,
                       foregroundColor: AppColors.white,

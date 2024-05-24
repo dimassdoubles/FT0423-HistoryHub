@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
@@ -11,10 +11,7 @@ import 'package:history_hub/src/core/styles/text_weights.dart';
 import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
 import 'package:history_hub/src/core/widgets/input/input_password.dart';
-import 'package:history_hub/src/features/forgot_password/presentation/forgot_password_screen.dart';
-import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/login/presentation/login_controller.dart';
-import 'package:history_hub/src/features/register/presentation/register_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -90,12 +87,11 @@ class LoginScreen extends HookConsumerWidget {
               focusNode: useFocusPassword.value,
               controller: useCtrlPassword,
               textInputAction: TextInputAction.done,
-              onFieldSubmitted: (_) => context.goNamed(HomeScreen.routeName),
+              onFieldSubmitted: (_) => context.pushRoute(const HomeRoute()),
             ),
             Gap(4.h),
             TextButton(
-              onPressed: () =>
-                  context.pushNamed(ForgotPasswordScreen.routeName),
+              onPressed: () => context.pushRoute(const ForgotPasswordRoute()),
               style: TextButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.w),
@@ -120,7 +116,7 @@ class LoginScreen extends HookConsumerWidget {
 
                 if (success) {
                   // ignore: use_build_context_synchronously
-                  context.goNamed(HomeScreen.routeName);
+                  context.pushRoute(const HomeRoute());
                 }
               },
               name: 'Masuk',
@@ -139,8 +135,7 @@ class LoginScreen extends HookConsumerWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () =>
-                        context.pushNamed(RegisterScreen.routeName),
+                    onPressed: () => context.pushRoute(const RegisterRoute()),
                     style: TextButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.w),

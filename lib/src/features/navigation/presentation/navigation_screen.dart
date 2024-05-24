@@ -1,12 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
-import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/navigation/presentation/widgets/navigation_app_bar.dart';
-import 'package:history_hub/src/features/transaction/presentation/transaction_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -39,15 +37,15 @@ class NavigationScreen extends HookConsumerWidget {
           onTap: (index) {
             switch (index) {
               case 0:
-                context.goNamed(HomeScreen.routeName);
+                context.pushRoute(const HomeRoute());
                 useCurrentIndex.value = 0;
                 break;
               case 1:
-                context.goNamed(TransactionScreen.routeName);
+                context.pushRoute(const TransactionRoute());
                 useCurrentIndex.value = 1;
                 break;
               default:
-                context.goNamed(HomeScreen.routeName);
+                context.pushRoute(const HomeRoute());
                 useCurrentIndex.value = 0;
             }
           },

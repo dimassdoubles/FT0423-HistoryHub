@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/core/helper/image_helper.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
@@ -80,7 +79,7 @@ class PhotoEditorScreen extends HookConsumerWidget {
             if (!useIsEditText.value &&
                 usePaintMode.value != PaintMode.freeStyle)
               _DefaultTopBar(
-                onCancelTap: () => context.pop(),
+                onCancelTap: () => context.back(),
                 onEnterDrawMode: () {
                   useImageKey.value.currentState
                       ?.changePaintMode(PaintMode.freeStyle);
@@ -159,19 +158,21 @@ class PhotoEditorScreen extends HookConsumerWidget {
         final image = await ImageHelper.uint8ListToFile(byteArray);
 
         // ignore: use_build_context_synchronously
-        context.pop();
+        context.back();
         // ignore: use_build_context_synchronously
-        context.pop<(String? err, File? result)>((null, image));
+        context.maybePop<(String? err, File? result)>((null, image));
       } else {
         debugPrint("saveImage uin8List kosong");
 
         // ignore: use_build_context_synchronously
-        context.pop<(String? err, File? result)>(('Foto gagal diproses', null));
+        context.maybePop<(String? err, File? result)>(
+            ('Foto gagal diproses', null));
       }
     } catch (e) {
       debugPrint("saveImage error: $e");
       // ignore: use_build_context_synchronously
-      context.pop<(String? err, File? result)>(('Foto gagal diproses', null));
+      context
+          .maybePop<(String? err, File? result)>(('Foto gagal diproses', null));
     }
   }
 }

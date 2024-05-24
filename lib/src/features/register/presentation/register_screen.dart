@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
@@ -13,9 +13,7 @@ import 'package:history_hub/src/core/widgets/input/input_password.dart';
 import 'package:history_hub/src/core/widgets/input/input_phone.dart';
 import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:history_hub/src/core/widgets/scaffold/app_scaffold.dart';
-import 'package:history_hub/src/features/login/presentation/login_screen.dart';
 import 'package:history_hub/src/features/register/presentation/register_controller.dart';
-import 'package:history_hub/src/features/register/presentation/select_address_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -62,7 +60,7 @@ class RegisterScreen extends HookConsumerWidget {
                     name: 'Alamat',
                     readOnly: true,
                     onTap: () =>
-                        context.pushNamed(SelectAddressScreen.routeName),
+                        context.router.push(const SelectAddressRoute()),
                     controller: useCtrlAlamat,
                     focusNode: useFocusAlamat.value,
                     nextFocusNode: useFocusEmail.value,
@@ -88,7 +86,7 @@ class RegisterScreen extends HookConsumerWidget {
                     focusNode: useFocusPassword.value,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) =>
-                        context.goNamed(LoginScreen.routeName),
+                        context.router.push(const LoginRoute()),
                   ),
                 ],
               ),
@@ -115,7 +113,7 @@ class RegisterScreen extends HookConsumerWidget {
                 );
 
                 // ignore: use_build_context_synchronously
-                context.goNamed(LoginScreen.routeName);
+                context.router.push(const LoginRoute());
               }
             },
             name: 'Daftar',

@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/core/styles/text_weights.dart';
 import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
-import 'package:history_hub/src/features/login/presentation/login_screen.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -60,13 +59,13 @@ class ForgotPasswordScreen extends HookConsumerWidget {
                     controller: useEmailCtrl,
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) =>
-                        context.goNamed(LoginScreen.routeName),
+                        context.pushRoute(const LoginRoute()),
                   ),
                 ],
               ),
             ),
             PrimaryButton(
-              onPressed: () => context.goNamed(LoginScreen.routeName),
+              onPressed: () => context.pushRoute(const LoginRoute()),
               name: 'Kirim',
             ),
           ],
