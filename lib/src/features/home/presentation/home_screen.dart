@@ -8,7 +8,6 @@ import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/features/home/presentation/widgets/post_item.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-@RoutePage()
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 

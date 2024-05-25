@@ -43,11 +43,7 @@ class SupabaseDatasources implements AppRemoteDatasources {
     try {
       await _supabaseClient.from('user_profiles').insert({
         'user_id': userId,
-        'full_name': params.fullName,
-        'email': params.email,
-        'phone_number': params.phoneNumber,
-        'address': params.address,
-        'avatar_url': '',
+        ...params.toMap(),
       });
 
       return (null, null);

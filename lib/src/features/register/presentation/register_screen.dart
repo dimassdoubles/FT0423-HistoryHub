@@ -117,15 +117,17 @@ class RegisterScreen extends HookConsumerWidget {
           Gap(16.h),
           PrimaryButton(
             onPressed: () async {
+              FocusScope.of(context).unfocus();
+
               final success = await controller.registerUser(
                 RegisterUserParams(
                   password: useCtrlPassword.text,
                   fullName: useCtrlNama.text,
                   phoneNumber: useCtrlPhone.text,
-                  // TODO uncomment
-                  // address: useCtrlAlamat.text,
-                  address: 'alamat',
                   email: useCtrlEmail.text,
+                  kabupatenId: useKabupaten.value!.id,
+                  kecamatanId: useKecamatan.value!.id,
+                  kelurahanId: useKelurahan.value!.id,
                 ),
               );
 

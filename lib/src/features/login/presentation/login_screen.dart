@@ -11,6 +11,7 @@ import 'package:history_hub/src/core/styles/text_weights.dart';
 import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/input/input_email.dart';
 import 'package:history_hub/src/core/widgets/input/input_password.dart';
+import 'package:history_hub/src/features/home/presentation/home_screen.dart';
 import 'package:history_hub/src/features/login/presentation/login_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -91,7 +92,11 @@ class LoginScreen extends HookConsumerWidget {
               focusNode: useFocusPassword.value,
               controller: useCtrlPassword,
               textInputAction: TextInputAction.done,
-              onFieldSubmitted: (_) => context.pushRoute(const HomeRoute()),
+              onFieldSubmitted: (_) => context.pushRoute(
+                NavigationRoute(
+                  body: const HomeScreen(),
+                ),
+              ),
             ),
             Gap(4.h),
             TextButton(
@@ -120,7 +125,7 @@ class LoginScreen extends HookConsumerWidget {
 
                 if (success) {
                   // ignore: use_build_context_synchronously
-                  context.pushRoute(const HomeRoute());
+                  context.pushRoute(NavigationRoute(body: const HomeScreen()));
                 }
               },
               name: 'Masuk',

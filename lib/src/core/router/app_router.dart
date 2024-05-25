@@ -16,9 +16,6 @@ class AppRouter extends $AppRouter {
           page: ForgotPasswordRoute.page,
         ),
         AutoRoute(
-          page: HomeRoute.page,
-        ),
-        AutoRoute(
           page: LoginRoute.page,
         ),
         AutoRoute(
@@ -38,9 +35,6 @@ class AppRouter extends $AppRouter {
         ),
         AutoRoute(
           page: SelectAddressRoute.page,
-        ),
-        AutoRoute(
-          page: TransactionRoute.page,
         ),
       ];
 }
