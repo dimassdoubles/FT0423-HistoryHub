@@ -2,11 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
-import 'package:history_hub/src/core/widgets/app_dropdown.dart';
 import 'package:history_hub/src/core/widgets/button/primary_button.dart';
 import 'package:history_hub/src/core/widgets/scaffold/app_scaffold.dart';
+import 'package:history_hub/src/features/register/presentation/controllers/select_address_controller.dart';
+import 'package:history_hub/src/features/register/presentation/widgets/select_kabupaten.dart';
+import 'package:history_hub/src/features/register/presentation/widgets/select_kecamatan.dart';
+import 'package:history_hub/src/features/register/presentation/widgets/select_kelurahan.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 @RoutePage()
@@ -16,6 +18,8 @@ class SelectAddressScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(selectAddressControllerProvider);
+
     return AppScaffold(
       title: 'Pilih alamat',
       body: Column(
@@ -23,83 +27,17 @@ class SelectAddressScreen extends HookConsumerWidget {
           Expanded(
             child: Column(
               children: [
-                AppDropdown<String>(
-                  name: 'Kota / kabupaten',
-                  value: null,
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'A',
-                      child: Text(
-                        'Kabupaten A',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'B',
-                      child: Text(
-                        'Kabupaten B',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                  ],
-                  onChanged: (_) {
-                    //
-                  },
-                ),
+                const SelectKabupaten(),
                 Gap(CommonSizes.formGap),
-                AppDropdown<String>(
-                  name: 'Kecamatan',
-                  value: null,
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'A',
-                      child: Text(
-                        'Kecamatan A',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'B',
-                      child: Text(
-                        'Kecamatan B',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                  ],
-                  onChanged: (_) {
-                    //
-                  },
-                ),
+                const SelectKecamatan(),
                 Gap(CommonSizes.formGap),
-                AppDropdown<String>(
-                  name: 'Kelurahan',
-                  value: null,
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'A',
-                      child: Text(
-                        'Kelurahan A',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                    DropdownMenuItem(
-                      value: 'B',
-                      child: Text(
-                        'Kelurahan B',
-                        style: TextStyle(color: AppColors.black),
-                      ),
-                    ),
-                  ],
-                  onChanged: (_) {
-                    //
-                  },
-                ),
+                const SelectKelurahan(),
               ],
             ),
           ),
           Gap(16.h),
           PrimaryButton(
-            onPressed: () => context.back(),
+            onPressed: () => context.maybePop(state),
             name: 'Konfirmasi',
           ),
         ],

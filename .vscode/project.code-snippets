@@ -1,0 +1,10 @@
+{
+    "Generate part 'file_name.g.dart'": {
+      "prefix": "partg",
+      "body": [
+        "part '${TM_FILENAME_BASE}.g.dart';"
+      ],
+      "description": "Generate part 'file_name.g.dart'"
+    }
+  }
+  

@@ -49,7 +49,7 @@ class InputText extends HookConsumerWidget {
 
   static final textStyle = AppTexts.primary.copyWith(
     fontWeight: TextWeights.medium,
-    fontSize: 16.sp,
+    fontSize: 14.sp,
   );
 
   @override

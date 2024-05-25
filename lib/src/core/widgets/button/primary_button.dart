@@ -33,7 +33,7 @@ class PrimaryButton extends HookConsumerWidget {
           name,
           style: AppTexts.primary.copyWith(
             color: AppColors.white,
-            fontSize: 20.sp,
+            fontSize: 16.sp,
             fontWeight: TextWeights.semiBold,
           ),
         ),

@@ -30,6 +30,9 @@ class LoginScreen extends HookConsumerWidget {
 
     final controller = ref.read(loginControllerProvider);
 
+    final bottomInsets = MediaQuery.of(context).viewInsets.bottom;
+    bool isKeyboardOpen = bottomInsets != 0;
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(CommonSizes.pagePadding),
@@ -38,43 +41,44 @@ class LoginScreen extends HookConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Gap(0.05.sh),
-            Expanded(
-              child: SizedBox(
-                width: 1.sw,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 128.w,
-                        maxHeight: 130.h,
+            if (!isKeyboardOpen)
+              Expanded(
+                child: SizedBox(
+                  width: 1.sw,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 128.w,
+                          maxHeight: 130.h,
+                        ),
+                        child: Image.asset('assets/logos/colored_logo.webp'),
                       ),
-                      child: Image.asset('assets/logos/colored_logo.webp'),
-                    ),
-                    Gap(24.h),
-                    Text(
-                      'Welcome to HistoryHub',
-                      style: AppTexts.primary.copyWith(
-                        fontSize: 36.sp,
-                        fontWeight: TextWeights.extraBold,
+                      Gap(24.h),
+                      Text(
+                        'Welcome to HistoryHub',
+                        style: AppTexts.primary.copyWith(
+                          fontSize: 24.sp,
+                          fontWeight: TextWeights.extraBold,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Gap(16.h),
-                    Text(
-                      'Terhubunglah dan berbagi dengan sesama pecinta sejarah.',
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: TextWeights.regular,
-                        color: AppColors.neutral400,
+                      Gap(16.h),
+                      Text(
+                        'Terhubunglah dan berbagi dengan sesama pecinta sejarah.',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: TextWeights.regular,
+                          color: AppColors.neutral400,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
             Gap(16.h),
             InputEmail(
               focusNode: useFocusEmail.value,
@@ -101,7 +105,7 @@ class LoginScreen extends HookConsumerWidget {
                 'Lupa kata sandi?',
                 style: AppTexts.primary.copyWith(
                   fontWeight: TextWeights.semiBold,
-                  fontSize: 16.sp,
+                  fontSize: 14.sp,
                   color: AppColors.primary500,
                 ),
               ),
@@ -130,7 +134,7 @@ class LoginScreen extends HookConsumerWidget {
                     'Belum punya akun ?',
                     style: AppTexts.primary.copyWith(
                       color: AppColors.black,
-                      fontSize: 16.sp,
+                      fontSize: 14.sp,
                       fontWeight: TextWeights.bold,
                     ),
                   ),
@@ -145,7 +149,7 @@ class LoginScreen extends HookConsumerWidget {
                       'Daftar di sini',
                       style: AppTexts.primary.copyWith(
                         color: AppColors.primary500,
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: TextWeights.bold,
                       ),
                     ),

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:history_hub/src/core/data/models/kabupaten.dart';
+import 'package:history_hub/src/core/data/models/kecamatan.dart';
+import 'package:history_hub/src/core/data/models/kelurahan.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';
 import 'package:history_hub/src/core/router/app_router.gr.dart';
@@ -13,6 +16,7 @@ import 'package:history_hub/src/core/widgets/input/input_password.dart';
 import 'package:history_hub/src/core/widgets/input/input_phone.dart';
 import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:history_hub/src/core/widgets/scaffold/app_scaffold.dart';
+import 'package:history_hub/src/features/register/presentation/controllers/select_address_controller.dart';
 import 'package:history_hub/src/features/register/presentation/register_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -37,6 +41,10 @@ class RegisterScreen extends HookConsumerWidget {
     final useCtrlPhone = useTextEditingController();
     final useCtrlPassword = useTextEditingController();
 
+    final useKabupaten = useState<Kabupaten?>(null);
+    final useKecamatan = useState<Kecamatan?>(null);
+    final useKelurahan = useState<Kelurahan?>(null);
+
     final controller = ref.read(registerControllerProvider);
 
     return AppScaffold(
@@ -59,8 +67,22 @@ class RegisterScreen extends HookConsumerWidget {
                   InputText(
                     name: 'Alamat',
                     readOnly: true,
-                    onTap: () =>
-                        context.router.push(const SelectAddressRoute()),
+                    onTap: () async {
+                      final result = await context.router.push(
+                        const SelectAddressRoute(),
+                      );
+
+                      debugPrint(result.toString());
+
+                      if (result != null) {
+                        useKabupaten.value =
+                            (result as SelectAddressState).kabupaten;
+                        useKecamatan.value = result.kecamatan;
+                        useKelurahan.value = result.kelurahan;
+                        useCtrlAlamat.text =
+                            "Kab. ${result.kabupaten!.nama}, Kec. ${result.kecamatan!.nama}, Kel. ${result.kelurahan!.nama}";
+                      }
+                    },
                     controller: useCtrlAlamat,
                     focusNode: useFocusAlamat.value,
                     nextFocusNode: useFocusEmail.value,
