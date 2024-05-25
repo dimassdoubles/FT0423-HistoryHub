@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:history_hub/src/core/constants/functions.dart';
 import 'package:history_hub/src/core/constants/tables.dart';
 import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
 import 'package:history_hub/src/core/data/models/app_user.dart';
@@ -60,14 +61,39 @@ class SupabaseDatasources implements AppRemoteDatasources {
         password: password,
       );
 
-      // response to AppUser
+      // // response to AppUser
+      // final userProfile = await _supabaseClient
+      //     .from('user_profiles')
+      //     .select()
+      //     .eq('user_id', response.user!.id);
+
+      final query = '''
+        SELECT 
+        A.id,
+        A.user_id,
+        A.full_name,
+        A.email,
+        A.phone_number,
+        A.avatar_url,
+        B.nama as nama_kabupaten,
+        C.nama as nama_kecamatan,
+        D.nama as nama_kelurahan
+        FROM ${Tables.userProfile} AS A
+        JOIN ${Tables.kabupaten} AS B ON A.id_kabupaten = B.id
+        JOIN ${Tables.kecamatan} AS C ON A.id_kecamatan = C.id
+        JOIN ${Tables.kelurahan} AS D ON A.id_kelurahan = D.id
+        WHERE A.user_id = '${response.user!.id}'
+        ORDER BY
+        A.created_at
+      ''';
+
       final userProfile = await _supabaseClient
-          .from('user_profiles')
-          .select()
-          .eq('user_id', response.user!.id);
+          .rpc(Functions.executeSql, params: {'query': query});
 
       // convert userProfile to AppUser
+      debugPrint('sampai sini');
       final appUser = AppUser.fromJson(userProfile.first);
+      debugPrint('harusnya ga sampai sini');
 
       return (null, appUser);
     } catch (e) {

@@ -3,7 +3,9 @@ class AppUser {
   final String fullName;
   final String email;
   final String phoneNumber;
-  final String address;
+  final String namaKabupaten;
+  final String namaKecamatan;
+  final String namaKelurahan;
   final String avatarUrl;
 
   AppUser({
@@ -11,8 +13,10 @@ class AppUser {
     required this.fullName,
     required this.email,
     required this.phoneNumber,
-    required this.address,
     required this.avatarUrl,
+    required this.namaKabupaten,
+    required this.namaKecamatan,
+    required this.namaKelurahan,
   });
 
   // from json
@@ -22,7 +26,9 @@ class AppUser {
       fullName: json['full_name'],
       email: json['email'],
       phoneNumber: json['phone_number'],
-      address: json['address'],
+      namaKabupaten: json['nama_kabupaten'],
+      namaKecamatan: json['nama_kecamatan'],
+      namaKelurahan: json['nama_kelurahan'],
       avatarUrl: json['avatar_url'],
     );
   }
