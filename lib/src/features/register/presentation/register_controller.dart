@@ -1,4 +1,4 @@
-import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
+import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources_provider.dart';
 import 'package:history_hub/src/core/data/models/app_result.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';

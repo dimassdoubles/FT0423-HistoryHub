@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:history_hub/src/core/constants/functions.dart';
 import 'package:history_hub/src/core/constants/tables.dart';
-import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
+import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources_provider.dart';
 import 'package:history_hub/src/core/data/models/app_user.dart';
 import 'package:history_hub/src/core/data/models/kabupaten.dart';
 import 'package:history_hub/src/core/data/models/kecamatan.dart';
 import 'package:history_hub/src/core/data/models/kelurahan.dart';
+import 'package:history_hub/src/core/data/models/params/create_post_params.dart';
+import 'package:history_hub/src/core/data/models/params/get_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/error/app_failure.dart';
+import 'package:history_hub/src/features/login/presentation/providers/current_user_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SupabaseDatasources implements AppRemoteDatasources {
+part 'supabase_datasources_provider.g.dart';
+
+@Riverpod(keepAlive: true)
+class SupabaseDatasources extends _$SupabaseDatasources
+    implements AppRemoteDatasources {
+  @override
+  SupabaseDatasources build() {
+    return SupabaseDatasources();
+  }
+
   late final SupabaseClient _supabaseClient;
 
   SupabaseDatasources() {
@@ -60,12 +73,6 @@ class SupabaseDatasources implements AppRemoteDatasources {
         email: email,
         password: password,
       );
-
-      // // response to AppUser
-      // final userProfile = await _supabaseClient
-      //     .from('user_profiles')
-      //     .select()
-      //     .eq('user_id', response.user!.id);
 
       final query = '''
         SELECT 
@@ -140,5 +147,30 @@ class SupabaseDatasources implements AppRemoteDatasources {
     } catch (e) {
       return (AppFailure(e.toString()), null);
     }
+  }
+
+  @override
+  Future<(AppFailure?, void)> createPost(
+    CreatePostParams params,
+  ) async {
+    try {
+      // TODO upload gambar postingan
+
+      await _supabaseClient.from(Tables.post).insert({
+        "user_id": ref.read(currentUserProvider)!.id,
+        "image_url": "",
+        ...params.toMap(),
+      });
+
+      return (null, null);
+    } catch (e) {
+      return (AppFailure(e.toString()), null);
+    }
+  }
+
+  @override
+  Future<(AppFailure?, void)> getPost(GetPostParams params) {
+    // TODO: implement getPost
+    throw UnimplementedError();
   }
 }

@@ -1,4 +1,4 @@
-import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
+import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources_provider.dart';
 import 'package:history_hub/src/core/data/models/kabupaten.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

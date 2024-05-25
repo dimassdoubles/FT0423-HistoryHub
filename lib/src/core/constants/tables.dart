@@ -5,4 +5,5 @@ class Tables {
   static const kabupaten = "kabupatens";
   static const kecamatan = "kecamatans";
   static const kelurahan = "kelurahans";
+  static const post = "posts";
 }

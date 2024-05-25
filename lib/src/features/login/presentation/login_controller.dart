@@ -1,7 +1,8 @@
-import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources.dart';
+import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources_provider.dart';
 import 'package:history_hub/src/core/data/models/app_result.dart';
 import 'package:history_hub/src/core/data/models/app_user.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';
+import 'package:history_hub/src/features/login/presentation/providers/current_user_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final loginControllerProvider = Provider<LoginController>((ref) {
@@ -34,6 +35,7 @@ class LoginController {
     }
 
     loginState = AppResult.success(user!);
+    _ref.read(currentUserProvider.notifier).login(user);
     return true;
   }
 }
