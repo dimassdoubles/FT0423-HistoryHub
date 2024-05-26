@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/styles/app_texts.dart';
-import 'package:history_hub/src/core/styles/text_weights.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
+import 'package:history_hub/src/core/constants/styles/app_texts.dart';
+import 'package:history_hub/src/core/constants/styles/text_weights.dart';
+import 'package:history_hub/src/core/data/models/post_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:photo_view/photo_view.dart';
 
 class PostItem extends HookConsumerWidget {
-  const PostItem({super.key});
+  final PostModel post;
+  const PostItem(this.post, {super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
@@ -31,14 +33,14 @@ class PostItem extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Joko Widodo',
+                  post.namaUser,
                   style: AppTexts.primary.copyWith(
                     fontWeight: TextWeights.black,
                     fontSize: 16.sp,
                   ),
                 ),
                 Text(
-                  '5j yang lalu',
+                  post.tanggal.toIso8601String(),
                   style: AppTexts.primary.copyWith(
                     fontSize: 10,
                     fontWeight: TextWeights.semiBold,
@@ -73,7 +75,7 @@ class PostItem extends HookConsumerWidget {
         ),
         Gap(12.h),
         Text(
-          'Pada abad ke-19, Revolusi Industri mengubah wajah peradaban manusia secara mendalam. Inovasi teknologi, seperti mesin uap dan jalur kereta api, mempercepat perkembangan industri dan memicu perubahan sosial yang signifikan.',
+          post.content,
           style: AppTexts.primary,
         ),
         Gap(16.h),
@@ -84,13 +86,11 @@ class PostItem extends HookConsumerWidget {
               builder: (context) => Stack(
                 children: [
                   PhotoView(
-                    imageProvider: const NetworkImage(
-                      'https://img.inews.co.id/media/600/files/networks/2022/11/17/00876_kapal-uap-voc.jpg',
-                    ),
+                    imageProvider: NetworkImage(post.imageUrl),
                   ),
                   IconButton(
                     onPressed: () {
-                      context.back();
+                      context.maybePop();
                     },
                     style: IconButton.styleFrom(
                       backgroundColor: AppColors.black.withOpacity(0.1),
@@ -104,11 +104,17 @@ class PostItem extends HookConsumerWidget {
               ),
             );
           },
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.w),
-            child: Image.network(
-              'https://img.inews.co.id/media/600/files/networks/2022/11/17/00876_kapal-uap-voc.jpg',
-              fit: BoxFit.cover,
+          child: SizedBox(
+            width: 1.sw,
+            height: (3 / 4).sw,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10.w),
+              child: Image.network(
+                post.imageUrl,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => const Center(
+                    child: Text('Error Image!')), // TODO image error
+              ),
             ),
           ),
         ),
@@ -116,8 +122,10 @@ class PostItem extends HookConsumerWidget {
         Row(
           children: [
             SvgPicture.asset('assets/icons/favorite.svg'),
+            if (post.likeCount > 0) Text(post.likeCount.toString()),
             Gap(8.w),
             SvgPicture.asset('assets/icons/comment.svg'),
+            if (post.commentCount > 0) Text(post.commentCount.toString()),
             Gap(8.w),
             SvgPicture.asset('assets/icons/share.svg'),
             Gap(8.w),

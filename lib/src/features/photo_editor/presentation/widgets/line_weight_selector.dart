@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
 
 enum _Weight {
   regular(2, "line-regular"),

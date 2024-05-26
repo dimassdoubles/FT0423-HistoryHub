@@ -9,8 +9,12 @@ class PostModel extends Equatable {
   final List<String> listTagId;
   final String content;
   final String imageUrl;
+  final int likeCount;
+  final int commentCount;
+  final bool isLikedByMe;
 
   const PostModel({
+    required this.isLikedByMe,
     required this.userId,
     required this.id,
     required this.namaUser,
@@ -19,18 +23,30 @@ class PostModel extends Equatable {
     required this.listTagId,
     required this.content,
     required this.imageUrl,
+    required this.likeCount,
+    required this.commentCount,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
+    String imageUrl = json['image_url'];
+    if (imageUrl.isNotEmpty) {
+      // supabase public url
+      imageUrl =
+          'https://nlegiosgowsuihzfttbx.supabase.co/storage/v1/object/public/$imageUrl';
+    }
+
     return PostModel(
       id: json['id'],
       userId: json['user_id'],
       namaUser: json['nama_user'],
       avatarUser: json['avatar_user'],
-      tanggal: DateTime.parse(json['tanggal']),
+      tanggal: DateTime.parse(json['tanggal']).toLocal(),
       listTagId: List<String>.from(json['list_tag_id']),
       content: json['content'],
-      imageUrl: json['image_url'],
+      imageUrl: imageUrl,
+      likeCount: json['like_count'],
+      commentCount: json['comment_count'],
+      isLikedByMe: json['is_liked_by_me'],
     );
   }
 
@@ -44,5 +60,8 @@ class PostModel extends Equatable {
         listTagId,
         content,
         imageUrl,
+        likeCount,
+        commentCount,
+        isLikedByMe,
       ];
 }

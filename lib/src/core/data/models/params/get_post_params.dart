@@ -1,4 +1,5 @@
 class GetPostParams {
+  final String myUserId;
   final String keyword;
   final List<String> listTagId;
   final int offset;
@@ -6,6 +7,7 @@ class GetPostParams {
   static const int limit = 10;
 
   GetPostParams({
+    required this.myUserId,
     required this.keyword,
     required this.listTagId,
     required this.offset,
@@ -13,6 +15,7 @@ class GetPostParams {
 
   Map<String, dynamic> toMap() {
     return {
+      'my_user_id': myUserId,
       'keyword': keyword,
       'list_tag_id': listTagId,
       'limit': limit,

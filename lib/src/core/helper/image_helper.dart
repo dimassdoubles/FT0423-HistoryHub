@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/styles/app_texts.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
+import 'package:history_hub/src/core/constants/styles/app_texts.dart';
 import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
 

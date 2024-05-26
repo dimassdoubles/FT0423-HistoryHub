@@ -6,7 +6,8 @@ import 'package:history_hub/src/core/data/models/kelurahan.dart';
 import 'package:history_hub/src/core/data/models/params/create_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/get_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
-import 'package:history_hub/src/core/error/app_failure.dart';
+import 'package:history_hub/src/core/data/models/post_model.dart';
+import 'package:history_hub/src/core/constants/error/app_failure.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_remote_datasources_provider.g.dart';
@@ -25,7 +26,7 @@ abstract class AppRemoteDatasources {
   Future<(AppFailure?, List<Kelurahan>?)> getListKelurahan(int kecamatanId);
 
   // Post
-  Future<(AppFailure?, void)> getPost(GetPostParams params);
+  Future<List<PostModel>> getPost(GetPostParams params);
   Future<(AppFailure?, void)> createPost(CreatePostParams params);
   // Future<(AppFailure?, void)> pinPost();
 

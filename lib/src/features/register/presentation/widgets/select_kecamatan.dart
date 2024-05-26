@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:history_hub/src/core/data/models/kecamatan.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/widgets/app_dropdown.dart';
-import 'package:history_hub/src/core/widgets/input/input_text.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
+import 'package:history_hub/src/core/presentation/widgets/app_dropdown.dart';
+import 'package:history_hub/src/core/presentation/widgets/input/input_text.dart';
 import 'package:history_hub/src/features/register/presentation/providers/list_kecamatan_provider.dart';
 import 'package:history_hub/src/features/register/presentation/controllers/select_address_controller.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

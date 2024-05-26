@@ -7,7 +7,7 @@ part of 'supabase_datasources_provider.dart';
 // **************************************************************************
 
 String _$supabaseDatasourcesHash() =>
-    r'3cf447cae294e9ed344f5f77e66895b187f3821a';
+    r'b9a51cf9f4671d570f08ac12ae0ac8ca79e827d2';
 
 /// See also [SupabaseDatasources].
 @ProviderFor(SupabaseDatasources)

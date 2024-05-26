@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:gap/gap.dart';
 import 'package:history_hub/src/core/router/app_router.gr.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/styles/common_sizes.dart';
-import 'package:history_hub/src/features/home/presentation/widgets/post_item.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
+import 'package:history_hub/src/core/constants/styles/common_sizes.dart';
+import 'package:history_hub/src/features/home/presentation/widgets/post_list_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -37,16 +35,10 @@ class HomeScreen extends HookConsumerWidget {
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: CommonSizes.pagePadding),
-                  child: TabBarView(
+                  child: const TabBarView(
                     children: [
-                      ListView.separated(
-                        itemCount: 11,
-                        itemBuilder: (context, index) => index == 0
-                            ? const SizedBox.shrink()
-                            : const PostItem(),
-                        separatorBuilder: (context, index) => Gap(8.h),
-                      ),
-                      const Center(
+                      PostListView(),
+                      Center(
                         child: Text('Acara'),
                       ),
                     ],

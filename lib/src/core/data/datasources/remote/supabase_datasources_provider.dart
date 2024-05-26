@@ -10,7 +10,8 @@ import 'package:history_hub/src/core/data/models/kelurahan.dart';
 import 'package:history_hub/src/core/data/models/params/create_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/get_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
-import 'package:history_hub/src/core/error/app_failure.dart';
+import 'package:history_hub/src/core/data/models/post_model.dart';
+import 'package:history_hub/src/core/constants/error/app_failure.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -187,8 +188,44 @@ class SupabaseDatasources extends _$SupabaseDatasources
   }
 
   @override
-  Future<(AppFailure?, void)> getPost(GetPostParams params) {
-    // TODO: implement getPost
-    throw UnimplementedError();
+  Future<List<PostModel>> getPost(GetPostParams params) async {
+    // TODO cari dan pagination
+    final query = '''
+      SELECT
+          A.id,
+          A.user_id,
+          A.content,
+          A.created_at AS tanggal,
+          A.image_url,
+          A.list_tag_id,
+          B.full_name AS nama_user,
+          B.avatar_url AS avatar_user,
+          COUNT(DISTINCT C.id) AS like_count,
+          COUNT(DISTINCT D.id) AS comment_count,
+          EXISTS (
+              SELECT 1
+              FROM likes AS L
+              WHERE L.post_id = A.id AND L.user_id = '${params.myUserId}'
+          ) AS is_liked_by_me
+      FROM posts AS A
+      JOIN user_profiles AS B ON A.user_id = B.user_id
+      LEFT JOIN likes AS C ON A.id = C.post_id
+      LEFT JOIN comments AS D ON A.id = D.post_id
+      GROUP BY
+          A.id,
+          A.user_id,
+          A.content,
+          A.created_at,
+          A.image_url,
+          A.list_tag_id,
+          B.full_name,
+          B.avatar_url
+      ORDER BY A.created_at DESC
+      ''';
+
+    final posts = await _supabaseClient
+        .rpc(Functions.executeSql, params: {'query': query});
+
+    return List<PostModel>.from(posts.map((json) => PostModel.fromJson(json)));
   }
 }

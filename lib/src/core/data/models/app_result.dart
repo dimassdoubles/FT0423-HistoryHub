@@ -1,4 +1,4 @@
-import 'package:history_hub/src/core/error/app_failure.dart';
+import 'package:history_hub/src/core/constants/error/app_failure.dart';
 
 enum ResultStatus { initial, loading, success, error }
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:history_hub/src/core/data/models/app_result.dart';
 import 'package:history_hub/src/core/helper/dialog_helper.dart';
 import 'package:history_hub/src/core/router/app_router.gr.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
 import 'package:history_hub/src/features/login/presentation/providers/current_user_provider.dart';
 import 'package:history_hub/src/features/post/presentation/controllers/create_post_controller.dart';
 import 'package:history_hub/src/features/post/presentation/providers/create_post_status_provider.dart';

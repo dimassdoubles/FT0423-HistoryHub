@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/widgets/input/input_text.dart';
+import 'package:history_hub/src/core/constants/styles/app_colors.dart';
+import 'package:history_hub/src/core/presentation/widgets/input/input_text.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AppDropdown<ValueType> extends HookConsumerWidget {
