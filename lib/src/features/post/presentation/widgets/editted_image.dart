@@ -32,7 +32,7 @@ class EdittedImage extends HookConsumerWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        context.back();
+                        context.maybePop();
                       },
                       style: IconButton.styleFrom(
                         backgroundColor: AppColors.black.withOpacity(0.1),

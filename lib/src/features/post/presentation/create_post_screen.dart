@@ -1,16 +1,14 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
-import 'package:history_hub/src/core/widgets/input/input_text.dart';
 import 'package:history_hub/src/features/photo_editor/presentation/photo_editor_screen.dart';
+import 'package:history_hub/src/features/post/presentation/controllers/create_post_controller.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/editted_image.dart';
+import 'package:history_hub/src/features/post/presentation/widgets/input_content.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/input_place.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -22,7 +20,8 @@ class CreatePostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final useImage = useState<File?>(null);
+    final state = ref.watch(createPostControllerProvider);
+    final controller = ref.watch(createPostControllerProvider.notifier);
 
     return Scaffold(
       body: SafeArea(
@@ -64,53 +63,29 @@ class CreatePostScreen extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Gap(24.h),
-                      TextFormField(
-                        maxLength: 400,
-                        cursorColor: AppColors.primary500,
-                        minLines: 4,
-                        maxLines: 5,
-                        style: InputText.textStyle,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 8.w,
-                          ),
-                          hintStyle: InputText.textStyle.copyWith(
-                            color: AppColors.neutral300,
-                          ),
-                          hintText: 'Tulis sesuatu...',
-                        ),
-                      ),
+                      const InputContent(),
                       Gap(16.h),
-                      if (useImage.value != null)
+                      if (state.image != null)
                         EdittedImage(
-                          useImage.value!,
-                          onDelete: () => useImage.value = null,
+                          state.image!,
+                          onDelete: () => controller.removeImage(),
                         ),
                       const InputPlace(),
                       Gap(16.h),
                       const Divider(color: AppColors.neutral200),
-                      if (useImage.value == null)
+                      if (state.image == null)
                         Padding(
                           padding: EdgeInsets.only(top: 6.h),
                           child: ElevatedButton(
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
-                              final (String? err, File? image) =
-                                  await showDialog(
+                              await showDialog(
                                 context: context,
-                                builder: (context) => const PhotoEditorScreen(),
+                                builder: (context) => PhotoEditorScreen(
+                                  onImageSelected: (image) =>
+                                      controller.setImage(image),
+                                ),
                               );
-
-                              if (err != null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(err),
-                                  ),
-                                );
-                              } else {
-                                useImage.value = image!;
-                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primary100,

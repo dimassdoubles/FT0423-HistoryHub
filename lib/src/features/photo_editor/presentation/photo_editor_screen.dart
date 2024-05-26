@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:history_hub/src/core/helper/image_helper.dart';
+import 'package:history_hub/src/core/helper/dialog_helper.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/features/photo_editor/presentation/widgets/action_button.dart';
@@ -12,10 +12,15 @@ import 'package:history_hub/src/features/photo_editor/presentation/widgets/color
 import 'package:history_hub/src/features/photo_editor/presentation/widgets/line_weight_selector.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_sketcher/image_sketcher.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
-@RoutePage()
 class PhotoEditorScreen extends HookConsumerWidget {
-  const PhotoEditorScreen({super.key});
+  final void Function(File image)? onImageSelected;
+  const PhotoEditorScreen({
+    super.key,
+    this.onImageSelected,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,18 +31,23 @@ class PhotoEditorScreen extends HookConsumerWidget {
     final usePaintMode = useState(PaintMode.none);
     final useIsEditText = useState(false);
 
+    final useScreenshotCtrl = useState(ScreenshotController());
+
     return Material(
       key: useKey.value,
       color: AppColors.black,
       child: SafeArea(
         child: Stack(
           children: [
-            ImageSketcher.asset(
-              'assets/images/image.jpeg',
-              key: useImageKey.value,
-              enableToolbar: false,
-              initialPaintMode: usePaintMode.value,
-              initialColor: useDrawColor.value,
+            Screenshot(
+              controller: useScreenshotCtrl.value,
+              child: ImageSketcher.asset(
+                'assets/images/image.jpeg',
+                key: useImageKey.value,
+                enableToolbar: false,
+                initialPaintMode: usePaintMode.value,
+                initialColor: useDrawColor.value,
+              ),
             ),
 
             // default bottom bar
@@ -49,7 +59,10 @@ class PhotoEditorScreen extends HookConsumerWidget {
                   padding: EdgeInsets.all(CommonSizes.pagePadding),
                   child: ActionButton(
                     onTap: () {
-                      saveImage(context, useImageKey.value);
+                      saveImage(
+                        context,
+                        useScreenshotCtrl.value,
+                      );
                     },
                     icon: Icons.done_rounded,
                     backgroundColor: AppColors.primary500,
@@ -79,7 +92,7 @@ class PhotoEditorScreen extends HookConsumerWidget {
             if (!useIsEditText.value &&
                 usePaintMode.value != PaintMode.freeStyle)
               _DefaultTopBar(
-                onCancelTap: () => context.back(),
+                onCancelTap: () => context.maybePop(),
                 onEnterDrawMode: () {
                   useImageKey.value.currentState
                       ?.changePaintMode(PaintMode.freeStyle);
@@ -134,45 +147,34 @@ class PhotoEditorScreen extends HookConsumerWidget {
   }
 
   void saveImage(
-      BuildContext context, GlobalKey<ImageSketcherState> imageKey) async {
-    debugPrint('saveImage');
+    BuildContext context,
+    ScreenshotController controller,
+  ) async {
+    DialogHelper.showLoading();
+    bool isLoading = true;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Material(
-          color: AppColors.black.withOpacity(0.3),
-          child: const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.primary500,
-            ),
-          ),
-        );
-      },
-    );
     try {
-      Uint8List? byteArray = await imageKey.currentState?.exportImage();
-      if (byteArray != null) {
-        debugPrint("saveImage berhasil mendapatkan unit8list");
+      final tempDir = await getTemporaryDirectory();
+      String fileName = DateTime.now().microsecondsSinceEpoch.toString();
 
-        final image = await ImageHelper.uint8ListToFile(byteArray);
+      final image = await controller.captureAndSave(
+        tempDir.path,
+        fileName: fileName,
+      );
 
-        // ignore: use_build_context_synchronously
-        context.back();
-        // ignore: use_build_context_synchronously
-        context.maybePop<(String? err, File? result)>((null, image));
-      } else {
-        debugPrint("saveImage uin8List kosong");
-
-        // ignore: use_build_context_synchronously
-        context.maybePop<(String? err, File? result)>(
-            ('Foto gagal diproses', null));
+      if (image != null) {
+        onImageSelected?.call(File(image));
+        DialogHelper.dismiss();
+        isLoading = false;
       }
     } catch (e) {
+      if (isLoading) DialogHelper.dismiss();
       debugPrint("saveImage error: $e");
+    } finally {
       // ignore: use_build_context_synchronously
-      context
-          .maybePop<(String? err, File? result)>(('Foto gagal diproses', null));
+      context.router.popUntil(
+        (route) => route.settings.name == CreatePostRoute.name,
+      );
     }
   }
 }
@@ -397,7 +399,6 @@ class _DefaultTopBar extends StatelessWidget {
             onTap: _onCancelTap,
             icon: Icons.clear,
           ),
-          const Spacer(),
           Flexible(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -22,9 +22,6 @@ class AppRouter extends $AppRouter {
           page: NavigationRoute.page,
         ),
         AutoRoute(
-          page: PhotoEditorRoute.page,
-        ),
-        AutoRoute(
           page: RegisterRoute.page,
         ),
         AutoRoute(
