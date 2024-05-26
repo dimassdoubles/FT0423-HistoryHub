@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:history_hub/src/core/constants/styles/app_texts.dart';
 import 'package:history_hub/src/core/presentation/widgets/input/input_text.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -26,27 +25,22 @@ class DetailTiket extends HookConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const InputText(
+          InputText(
+            controller: jumlahTiketController,
             name: 'Jumlah Tiket',
             keyboardType: TextInputType.number,
           ),
           Gap(8.w),
-          const InputText(
+          InputText(
+            controller: hargaTiketController,
             name: 'Harga Tiket',
             keyboardType: TextInputType.number,
           ),
-          Gap(16.w),
-          Text(
-            'Tanggal Penjualan',
-            style: AppTexts.primary.copyWith(
-              fontSize: 12,
-              color: const Color(0xff797979),
-            ),
-          ),
           Gap(8.w),
           InputText(
+            controller: tanggalJualController,
             onTap: onTap,
-            name: 'Tanggal Mulai',
+            name: 'Tanggal Penjualan Tiket',
             readOnly: true,
           ),
         ],

@@ -7,6 +7,7 @@ import 'package:history_hub/src/core/constants/styles/common_sizes.dart';
 import 'package:history_hub/src/core/extensions/date_time_extension.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/create_event_header.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/detail_event.dart';
+import 'package:history_hub/src/features/create_event/presentation/widgets/detail_tiket.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/info_penyelenggara.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/input_deskripsi.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/input_nama_event.dart';
@@ -23,8 +24,7 @@ class NewEventScreen extends HookConsumerWidget {
     final useDeskripsiCt = useTextEditingController();
     final useJumlahTiketCt = useTextEditingController();
     final useHargaTiketCt = useTextEditingController();
-    final useTanggalMulaiJualCt = useTextEditingController();
-    final useTanggalAkhirJualCt = useTextEditingController();
+    final useTanggalJualCt = useTextEditingController();
 
     final useTanggalMulaiEvent = useState<DateTime?>(null);
     final useTanggalAkhirEvent = useState<DateTime?>(null);
@@ -116,11 +116,59 @@ class NewEventScreen extends HookConsumerWidget {
                           Gap(24.w),
                           InputDeskripsi(useDeskripsiCt),
                           Gap(24.w),
-                          // DetailTiket(
-                          //   jumlahTiketController: useJumlahTiketCt,
-                          //   hargaTiketController: useHargaTiketCt,
-                          //   tanggalJualController: useTanggalJualCt,
-                          // ),
+                          DetailTiket(
+                            jumlahTiketController: useJumlahTiketCt,
+                            hargaTiketController: useHargaTiketCt,
+                            tanggalJualController: useTanggalJualCt,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  content: Container(
+                                    width: double.maxFinite,
+                                    height: 400,
+                                    child: SfDateRangePicker(
+                                      onSelectionChanged:
+                                          (DateRangePickerSelectionChangedArgs
+                                              args) {
+                                        print(args.value);
+                                      },
+                                      selectionMode:
+                                          DateRangePickerSelectionMode.range,
+                                      onSubmit: (selected) {
+                                        debugPrint(
+                                            selected.runtimeType.toString());
+                                        final dateRange =
+                                            selected as PickerDateRange?;
+
+                                        if (dateRange != null) {
+                                          useTanggalMulaiJualTiket.value =
+                                              dateRange.startDate;
+                                          useTanggalAkhirJualTiket.value =
+                                              dateRange.endDate;
+                                          useTanggalJualCt.text =
+                                              getRangeTanggalString(
+                                                    useTanggalMulaiJualTiket
+                                                        .value,
+                                                    useTanggalAkhirJualTiket
+                                                        .value,
+                                                  ) ??
+                                                  '';
+                                        }
+
+                                        context.maybePop();
+                                      },
+                                      onCancel: () {
+                                        context.maybePop();
+                                      },
+                                      enablePastDates: false,
+                                      showActionButtons: true,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                           const Gap(64),
                         ],
                       ),
