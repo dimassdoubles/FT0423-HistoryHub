@@ -6,7 +6,8 @@ import 'package:history_hub/src/core/presentation/widgets/input/input_text.dart'
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InputDeskripsi extends HookConsumerWidget {
-  const InputDeskripsi({super.key});
+  final TextEditingController controller;
+  const InputDeskripsi(this.controller, {super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
@@ -24,13 +25,12 @@ class InputDeskripsi extends HookConsumerWidget {
           ),
         ),
         TextFormField(
-          // controller: useContent,
+          controller: controller,
           maxLength: 400,
           cursorColor: AppColors.primary500,
           minLines: 4,
           maxLines: 5,
           style: InputText.textStyle,
-          // onChanged: (value) => controller.setContent(value),
           decoration: InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(

@@ -3,10 +3,12 @@ import 'package:history_hub/src/core/constants/styles/app_texts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class InputNamaEvent extends HookConsumerWidget {
-  const InputNamaEvent({super.key});
+  final TextEditingController controller;
+  const InputNamaEvent(this.controller, {super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
+      controller: controller,
       style: AppTexts.primary.copyWith(
         fontSize: 24,
       ),

@@ -6,7 +6,19 @@ import 'package:history_hub/src/core/presentation/widgets/input/input_text.dart'
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class DetailTiket extends HookConsumerWidget {
-  const DetailTiket({super.key});
+  final TextEditingController jumlahTiketController;
+  final TextEditingController hargaTiketController;
+  final TextEditingController tanggalJualController;
+  final void Function()? onTap;
+
+  const DetailTiket({
+    super.key,
+    required this.jumlahTiketController,
+    required this.hargaTiketController,
+    required this.tanggalJualController,
+    this.onTap,
+  });
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
@@ -32,13 +44,9 @@ class DetailTiket extends HookConsumerWidget {
             ),
           ),
           Gap(8.w),
-          const InputText(
+          InputText(
+            onTap: onTap,
             name: 'Tanggal Mulai',
-            readOnly: true,
-          ),
-          Gap(8.w),
-          const InputText(
-            name: 'Tanggal Berakhir',
             readOnly: true,
           ),
         ],
