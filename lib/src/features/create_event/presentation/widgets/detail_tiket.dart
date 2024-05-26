@@ -20,31 +20,28 @@ class DetailTiket extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InputText(
-            controller: jumlahTiketController,
-            name: 'Jumlah Tiket',
-            keyboardType: TextInputType.number,
-          ),
-          Gap(8.w),
-          InputText(
-            controller: hargaTiketController,
-            name: 'Harga Tiket',
-            keyboardType: TextInputType.number,
-          ),
-          Gap(8.w),
-          InputText(
-            controller: tanggalJualController,
-            onTap: onTap,
-            name: 'Tanggal Penjualan Tiket',
-            readOnly: true,
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InputText(
+          controller: jumlahTiketController,
+          name: 'Jumlah Tiket',
+          keyboardType: TextInputType.number,
+        ),
+        Gap(8.w),
+        InputText(
+          controller: hargaTiketController,
+          name: 'Harga Tiket',
+          keyboardType: TextInputType.number,
+        ),
+        Gap(8.w),
+        InputText(
+          controller: tanggalJualController,
+          onTap: onTap,
+          name: 'Tanggal Penjualan Tiket',
+          readOnly: true,
+        ),
+      ],
     );
   }
 }

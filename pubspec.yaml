@@ -30,6 +30,7 @@ dependencies:
   screenshot: ^2.5.0
   supabase_flutter: ^2.5.3
   syncfusion_flutter_datepicker: 24.1.46
+  time_range_picker: ^2.3.0
   uuid: ^4.4.0
 
 dev_dependencies:

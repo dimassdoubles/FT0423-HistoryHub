@@ -5,13 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:history_hub/src/core/constants/styles/common_sizes.dart';
 import 'package:history_hub/src/core/extensions/date_time_extension.dart';
+import 'package:history_hub/src/core/extensions/time_of_day_extension.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/create_event_header.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/detail_event.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/detail_tiket.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/info_penyelenggara.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/input_deskripsi.dart';
+import 'package:history_hub/src/features/create_event/presentation/widgets/input_lokasi.dart';
 import 'package:history_hub/src/features/create_event/presentation/widgets/input_nama_event.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 import 'widgets/add_image_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -25,6 +28,7 @@ class NewEventScreen extends HookConsumerWidget {
     final useJumlahTiketCt = useTextEditingController();
     final useHargaTiketCt = useTextEditingController();
     final useTanggalJualCt = useTextEditingController();
+    final useLokasiCt = useTextEditingController();
 
     final useTanggalMulaiEvent = useState<DateTime?>(null);
     final useTanggalAkhirEvent = useState<DateTime?>(null);
@@ -64,14 +68,21 @@ class NewEventScreen extends HookConsumerWidget {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  content: Container(
+                                  content: SizedBox(
                                     width: double.maxFinite,
                                     height: 400,
                                     child: SfDateRangePicker(
+                                      initialDisplayDate:
+                                          useTanggalMulaiEvent.value,
+                                      initialSelectedRange: PickerDateRange(
+                                          useTanggalMulaiEvent.value,
+                                          useTanggalAkhirEvent.value),
                                       onSelectionChanged:
                                           (DateRangePickerSelectionChangedArgs
                                               args) {
-                                        print(args.value);
+                                        debugPrint(
+                                          args.value.toString(),
+                                        );
                                       },
                                       selectionMode:
                                           DateRangePickerSelectionMode.range,
@@ -103,18 +114,29 @@ class NewEventScreen extends HookConsumerWidget {
                           ),
                           DetailEvent(
                             label: 'Pilih waktu',
-                            onTap: () {},
+                            value: getRangeTimeString(
+                              useJamMulaiEvent.value,
+                              useJamAkhirEvent.value,
+                            ),
+                            onTap: () async {
+                              TimeRange result = await showTimeRangePicker(
+                                start: useJamMulaiEvent.value,
+                                end: useJamAkhirEvent.value,
+                                context: context,
+                              );
+
+                              useJamMulaiEvent.value = result.startTime;
+                              useJamAkhirEvent.value = result.endTime;
+                            },
                           ),
-                          DetailEvent(
-                            label: 'Pilih lokasi',
-                            onTap: () {},
-                          ),
+                          InputLokasi(useLokasiCt),
                           Gap(16.w),
                           const Divider(color: Color(0xffDDDDDD)),
                           Gap(8.w),
                           const InfoPenyelenggara(),
                           Gap(24.w),
                           InputDeskripsi(useDeskripsiCt),
+                          const Divider(color: Color(0xffDDDDDD)),
                           Gap(24.w),
                           DetailTiket(
                             jumlahTiketController: useJumlahTiketCt,
@@ -124,14 +146,20 @@ class NewEventScreen extends HookConsumerWidget {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  content: Container(
+                                  content: SizedBox(
                                     width: double.maxFinite,
                                     height: 400,
                                     child: SfDateRangePicker(
+                                      initialDisplayDate:
+                                          useTanggalMulaiJualTiket.value,
+                                      initialSelectedRange: PickerDateRange(
+                                        useTanggalMulaiJualTiket.value,
+                                        useTanggalAkhirJualTiket.value,
+                                      ),
                                       onSelectionChanged:
                                           (DateRangePickerSelectionChangedArgs
                                               args) {
-                                        print(args.value);
+                                        debugPrint(args.value.toString());
                                       },
                                       selectionMode:
                                           DateRangePickerSelectionMode.range,
@@ -184,16 +212,33 @@ class NewEventScreen extends HookConsumerWidget {
   }
 
   String? getRangeTanggalString(
-    DateTime? useTanggalMulaiEvent,
-    DateTime? useTanggalAkhirEvent,
+    DateTime? dateStart,
+    DateTime? dateEnd,
   ) {
     String result = "";
-    if (useTanggalMulaiEvent != null) {
-      result += useTanggalMulaiEvent.display();
+    if (dateStart != null) {
+      result += dateStart.display();
     }
 
-    if (useTanggalAkhirEvent != null) {
-      result += " s/d ${useTanggalAkhirEvent.display()}";
+    if (dateEnd != null) {
+      result += " s/d ${dateEnd.display()}";
+    }
+
+    debugPrint(result);
+    return result.isNotEmpty ? result : null;
+  }
+
+  String? getRangeTimeString(
+    TimeOfDay? timeStart,
+    TimeOfDay? timeEnd,
+  ) {
+    String result = "";
+    if (timeStart != null) {
+      result += timeStart.display();
+    }
+
+    if (timeEnd != null) {
+      result += " s/d ${timeEnd.display()}";
     }
 
     debugPrint(result);

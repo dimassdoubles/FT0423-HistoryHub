@@ -13,15 +13,12 @@ class InputDeskripsi extends HookConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.w),
-          child: Text(
-            'Deskripsi',
-            style: AppTexts.primary.copyWith(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.black,
-            ),
+        Text(
+          'Deskripsi',
+          style: AppTexts.primary.copyWith(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.black,
           ),
         ),
         TextFormField(
@@ -30,13 +27,12 @@ class InputDeskripsi extends HookConsumerWidget {
           cursorColor: AppColors.primary500,
           minLines: 4,
           maxLines: 5,
-          style: InputText.textStyle,
+          style: InputText.textStyle.copyWith(fontSize: 16.sp),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 8.w,
-            ),
+            contentPadding: EdgeInsets.zero,
             hintStyle: InputText.textStyle.copyWith(
+              fontSize: 16.sp,
               color: AppColors.neutral300,
             ),
             hintText: 'Tulis sesuatu...',
