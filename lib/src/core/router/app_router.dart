@@ -10,6 +10,9 @@ class AppRouter extends $AppRouter {
           page: SplashRoute.page,
         ),
         AutoRoute(
+          page: NewEventRoute.page,
+        ),
+        AutoRoute(
           page: CreatePostRoute.page,
         ),
         AutoRoute(

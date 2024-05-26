@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:history_hub/src/core/constants/styles/common_sizes.dart';
+import 'package:history_hub/src/core/router/app_router.gr.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class NavigationAppBar extends HookConsumerWidget
@@ -23,9 +25,14 @@ class NavigationAppBar extends HookConsumerWidget
                 ),
               ),
             ),
-            Image.asset(
-              'assets/logos/colored_logo.webp',
-              width: 28.w,
+            InkWell(
+              onTap: () {
+                context.router.push(const NewEventRoute());
+              },
+              child: Image.asset(
+                'assets/logos/colored_logo.webp',
+                width: 28.w,
+              ),
             ),
           ],
         ),
