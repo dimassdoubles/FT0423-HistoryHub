@@ -155,7 +155,8 @@ class PhotoEditorScreen extends HookConsumerWidget {
 
     try {
       final tempDir = await getTemporaryDirectory();
-      String fileName = DateTime.now().microsecondsSinceEpoch.toString();
+      String fileName =
+          '${DateTime.now().microsecondsSinceEpoch.toString()}.png';
 
       final image = await controller.captureAndSave(
         tempDir.path,

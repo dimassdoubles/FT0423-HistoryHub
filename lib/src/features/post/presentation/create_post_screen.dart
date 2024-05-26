@@ -7,6 +7,7 @@ import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
 import 'package:history_hub/src/features/photo_editor/presentation/photo_editor_screen.dart';
 import 'package:history_hub/src/features/post/presentation/controllers/create_post_controller.dart';
+import 'package:history_hub/src/features/post/presentation/widgets/create_post_button.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/editted_image.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/input_content.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/input_place.dart';
@@ -46,15 +47,7 @@ class CreatePostScreen extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () => context.back(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary500,
-                      foregroundColor: AppColors.white,
-                      elevation: 0,
-                    ),
-                    child: const Text('Post'),
-                  ),
+                  const CreatePostButton(),
                 ],
               ),
               Expanded(

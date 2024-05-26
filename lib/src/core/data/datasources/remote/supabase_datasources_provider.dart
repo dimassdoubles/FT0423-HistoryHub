@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:history_hub/src/core/constants/functions.dart';
-import 'package:history_hub/src/core/constants/tables.dart';
+import 'package:history_hub/src/core/constants/supabase/functions.dart';
+import 'package:history_hub/src/core/constants/supabase/supabase_storage.dart';
+import 'package:history_hub/src/core/constants/supabase/tables.dart';
 import 'package:history_hub/src/core/data/datasources/remote/app_remote_datasources_provider.dart';
 import 'package:history_hub/src/core/data/models/app_user.dart';
 import 'package:history_hub/src/core/data/models/kabupaten.dart';
@@ -10,9 +11,10 @@ import 'package:history_hub/src/core/data/models/params/create_post_params.dart'
 import 'package:history_hub/src/core/data/models/params/get_post_params.dart';
 import 'package:history_hub/src/core/data/models/params/register_user_params.dart';
 import 'package:history_hub/src/core/error/app_failure.dart';
-import 'package:history_hub/src/features/login/presentation/providers/current_user_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:uuid/uuid.dart';
+import 'package:path/path.dart' as path;
 
 part 'supabase_datasources_provider.g.dart';
 
@@ -154,11 +156,28 @@ class SupabaseDatasources extends _$SupabaseDatasources
     CreatePostParams params,
   ) async {
     try {
-      // TODO upload gambar postingan
+      String imageUrl = "";
+      const uuid = Uuid();
+
+      if (params.image != null) {
+        debugPrint('image path: ${params.image!.path}');
+
+        String fileName =
+            "${uuid.v4()}-01${path.extension(params.image!.path)}"; // 01 adalah urutan photo
+        debugPrint(fileName);
+        final uploadPath = '${params.userId}/$fileName';
+        await _supabaseClient.storage.from(SupabaseStorage.postBucket).upload(
+              uploadPath,
+              params.image!,
+            );
+        imageUrl = _supabaseClient.storage
+            .from(SupabaseStorage.postBucket)
+            .getPublicUrl(uploadPath);
+      }
 
       await _supabaseClient.from(Tables.post).insert({
-        "user_id": ref.read(currentUserProvider)!.id,
-        "image_url": "",
+        "id": uuid.v4(),
+        "image_url": imageUrl,
         ...params.toMap(),
       });
 

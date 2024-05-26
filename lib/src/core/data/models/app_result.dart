@@ -9,7 +9,7 @@ class AppResult<T> {
 
   AppResult({required this.status, this.data, this.error});
 
-  factory AppResult.initial() {
+  factory AppResult.initial({T? data}) {
     return AppResult<T>(status: ResultStatus.initial);
   }
 
