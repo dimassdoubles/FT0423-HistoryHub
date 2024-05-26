@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:history_hub/src/core/styles/app_colors.dart';
-import 'package:history_hub/src/core/styles/app_texts.dart';
 import 'package:history_hub/src/core/styles/common_sizes.dart';
-import 'package:history_hub/src/features/photo_editor/presentation/photo_editor_screen.dart';
 import 'package:history_hub/src/features/post/presentation/controllers/create_post_controller.dart';
+import 'package:history_hub/src/features/post/presentation/widgets/add_image_button.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/create_post_button.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/editted_image.dart';
 import 'package:history_hub/src/features/post/presentation/widgets/input_content.dart';
@@ -66,44 +65,7 @@ class CreatePostScreen extends HookConsumerWidget {
                       const InputPlace(),
                       Gap(16.h),
                       const Divider(color: AppColors.neutral200),
-                      if (state.image == null)
-                        Padding(
-                          padding: EdgeInsets.only(top: 6.h),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              FocusScope.of(context).unfocus();
-                              await showDialog(
-                                context: context,
-                                builder: (context) => PhotoEditorScreen(
-                                  onImageSelected: (image) =>
-                                      controller.setImage(image),
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary100,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.w),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.image_outlined,
-                                  color: AppColors.primary500,
-                                ),
-                                Gap(4.w),
-                                Text(
-                                  'Foto',
-                                  style: AppTexts.primary
-                                      .copyWith(color: AppColors.primary500),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                      if (state.image == null) const AddImageButton(),
                       Gap(CommonSizes.footer),
                     ],
                   ),

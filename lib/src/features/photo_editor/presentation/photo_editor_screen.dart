@@ -16,9 +16,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 class PhotoEditorScreen extends HookConsumerWidget {
+  final File rawImage;
   final void Function(File image)? onImageSelected;
   const PhotoEditorScreen({
     super.key,
+    required this.rawImage,
     this.onImageSelected,
   });
 
@@ -41,8 +43,8 @@ class PhotoEditorScreen extends HookConsumerWidget {
           children: [
             Screenshot(
               controller: useScreenshotCtrl.value,
-              child: ImageSketcher.asset(
-                'assets/images/image.jpeg',
+              child: ImageSketcher.file(
+                rawImage,
                 key: useImageKey.value,
                 enableToolbar: false,
                 initialPaintMode: usePaintMode.value,

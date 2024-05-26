@@ -27,7 +27,9 @@ class CreatePostButton extends HookConsumerWidget {
             .popUntil((route) => route.settings.name == NavigationRoute.name);
       } else if (next.$2 == ResultStatus.error) {
         DialogHelper.dismiss();
-        DialogHelper.showError('Gagal membuat postingan');
+        DialogHelper.showError(
+          'Gagal membuat postingan: ${next.$2.toString()}',
+        );
       }
     });
 

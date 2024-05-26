@@ -166,13 +166,12 @@ class SupabaseDatasources extends _$SupabaseDatasources
             "${uuid.v4()}-01${path.extension(params.image!.path)}"; // 01 adalah urutan photo
         debugPrint(fileName);
         final uploadPath = '${params.userId}/$fileName';
-        await _supabaseClient.storage.from(SupabaseStorage.postBucket).upload(
+        imageUrl = await _supabaseClient.storage
+            .from(SupabaseStorage.postBucket)
+            .upload(
               uploadPath,
               params.image!,
             );
-        imageUrl = _supabaseClient.storage
-            .from(SupabaseStorage.postBucket)
-            .getPublicUrl(uploadPath);
       }
 
       await _supabaseClient.from(Tables.post).insert({
