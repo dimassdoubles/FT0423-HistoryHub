@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:history_hub/src/core/constants/styles/app_colors.dart';
 import 'package:history_hub/src/core/constants/styles/app_texts.dart';
@@ -19,6 +20,7 @@ class InputText extends HookConsumerWidget {
   final bool autoFocus;
   final bool readOnly;
   final VoidCallback? onTap;
+  final List<TextInputFormatter>? inputFormatters;
 
   const InputText({
     super.key,
@@ -35,6 +37,7 @@ class InputText extends HookConsumerWidget {
     this.autoFocus = false,
     this.readOnly = false,
     this.onTap,
+    this.inputFormatters,
   });
 
   static final border = OutlineInputBorder(
@@ -55,6 +58,7 @@ class InputText extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
+      inputFormatters: inputFormatters,
       readOnly: readOnly,
       autofocus: autoFocus,
       onTap: onTap,

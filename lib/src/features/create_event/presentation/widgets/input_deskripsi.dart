@@ -22,6 +22,7 @@ class InputDeskripsi extends HookConsumerWidget {
           ),
         ),
         TextFormField(
+          textInputAction: TextInputAction.next,
           controller: controller,
           maxLength: 400,
           cursorColor: AppColors.primary500,

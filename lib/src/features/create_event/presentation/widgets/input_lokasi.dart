@@ -10,6 +10,7 @@ class InputLokasi extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return TextFormField(
+      textInputAction: TextInputAction.next,
       controller: controller,
       maxLength: 400,
       cursorColor: AppColors.primary500,
