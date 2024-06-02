@@ -14,6 +14,10 @@ class HomeController extends GetxController {
     super.onInit();
   }
 
+  final _navBarIndex = 0.obs;
+  int get navBarIndex => _navBarIndex.value;
+  set navBarIndex(int value) => _navBarIndex.value = value;
+
   late final currentUser = localDatasource.getCurrentUser()!;
 
   final GlobalKey<SliderDrawerState> sliderDrawerKey =
