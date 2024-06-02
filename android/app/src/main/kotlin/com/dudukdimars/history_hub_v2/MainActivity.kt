@@ -1,0 +1,5 @@
+package com.dudukdimars.history_hub_v2
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity()
