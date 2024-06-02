@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/constants/styles/common_sizes.dart';
@@ -13,44 +14,53 @@ class HomePostView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
-              TabBar(
-                dividerColor: AppColors.neutral200,
-                indicatorColor: AppColors.primary500,
-                isScrollable: true,
-                indicatorWeight: 3,
-                tabAlignment: TabAlignment.start,
-                labelColor: AppColors.primary500,
-                tabs: [
-                  Tab(text: 'Postingan'),
-                  Tab(text: 'Acara'),
+        Column(
+          children: [
+            TabBar(
+              controller: controller.postTabController,
+              dividerColor: AppColors.neutral200,
+              indicatorColor: AppColors.primary500,
+              isScrollable: true,
+              indicatorWeight: 3,
+              tabAlignment: TabAlignment.start,
+              labelColor: AppColors.primary500,
+              tabs: const [
+                Tab(text: 'Postingan'),
+                Tab(text: 'Acara'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: controller.postTabController,
+                children: const [
+                  PostListView(),
+                  EventListView(),
                 ],
               ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    PostListView(),
-                    EventListView(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
             padding: EdgeInsets.all(CommonSizes.pagePadding),
-            child: FloatingActionButton(
-              onPressed: controller.createPost,
-              shape: const CircleBorder(),
-              backgroundColor: AppColors.primary500,
-              foregroundColor: AppColors.white,
-              child: const Icon(Icons.edit_outlined),
-            ),
+            child: Obx(() {
+              return FloatingActionButton(
+                onPressed: controller.createPost,
+                shape: const CircleBorder(),
+                backgroundColor: AppColors.primary500,
+                foregroundColor: AppColors.white,
+                child: controller.postTabIndex == 0
+                    ? const Icon(Icons.edit_outlined)
+                    : SvgPicture.asset(
+                        'assets/icons/calendar_add.svg',
+                        colorFilter: const ColorFilter.mode(
+                          AppColors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+              );
+            }),
           ),
         ),
       ],

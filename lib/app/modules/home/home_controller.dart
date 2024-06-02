@@ -5,10 +5,29 @@ import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/modules/auth/login/login_page.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final AppDatasource datasource;
   final LocalDatasource localDatasource;
   HomeController(this.datasource, this.localDatasource);
+
+  @override
+  void onInit() {
+    postTabController = TabController(length: 2, vsync: this);
+    postTabController.animation?.addListener(() {
+      int indexChange = postTabController.offset.round();
+      int index = postTabController.index + indexChange;
+
+      postTabIndex = index;
+    });
+    super.onInit();
+  }
+
+  final _postTabIndex = 0.obs;
+  int get postTabIndex => _postTabIndex.value;
+  set postTabIndex(int value) => _postTabIndex.value = value;
+
+  late TabController postTabController;
 
   void createPost() {}
 
