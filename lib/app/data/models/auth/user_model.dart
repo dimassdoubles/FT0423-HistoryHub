@@ -20,7 +20,7 @@ class UserModel {
   });
 
   // from json
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<dynamic, dynamic> json) {
     return UserModel(
       id: json['user_id'],
       fullName: json['full_name'],

@@ -14,65 +14,70 @@ import 'package:history_hub_v2/app/presentation/widgets/scaffold/app_scaffold.da
 class RegisterPage extends GetView<RegisterController> {
   static const routeName = '/register';
 
+  const RegisterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       title: 'Buat akun baru',
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  InputText(
-                    name: 'Nama',
-                    controller: controller.controllerNama,
-                    focusNode: controller.focusNama,
-                    nextFocusNode: controller.focusAlamat,
-                    keyboardType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  Gap(CommonSizes.formGap),
-                  InputText(
-                    name: 'Alamat',
-                    readOnly: true,
-                    onTap: controller.selectAddress,
-                    controller: controller.controllerAlamat,
-                    focusNode: controller.focusAlamat,
-                    nextFocusNode: controller.focusEmail,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  Gap(CommonSizes.formGap),
-                  InputEmail(
-                    controller: controller.controllerEmail,
-                    focusNode: controller.focusEmail,
-                    nextFocusNode: controller.focusPhone,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  Gap(CommonSizes.formGap),
-                  InputPhone(
-                    controller: controller.controllerPhone,
-                    focusNode: controller.focusPhone,
-                    nextFocusNode: controller.focusPassword,
-                    textInputAction: TextInputAction.next,
-                  ),
-                  Gap(CommonSizes.formGap),
-                  InputPassword(
-                    controller: controller.controllerPassword,
-                    focusNode: controller.focusPassword,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) => controller.register(),
-                  ),
-                ],
+      body: Form(
+        key: controller.formKey,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    InputText(
+                      name: 'Nama',
+                      controller: controller.controllerNama,
+                      focusNode: controller.focusNama,
+                      nextFocusNode: controller.focusAlamat,
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    Gap(CommonSizes.formGap),
+                    InputText(
+                      name: 'Alamat',
+                      readOnly: true,
+                      onTap: controller.selectAddress,
+                      controller: controller.controllerAlamat,
+                      focusNode: controller.focusAlamat,
+                      nextFocusNode: controller.focusEmail,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    Gap(CommonSizes.formGap),
+                    InputEmail(
+                      controller: controller.controllerEmail,
+                      focusNode: controller.focusEmail,
+                      nextFocusNode: controller.focusPhone,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    Gap(CommonSizes.formGap),
+                    InputPhone(
+                      controller: controller.controllerPhone,
+                      focusNode: controller.focusPhone,
+                      nextFocusNode: controller.focusPassword,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    Gap(CommonSizes.formGap),
+                    InputPassword(
+                      controller: controller.controllerPassword,
+                      focusNode: controller.focusPassword,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) => controller.register(),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Gap(16.h),
-          PrimaryButton(
-            onPressed: controller.register,
-            name: 'Daftar',
-          ),
-        ],
+            Gap(16.h),
+            PrimaryButton(
+              onPressed: controller.register,
+              name: 'Daftar',
+            ),
+          ],
+        ),
       ),
     );
   }

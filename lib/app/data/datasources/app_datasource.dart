@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:history_hub_v2/app/core/constants/supabase/sp_functions.dart';
+import 'package:history_hub_v2/app/core/constants/supabase/sp_tables.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/kabupaten_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kecamatan_model.dart';
@@ -96,17 +98,25 @@ class AppDatasourceImpl implements AppDatasource {
     String email,
     String password,
   ) async {
+    debugPrint('login');
     await _supabaseClient.auth
         .signInWithPassword(email: email, password: password);
     final userProfile = await _supabaseClient.rpc(SpFunctions.getUserProfile);
-
-    _localDatasource.login(userProfile);
+    _localDatasource.login(UserModel.fromJson(userProfile.first));
     return UserModel.fromJson(userProfile.first);
   }
 
   @override
-  Future<void> registerUser(RegisterUserParams params) {
-    // TODO: implement registerUser
-    throw UnimplementedError();
+  Future<void> registerUser(RegisterUserParams params) async {
+    final response = await _supabaseClient.auth.signUp(
+      email: params.email,
+      password: params.password,
+    );
+
+    final userId = response.user!.id;
+    await _supabaseClient.from(SpTables.userProfiles).insert({
+      'user_id': userId,
+      ...params.toMap(),
+    });
   }
 }

@@ -18,10 +18,11 @@ class SplashController extends GetxController {
   }
 
   void toTheNextPage() {
-    // TODO remove && false
-    if (_localDatasource.isLoggedIn() && false) {
+    if (_localDatasource.isLoggedIn()) {
+      debugPrint('sudah login');
       Navigator.of(Get.context!).pushReplacementNamed(HomePage.routeName);
     } else {
+      debugPrint('belum login');
       Navigator.of(Get.context!).pushReplacementNamed(LoginPage.routeName);
     }
   }
