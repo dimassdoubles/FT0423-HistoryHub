@@ -80,7 +80,9 @@ class PostListItem extends GetView<PostController> {
           Gap(12.h),
           Text(
             post.content,
-            style: AppTexts.primary,
+            style: AppTexts.primary.copyWith(
+              color: AppColors.neutral400,
+            ),
           ),
           Gap(16.h),
           InkWell(

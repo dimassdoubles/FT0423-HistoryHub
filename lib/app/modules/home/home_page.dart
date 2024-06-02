@@ -19,6 +19,7 @@ class HomePage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SliderDrawer(
+        isDraggable: false,
         key: controller.sliderDrawerKey,
         appBar: SliderAppBar(
           appBarColor: AppColors.white,
