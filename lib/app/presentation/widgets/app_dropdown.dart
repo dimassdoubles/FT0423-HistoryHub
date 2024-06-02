@@ -7,12 +7,14 @@ class AppDropdown<ValueType> extends StatelessWidget {
   final void Function(ValueType?)? onChanged;
   final ValueType? value;
   final String name;
+  final bool isRequired;
   const AppDropdown({
     super.key,
     required this.items,
     required this.onChanged,
     required this.value,
     required this.name,
+    this.isRequired = true,
   });
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,12 @@ class AppDropdown<ValueType> extends StatelessWidget {
       items: items,
       onChanged: onChanged,
       style: InputText.textStyle,
+      validator: (value) {
+        if (isRequired && value == null) {
+          return "$name harus diisi";
+        }
+        return null;
+      },
       decoration: InputDecoration(
         filled: true,
         hintText: name,

@@ -19,25 +19,28 @@ class SelectAddressPage extends GetView<SelectAddressController> {
   Widget build(BuildContext context) {
     return AppScaffold(
       title: 'Pilih alamat',
-      body: Column(
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                const SelectKabupaten(),
-                Gap(CommonSizes.formGap),
-                const SelectKecamatan(),
-                Gap(CommonSizes.formGap),
-                const SelectKelurahan(),
-              ],
+      body: Form(
+        key: controller.formKey,
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  const SelectKabupaten(),
+                  Gap(CommonSizes.formGap),
+                  const SelectKecamatan(),
+                  Gap(CommonSizes.formGap),
+                  const SelectKelurahan(),
+                ],
+              ),
             ),
-          ),
-          Gap(16.h),
-          PrimaryButton(
-            onPressed: controller.submit,
-            name: 'Konfirmasi',
-          ),
-        ],
+            Gap(16.h),
+            PrimaryButton(
+              onPressed: controller.submit,
+              name: 'Konfirmasi',
+            ),
+          ],
+        ),
       ),
     );
   }

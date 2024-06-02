@@ -16,7 +16,7 @@ abstract class AppDatasource {
   Future<void> registerUser(RegisterUserParams params);
   Future<UserModel> login(String email, String password);
   Future<List<KabupatenModel>> getListKabupaten();
-  Future<List<KecamatanModel>> getListKecamatan(int kabupatedId);
+  Future<List<KecamatanModel>> getListKecamatan(int kabupatenId);
   Future<List<KelurahanModel>> getListKelurahan(int kecamatanId);
   Future<UserModel?> getCurrentUser();
 
@@ -56,21 +56,33 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<List<KabupatenModel>> getListKabupaten() {
-    // TODO: implement getListKabupaten
-    throw UnimplementedError();
+  Future<List<KabupatenModel>> getListKabupaten() async {
+    final response = await _supabaseClient.rpc(SpFunctions.getListKabupaten);
+    return List<KabupatenModel>.from(
+      response.map((json) => KabupatenModel.fromJson(json)),
+    );
   }
 
   @override
-  Future<List<KecamatanModel>> getListKecamatan(int kabupatedId) {
-    // TODO: implement getListKecamatan
-    throw UnimplementedError();
+  Future<List<KecamatanModel>> getListKecamatan(int kabupatenId) async {
+    final response =
+        await _supabaseClient.rpc(SpFunctions.getListKecamatan, params: {
+      "kabupaten_id": kabupatenId,
+    });
+    return List<KecamatanModel>.from(
+      response.map((json) => KecamatanModel.fromJson(json)),
+    );
   }
 
   @override
-  Future<List<KelurahanModel>> getListKelurahan(int kecamatanId) {
-    // TODO: implement getListKelurahan
-    throw UnimplementedError();
+  Future<List<KelurahanModel>> getListKelurahan(int kecamatanId) async {
+    final response =
+        await _supabaseClient.rpc(SpFunctions.getListKelurahan, params: {
+      "kecamatan_id": kecamatanId,
+    });
+    return List<KelurahanModel>.from(
+      response.map((json) => KelurahanModel.fromJson(json)),
+    );
   }
 
   @override
@@ -87,6 +99,8 @@ class AppDatasourceImpl implements AppDatasource {
     await _supabaseClient.auth
         .signInWithPassword(email: email, password: password);
     final userProfile = await _supabaseClient.rpc(SpFunctions.getUserProfile);
+
+    _localDatasource.login(userProfile);
     return UserModel.fromJson(userProfile.first);
   }
 

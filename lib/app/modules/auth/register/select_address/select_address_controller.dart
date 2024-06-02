@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/kabupaten_model.dart';
@@ -17,11 +18,14 @@ class SelectAddressController extends GetxController {
     super.onInit();
   }
 
+  final formKey = GlobalKey<FormState>();
+
   late final _selectedKabupaten =
       Rx<KabupatenModel?>(registerController.selectedKabupaten);
-  get selectedKabupaten => _selectedKabupaten.value;
-  set selectedKabupaten(value) {
+  KabupatenModel? get selectedKabupaten => _selectedKabupaten.value;
+  set selectedKabupaten(KabupatenModel? value) {
     _selectedKabupaten.value = value;
+
     selectedKecamatan = null;
     selectedKelurahan = null;
     getListKecamatan();
@@ -29,17 +33,18 @@ class SelectAddressController extends GetxController {
 
   late final _selectedKecamatan =
       Rx<KecamatanModel?>(registerController.selectedKecamatan);
-  get selectedKecamatan => _selectedKecamatan.value;
-  set selectedKecamatan(value) {
+  KecamatanModel? get selectedKecamatan => _selectedKecamatan.value;
+  set selectedKecamatan(KecamatanModel? value) {
     _selectedKecamatan.value = value;
+
     selectedKelurahan = null;
     getListKelurahan();
   }
 
   late final _selectedKelurahan =
       Rx<KelurahanModel?>(registerController.selectedKelurahan);
-  get selectedKelurahan => _selectedKelurahan.value;
-  set selectedKelurahan(value) {
+  KelurahanModel? get selectedKelurahan => _selectedKelurahan.value;
+  set selectedKelurahan(KelurahanModel? value) {
     _selectedKelurahan.value = value;
   }
 
@@ -67,8 +72,34 @@ class SelectAddressController extends GetxController {
     });
   }
 
-  void getListKecamatan() {}
-  void getListKelurahan() {}
+  void getListKecamatan() {
+    if (selectedKabupaten == null) return;
 
-  void submit() {}
+    listKecamatan = ResultModel.loading();
+    datasource.getListKecamatan(selectedKabupaten!.id).then((value) {
+      listKecamatan = ResultModel.success(value);
+    }).catchError((e) {
+      listKecamatan = ResultModel.error(e);
+    });
+  }
+
+  void getListKelurahan() {
+    if (selectedKecamatan == null) return;
+
+    listKelurahan = ResultModel.loading();
+    datasource.getListKelurahan(selectedKecamatan!.id).then((value) {
+      listKelurahan = ResultModel.success(value);
+    }).catchError((e) {
+      listKelurahan = ResultModel.error(e);
+    });
+  }
+
+  void submit() {
+    if (!formKey.currentState!.validate()) return;
+
+    registerController.selectedKabupaten = selectedKabupaten;
+    registerController.selectedKecamatan = selectedKecamatan;
+    registerController.selectedKelurahan = selectedKelurahan;
+    Get.back();
+  }
 }

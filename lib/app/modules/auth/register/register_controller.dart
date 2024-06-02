@@ -41,6 +41,9 @@ class RegisterController extends GetxController {
   get selectedKelurahan => _selectedKelurahan.value;
   set selectedKelurahan(value) {
     _selectedKelurahan.value = value;
+
+    controllerAlamat.text =
+        "${selectedKabupaten.nama}, ${selectedKecamatan.nama}, ${selectedKecamatan.nama}";
   }
 
   void register() {}
