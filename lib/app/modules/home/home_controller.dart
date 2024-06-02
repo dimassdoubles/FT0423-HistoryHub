@@ -10,11 +10,6 @@ class HomeController extends GetxController {
   final LocalDatasource localDatasource;
   HomeController(this.datasource, this.localDatasource);
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void createPost() {}
 
   final _navBarIndex = 0.obs;

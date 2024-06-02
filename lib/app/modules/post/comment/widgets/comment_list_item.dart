@@ -37,7 +37,7 @@ class CommentListItem extends StatelessWidget {
                   style: AppTexts.primary.copyWith(
                     fontSize: 10,
                     fontWeight: TextWeights.bold,
-                    color: Color.fromARGB(255, 151, 151, 151),
+                    color: const Color.fromARGB(255, 151, 151, 151),
                   ),
                 ),
                 Gap(4.w),

@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
+import 'package:history_hub_v2/app/data/models/event/event_model.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+
+class EventController extends GetxController {
+  final AppDatasource datasource;
+  EventController(this.datasource);
+  @override
+  void onInit() {
+    pagingController.addPageRequestListener((page) async {
+      getListEvent(page);
+    });
+    super.onInit();
+  }
+
+  final listKey = const PageStorageKey("event_list_key");
+
+  Future<void> onPageRefresh() async {
+    pagingController.refresh();
+  }
+
+  final PagingController<int, EventModel> pagingController = PagingController(
+    firstPageKey: 0,
+  );
+
+  final pageSize = 10;
+
+  void appendPage(int page, List<EventModel> data) {
+    final isLastPage = data.length < pageSize;
+    if (isLastPage) {
+      pagingController.appendLastPage(data);
+    } else {
+      pagingController.appendPage(data, page + 1);
+    }
+  }
+
+  void getListEvent(int page) {
+    debugPrint('getListEvent page: $page');
+    datasource.getListEvent(page).then((value) {
+      appendPage(page, value);
+    }).catchError((e) {
+      pagingController.error = e;
+    });
+  }
+}

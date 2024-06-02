@@ -12,11 +12,6 @@ class RegisterController extends GetxController {
   final AppDatasource datasource;
   RegisterController(this.datasource);
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   final formKey = GlobalKey<FormState>();
 
   // Create focus nodes

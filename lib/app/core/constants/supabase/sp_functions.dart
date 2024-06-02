@@ -9,4 +9,5 @@ class SpFunctions {
   static const likePost = "like_post";
   static const commentPost = "comment_post";
   static const getListComment = "get_list_comment";
+  static const getListEvent = "get_list_event";
 }

@@ -29,7 +29,7 @@ class AppPages {
     ),
     GetPage(
       name: RegisterPage.routeName,
-      page: () => RegisterPage(),
+      page: () => const RegisterPage(),
       binding: RegisterBinding(),
     ),
     GetPage(

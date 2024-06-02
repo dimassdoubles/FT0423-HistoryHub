@@ -20,7 +20,7 @@ class PostListItem extends GetView<PostController> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 16.w),
+      padding: EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

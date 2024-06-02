@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/data/models/auth/kabupaten_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kecamatan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kelurahan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
+import 'package:history_hub_v2/app/data/models/event/event_model.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
@@ -32,6 +33,8 @@ abstract class AppDatasource {
 
   // event
   Future<void> createEvent(CreateEventParams params);
+  Future<List<EventModel>> getListEvent(int page,
+      {int pageSize = 10}); // intial page = 0
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -166,6 +169,21 @@ class AppDatasourceImpl implements AppDatasource {
 
     return List<CommentModel>.from(
       response.map((json) => CommentModel.fromJson(json)),
+    );
+  }
+
+  @override
+  Future<List<EventModel>> getListEvent(int page, {int pageSize = 10}) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getListEvent,
+      params: {
+        'page_size': pageSize,
+        'page': page,
+      },
+    );
+
+    return List<EventModel>.from(
+      response.map((json) => EventModel.fromJson(json)),
     );
   }
 }

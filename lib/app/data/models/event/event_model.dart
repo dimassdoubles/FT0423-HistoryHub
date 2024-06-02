@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:history_hub_v2/app/core/constants/base_url.dart';
 
 class EventModel {
   final String id;
   final String idPenyelenggara;
   final String namaPenyelenggara;
-  final String? image;
+  final String image;
   final String nama;
   final DateTime tanggalMulai;
   final DateTime? tanggalAkhir;
@@ -21,7 +22,7 @@ class EventModel {
     required this.id,
     required this.idPenyelenggara,
     required this.namaPenyelenggara,
-    this.image,
+    required this.image,
     required this.nama,
     required this.tanggalMulai,
     this.tanggalAkhir,
@@ -36,30 +37,34 @@ class EventModel {
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
+    String imageUrl = json['image_url'];
+    if (imageUrl.isNotEmpty) {
+      imageUrl = '$baseUrl/storage/v1/object/public/$imageUrl';
+    }
+
     return EventModel(
       id: json['id'],
-      idPenyelenggara: json['id_penyelenggara'],
-      namaPenyelenggara: json['nama_penyelenggara'],
-      image: json['image'],
-      nama: json['nama'],
-      tanggalMulai: DateTime.parse(json['tanggal_mulai']),
-      tanggalAkhir: json['tanggal_akhir'] != null
-          ? DateTime.parse(json['tanggal_akhir'])
-          : null,
+      idPenyelenggara: json['user_id'],
+      namaPenyelenggara: json['full_name'],
+      image: imageUrl,
+      nama: json['name'],
+      tanggalMulai: DateTime.parse(json['date_start']),
+      tanggalAkhir:
+          json['date_end'] != null ? DateTime.parse(json['date_end']) : null,
       jamMulai: TimeOfDay(
-        hour: int.parse(json['jam_mulai'].split(':')[0]),
-        minute: int.parse(json['jam_mulai'].split(':')[1]),
+        hour: int.parse(json['time_start'].split(':')[0]),
+        minute: int.parse(json['time_start'].split(':')[1]),
       ),
       jamAkhir: TimeOfDay(
-        hour: int.parse(json['jam_akhir'].split(':')[0]),
-        minute: int.parse(json['jam_akhir'].split(':')[1]),
+        hour: int.parse(json['time_end'].split(':')[0]),
+        minute: int.parse(json['time_end'].split(':')[1]),
       ),
-      lokasi: json['lokasi'],
-      deskripsi: json['deskripsi'],
-      jumlahTiket: json['jumlah_tiket'],
-      hargaTiket: json['harga_tiket'],
-      tanggalMulaiJual: DateTime.parse(json['tanggal_mulai_jual']),
-      tanggalAkhirJual: DateTime.parse(json['tanggal_akhir_jual']),
+      lokasi: json['location'],
+      deskripsi: json['description'],
+      jumlahTiket: json['quota'],
+      hargaTiket: json['price'],
+      tanggalMulaiJual: DateTime.parse(json['date_buy_start']),
+      tanggalAkhirJual: DateTime.parse(json['date_buy_end']),
     );
   }
 }
