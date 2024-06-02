@@ -12,7 +12,7 @@ class EventModel {
   final TimeOfDay jamMulai;
   final TimeOfDay jamAkhir;
   final String lokasi;
-  final String? deskripsi;
+  final String deskripsi;
   final int jumlahTiket;
   final int hargaTiket;
   final DateTime tanggalMulaiJual;
@@ -29,7 +29,7 @@ class EventModel {
     required this.jamMulai,
     required this.jamAkhir,
     required this.lokasi,
-    this.deskripsi,
+    required this.deskripsi,
     required this.jumlahTiket,
     required this.hargaTiket,
     required this.tanggalMulaiJual,
@@ -60,7 +60,7 @@ class EventModel {
         minute: int.parse(json['time_end'].split(':')[1]),
       ),
       lokasi: json['location'],
-      deskripsi: json['description'],
+      deskripsi: json['description'] ?? '',
       jumlahTiket: json['quota'],
       hargaTiket: json['price'],
       tanggalMulaiJual: DateTime.parse(json['date_buy_start']),

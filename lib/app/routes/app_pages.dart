@@ -5,6 +5,8 @@ import 'package:history_hub_v2/app/modules/auth/register/register_binding.dart';
 import 'package:history_hub_v2/app/modules/auth/register/register_page.dart';
 import 'package:history_hub_v2/app/modules/auth/register/select_address/select_address_binding.dart';
 import 'package:history_hub_v2/app/modules/auth/register/select_address/select_address_page.dart';
+import 'package:history_hub_v2/app/modules/event/detail/event_detail_binding.dart';
+import 'package:history_hub_v2/app/modules/event/detail/event_detail_page.dart';
 import 'package:history_hub_v2/app/modules/home/home_binding.dart';
 import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_binding.dart';
@@ -41,6 +43,11 @@ class AppPages {
       name: HomePage.routeName,
       page: () => const HomePage(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: EventDetailPage.routeName,
+      page: () => const EventDetailPage(),
+      binding: EventDetailBinding(),
     ),
   ];
 }

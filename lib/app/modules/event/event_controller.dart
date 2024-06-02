@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
+import 'package:history_hub_v2/app/modules/event/detail/event_detail_page.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class EventController extends GetxController {
@@ -43,5 +44,12 @@ class EventController extends GetxController {
     }).catchError((e) {
       pagingController.error = e;
     });
+  }
+
+  void goingToDetail(EventModel event) {
+    Get.toNamed(
+      EventDetailPage.routeName,
+      arguments: event,
+    );
   }
 }
