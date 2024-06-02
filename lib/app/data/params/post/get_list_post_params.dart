@@ -1,25 +1,22 @@
 class GetListPostParams {
-  final String myUserId;
   final String keyword;
   final List<String> listTagId;
-  final int offset;
+  final int offset; // initial is 0
 
   static const int limit = 10;
 
   GetListPostParams({
-    required this.myUserId,
     required this.keyword,
     required this.listTagId,
     required this.offset,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
-      'my_user_id': myUserId,
-      'keyword': keyword,
-      'list_tag_id': listTagId,
-      'limit': limit,
-      'offset': offset,
+      // 'keyword': keyword,
+      // 'list_tag_id': listTagId,
+      'page_size': limit,
+      'page': offset,
     };
   }
 }

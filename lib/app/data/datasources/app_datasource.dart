@@ -88,9 +88,15 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<List<PostModel>> getListPost(GetListPostParams params) {
-    // TODO: implement getListPost
-    throw UnimplementedError();
+  Future<List<PostModel>> getListPost(GetListPostParams params) async {
+    debugPrint('login');
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getListPost,
+      params: params.toJson(),
+    );
+    return List<PostModel>.from(
+      response.map((json) => PostModel.fromJson(json)),
+    );
   }
 
   @override
