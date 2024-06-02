@@ -7,4 +7,5 @@ class SpFunctions {
   static const getListKelurahan = "get_list_kelurahan";
   static const getListPost = "get_list_post";
   static const likePost = "like_post";
+  static const commentPost = "comment_post";
 }

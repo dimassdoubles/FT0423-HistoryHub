@@ -26,6 +26,7 @@ abstract class AppDatasource {
   Future<List<PostModel>> getListPost(GetListPostParams params);
   Future<void> createPost(CreatePostParams params);
   Future<void> like(String postId);
+  Future<void> comment(String postId, String comment);
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -133,6 +134,19 @@ class AppDatasourceImpl implements AppDatasource {
       SpFunctions.likePost,
       params: {
         'post_id': postId,
+      },
+    );
+
+    return;
+  }
+
+  @override
+  Future<void> comment(String postId, String comment) async {
+    await _supabaseClient.rpc(
+      SpFunctions.commentPost,
+      params: {
+        'post_id': postId,
+        'content': comment,
       },
     );
 

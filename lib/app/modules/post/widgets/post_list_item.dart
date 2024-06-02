@@ -9,6 +9,7 @@ import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/modules/post/post_controller.dart';
+import 'package:history_hub_v2/app/modules/post/widgets/comment_button.dart';
 import 'package:history_hub_v2/app/modules/post/widgets/like_button.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -107,15 +108,7 @@ class PostListItem extends GetView<PostController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     LikeButton(post, index),
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/comment.svg',
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.neutral400, BlendMode.srcIn)),
-                        if (post.commentCount > 0)
-                          Text(post.commentCount.toString()),
-                      ],
-                    ),
+                    CommentButton(post),
                     SvgPicture.asset('assets/icons/share.svg'),
                   ],
                 ),
