@@ -49,6 +49,34 @@ class PostModel extends Equatable {
     );
   }
 
+  PostModel copyWith({
+    bool? isLikedByMe,
+    String? userId,
+    String? id,
+    String? namaUser,
+    String? avatarUser,
+    DateTime? tanggal,
+    List<String>? listTagId,
+    String? content,
+    String? imageUrl,
+    int? likeCount,
+    int? commentCount,
+  }) {
+    return PostModel(
+      isLikedByMe: isLikedByMe ?? this.isLikedByMe,
+      userId: userId ?? this.userId,
+      id: id ?? this.id,
+      namaUser: namaUser ?? this.namaUser,
+      avatarUser: avatarUser ?? this.avatarUser,
+      tanggal: tanggal ?? this.tanggal,
+      listTagId: listTagId ?? this.listTagId,
+      content: content ?? this.content,
+      imageUrl: imageUrl ?? this.imageUrl,
+      likeCount: likeCount ?? this.likeCount,
+      commentCount: commentCount ?? this.commentCount,
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,

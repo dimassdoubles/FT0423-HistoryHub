@@ -3,6 +3,7 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
+import 'package:history_hub_v2/app/modules/auth/login/login_page.dart';
 
 class HomeController extends GetxController {
   final AppDatasource datasource;
@@ -38,5 +39,8 @@ class HomeController extends GetxController {
     debugPrint(isDrawerOpen.toString());
   }
 
-  void logout() {}
+  void logout() {
+    // TODO buat logic yang benar
+    Get.toNamed(LoginPage.routeName);
+  }
 }

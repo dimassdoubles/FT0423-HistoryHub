@@ -25,6 +25,7 @@ abstract class AppDatasource {
   // post
   Future<List<PostModel>> getListPost(GetListPostParams params);
   Future<void> createPost(CreatePostParams params);
+  Future<void> like(String postId);
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -124,5 +125,17 @@ class AppDatasourceImpl implements AppDatasource {
       'user_id': userId,
       ...params.toMap(),
     });
+  }
+
+  @override
+  Future<void> like(String postId) async {
+    await _supabaseClient.rpc(
+      SpFunctions.likePost,
+      params: {
+        'post_id': postId,
+      },
+    );
+
+    return;
   }
 }

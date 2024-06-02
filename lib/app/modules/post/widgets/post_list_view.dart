@@ -13,7 +13,7 @@ class PostListView extends GetView<PostController> {
       key: controller.listKey,
       onRefresh: controller.onPageRefresh,
       pagingController: controller.pagingController,
-      itemBuilder: (context, item, index) => PostListItem(item),
+      itemBuilder: (context, item, index) => PostListItem(item, index),
     );
   }
 }

@@ -18,6 +18,21 @@ class PostController extends GetxController {
     super.onInit();
   }
 
+  // jika sudah like otomatis unlike
+  void like(PostModel post, int index, void Function()? onError) {
+    pagingController.itemList![index] = post.copyWith(
+        isLikedByMe: !post.isLikedByMe,
+        likeCount: post.isLikedByMe ? post.likeCount - 1 : post.likeCount + 1);
+    debugPrint('liked: ${pagingController.itemList![index].isLikedByMe}');
+    datasource.like(post.id).catchError((e) {
+      pagingController.itemList![index] = post;
+      debugPrint(
+        'unliked bcs error: ${pagingController.itemList![index].isLikedByMe}',
+      );
+      onError?.call();
+    });
+  }
+
   final listKey = const PageStorageKey("list_post_key");
 
   Future<void> onPageRefresh() async {
