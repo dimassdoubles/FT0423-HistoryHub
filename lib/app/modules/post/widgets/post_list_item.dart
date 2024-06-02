@@ -108,7 +108,7 @@ class PostListItem extends GetView<PostController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     LikeButton(post, index),
-                    CommentButton(post),
+                    CommentButton(post, index),
                     SvgPicture.asset('assets/icons/share.svg'),
                   ],
                 ),

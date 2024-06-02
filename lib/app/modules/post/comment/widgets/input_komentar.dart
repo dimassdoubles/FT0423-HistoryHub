@@ -18,6 +18,7 @@ class InputKomentar extends GetView<CommentController> {
         vertical: 16,
       ),
       child: TextFormField(
+        controller: controller.controllerKomentar,
         onFieldSubmitted: (value) => controller.comment(post, value),
         cursorColor: AppColors.primary500,
         minLines: 1,

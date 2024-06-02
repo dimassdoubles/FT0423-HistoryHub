@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/data/models/auth/kabupaten_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kecamatan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kelurahan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
+import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
@@ -27,6 +28,7 @@ abstract class AppDatasource {
   Future<void> createPost(CreatePostParams params);
   Future<void> like(String postId);
   Future<void> comment(String postId, String comment);
+  Future<List<CommentModel>> geListComment(String postId);
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -151,5 +153,19 @@ class AppDatasourceImpl implements AppDatasource {
     );
 
     return;
+  }
+
+  @override
+  Future<List<CommentModel>> geListComment(String postId) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getListComment,
+      params: {
+        'input_post_id': postId,
+      },
+    );
+
+    return List<CommentModel>.from(
+      response.map((json) => CommentModel.fromJson(json)),
+    );
   }
 }

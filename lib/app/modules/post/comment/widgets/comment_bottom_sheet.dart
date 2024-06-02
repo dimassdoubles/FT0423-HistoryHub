@@ -24,13 +24,15 @@ class CommentBottomSheet extends GetView<CommentController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '12 Komentar',
-                style: AppTexts.primary.copyWith(
-                  fontSize: 12.sp,
-                  fontWeight: TextWeights.bold,
-                ),
-              ),
+              Obx(() {
+                return Text(
+                  '${controller.commentCounter > 0 ? '${controller.commentCounter} ' : ''}Komentar',
+                  style: AppTexts.primary.copyWith(
+                    fontSize: 12.sp,
+                    fontWeight: TextWeights.bold,
+                  ),
+                );
+              }),
               IconButton(
                 onPressed: Get.back,
                 icon: const Icon(Icons.clear),
@@ -39,8 +41,8 @@ class CommentBottomSheet extends GetView<CommentController> {
           ),
         ),
         Gap(8.w),
-        const Expanded(
-          child: CommentListView(),
+        Expanded(
+          child: CommentListView(post),
         ),
         InputKomentar(post),
       ],

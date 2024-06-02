@@ -4,6 +4,8 @@ class CommentModel {
   final String userId;
   final DateTime createdAt;
   final String content;
+  final String userName;
+  final String userAvatarUrl;
 
   const CommentModel({
     required this.id,
@@ -11,6 +13,8 @@ class CommentModel {
     required this.userId,
     required this.createdAt,
     required this.content,
+    required this.userName,
+    required this.userAvatarUrl,
   });
 
   factory CommentModel.fromJson(Map<String, dynamic> json) {
@@ -20,22 +24,8 @@ class CommentModel {
       userId: json['user_id'],
       createdAt: DateTime.parse(json['created_at']).toLocal(),
       content: json['content'],
-    );
-  }
-
-  CommentModel copyWith({
-    String? id,
-    String? postId,
-    String? userId,
-    DateTime? createdAt,
-    String? content,
-  }) {
-    return CommentModel(
-      id: id ?? this.id,
-      postId: postId ?? this.postId,
-      userId: userId ?? this.userId,
-      createdAt: createdAt ?? this.createdAt,
-      content: content ?? this.content,
+      userName: json['fullname'],
+      userAvatarUrl: json['avatar_url'],
     );
   }
 }

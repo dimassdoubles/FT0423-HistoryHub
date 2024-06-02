@@ -20,6 +20,12 @@ class PostController extends GetxController {
     super.onInit();
   }
 
+  void updateCommentCounter(PostModel post, int index, int newCommentCount) {
+    pagingController.itemList![index] = post.copyWith(
+      commentCount: newCommentCount,
+    );
+  }
+
   // jika sudah like otomatis unlike
   void like(PostModel post, int index, void Function()? onError) {
     pagingController.itemList![index] = post.copyWith(
@@ -72,6 +78,4 @@ class PostController extends GetxController {
       pagingController.error = e;
     });
   }
-
-  
 }
