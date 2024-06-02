@@ -4,6 +4,11 @@ import 'package:history_hub_v2/app/modules/auth/register/select_address/select_a
 class SelectAddressBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SelectAddressController>(() => SelectAddressController());
+    Get.put<SelectAddressController>(
+      SelectAddressController(
+        Get.find(),
+        Get.find(),
+      ),
+    );
   }
 }
