@@ -1,5 +1,5 @@
 class SpFunctions {
   const SpFunctions._();
 
-  static const getUserProfile = "getUserProfile";
+  static const getUserProfile = "get_user_profile";
 }

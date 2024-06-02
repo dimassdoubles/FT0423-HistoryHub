@@ -18,7 +18,8 @@ class SplashController extends GetxController {
   }
 
   void toTheNextPage() {
-    if (_localDatasource.isLoggedIn()) {
+    // TODO remove && false
+    if (_localDatasource.isLoggedIn() && false) {
       Navigator.of(Get.context!).pushReplacementNamed(HomePage.routeName);
     } else {
       Navigator.of(Get.context!).pushReplacementNamed(LoginPage.routeName);
