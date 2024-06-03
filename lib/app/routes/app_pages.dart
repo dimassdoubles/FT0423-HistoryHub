@@ -11,6 +11,8 @@ import 'package:history_hub_v2/app/modules/home/home_binding.dart';
 import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_binding.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_page.dart';
+import 'package:history_hub_v2/app/modules/transaction/payment/payment_binding.dart';
+import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
 
 class AppPages {
   AppPages._();
@@ -48,6 +50,11 @@ class AppPages {
       name: EventDetailPage.routeName,
       page: () => const EventDetailPage(),
       binding: EventDetailBinding(),
+    ),
+    GetPage(
+      name: PaymentPage.routeName,
+      page: () => const PaymentPage(),
+      binding: PaymentBinding(),
     ),
   ];
 }

@@ -9,7 +9,7 @@ import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/core/extensions/int_extension.dart';
 import 'package:history_hub_v2/app/core/extensions/time_of_day_extension.dart';
 import 'package:history_hub_v2/app/modules/event/detail/event_detail_controller.dart';
-import 'package:history_hub_v2/app/presentation/widgets/button/primary_button.dart';
+import 'package:history_hub_v2/app/modules/event/detail/widgets/beli_tiket_button.dart';
 import 'package:photo_view/photo_view.dart';
 
 class EventDetailPage extends GetView<EventDetailController> {
@@ -157,10 +157,7 @@ class EventDetailPage extends GetView<EventDetailController> {
                 ),
                 SizedBox(
                   width: 157.w,
-                  child: PrimaryButton(
-                    onPressed: () {},
-                    name: 'Beli Tiket',
-                  ),
+                  child: const BeliTiketButton(),
                 ),
               ],
             ),

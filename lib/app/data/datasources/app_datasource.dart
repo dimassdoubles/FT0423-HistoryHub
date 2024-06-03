@@ -9,10 +9,12 @@ import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
+import 'package:history_hub_v2/app/data/models/transaction/transaction_token_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
+import 'package:history_hub_v2/app/data/params/transaction/get_transaction_token_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppDatasource {
@@ -33,8 +35,15 @@ abstract class AppDatasource {
 
   // event
   Future<void> createEvent(CreateEventParams params);
-  Future<List<EventModel>> getListEvent(int page,
-      {int pageSize = 10}); // intial page = 0
+  Future<List<EventModel>> getListEvent(
+    int page, {
+    int pageSize = 10,
+  }); // intial page = 0
+
+  // transactions
+  Future<TransactionTokenModel> getTransactionToken(
+    GetTransactionTokenParams params,
+  );
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -185,5 +194,17 @@ class AppDatasourceImpl implements AppDatasource {
     return List<EventModel>.from(
       response.map((json) => EventModel.fromJson(json)),
     );
+  }
+
+  @override
+  Future<TransactionTokenModel> getTransactionToken(
+    GetTransactionTokenParams params,
+  ) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getTransactionToken,
+      params: params.toJson(),
+    );
+
+    return TransactionTokenModel.fromJson(response);
   }
 }

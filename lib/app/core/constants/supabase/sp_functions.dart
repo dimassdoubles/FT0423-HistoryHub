@@ -10,4 +10,5 @@ class SpFunctions {
   static const commentPost = "comment_post";
   static const getListComment = "get_list_comment";
   static const getListEvent = "get_list_event";
+  static const getTransactionToken = "get_transaction_token";
 }
