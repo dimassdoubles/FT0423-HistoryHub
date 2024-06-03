@@ -7,14 +7,14 @@ import 'package:history_hub_v2/app/data/models/auth/kecamatan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kelurahan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
+import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
-import 'package:history_hub_v2/app/data/models/transaction/transaction_token_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
+import 'package:history_hub_v2/app/data/params/order/create_new_order_params.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
-import 'package:history_hub_v2/app/data/params/transaction/get_transaction_token_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppDatasource {
@@ -41,9 +41,7 @@ abstract class AppDatasource {
   }); // intial page = 0
 
   // transactions
-  Future<TransactionTokenModel> getTransactionToken(
-    GetTransactionTokenParams params,
-  );
+  Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -197,14 +195,12 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<TransactionTokenModel> getTransactionToken(
-    GetTransactionTokenParams params,
-  ) async {
+  Future<OrderModel> creaetNewOrder(CreateNewOrderParams params) async {
     final response = await _supabaseClient.rpc(
-      SpFunctions.getTransactionToken,
+      SpFunctions.createNewOrder,
       params: params.toJson(),
     );
 
-    return TransactionTokenModel.fromJson(response);
+    return OrderModel.fromJson(response.first);
   }
 }

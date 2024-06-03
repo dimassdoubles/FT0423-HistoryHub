@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
-import 'package:history_hub_v2/app/data/params/transaction/get_transaction_token_params.dart';
+import 'package:history_hub_v2/app/data/params/order/create_new_order_params.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
 
 class EventDetailController extends GetxController {
@@ -14,10 +14,10 @@ class EventDetailController extends GetxController {
   void getTransactionToken() {
     DialogHelper.showLoading();
     datasource
-        .getTransactionToken(
-      GetTransactionTokenParams(
-        orderId: 'order_${DateTime.now().millisecondsSinceEpoch}',
-        grossAmount: event.hargaTiket,
+        .creaetNewOrder(
+      CreateNewOrderParams(
+        price: event.hargaTiket,
+        eventId: event.id,
       ),
     )
         .then((value) {

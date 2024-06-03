@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/midtrans_const.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
-import 'package:history_hub_v2/app/data/models/transaction/transaction_token_model.dart';
+import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 enum PaymentResult { success, pending, error, close }
@@ -42,7 +42,7 @@ class PaymentController extends GetxController {
 
   late final WebViewController webViewController;
 
-  final TransactionTokenModel tokenModel = Get.arguments;
+  final OrderModel order = Get.arguments;
 
   late final String snapHtml = '''
     <html>
@@ -58,7 +58,7 @@ class PaymentController extends GetxController {
       <body onload="setTimeout(function() {pay()}, 1000)">
         <script type="text/javascript">
           function pay() {
-            window.snap.pay('${tokenModel.token}', {
+            window.snap.pay('${order.token}', {
               onSuccess: function(result){
                 Android.postMessage('${PaymentResult.success.name}');
               },
