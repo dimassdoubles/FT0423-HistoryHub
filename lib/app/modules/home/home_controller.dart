@@ -22,9 +22,13 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       postTabIndex = index;
     });
 
-    transactionTabController =
-        TabController(length: TransactionStatuses.values.length, vsync: this);
+    transactionTabController = TabController(
+      length: TransactionStatuses.values.length,
+      vsync: this,
+      initialIndex: 1,
+    );
     transactionTabController.addListener(() {
+      debugPrint('transaction tab listener');
       Get.find<TransactionController>().transactionStatuses =
           TransactionStatuses.values[transactionTabController.index];
     });

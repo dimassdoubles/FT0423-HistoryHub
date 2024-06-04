@@ -18,9 +18,11 @@ class TransactionController extends GetxController {
     super.onInit();
   }
 
-  final _transactionStatuses = Rx<TransactionStatuses?>(null);
-  TransactionStatuses? get transactionStatuses => _transactionStatuses.value;
-  set transactionStatuses(TransactionStatuses? value) {
+  int curPage = -1;
+
+  final _transactionStatuses = TransactionStatuses.aktif.obs;
+  TransactionStatuses get transactionStatuses => _transactionStatuses.value;
+  set transactionStatuses(TransactionStatuses value) {
     _transactionStatuses.value = value;
     onPageRefresh();
   }
@@ -28,6 +30,7 @@ class TransactionController extends GetxController {
   final listKey = const PageStorageKey("list_order_key");
 
   Future<void> onPageRefresh() async {
+    curPage = -1;
     pagingController.refresh();
   }
 
@@ -47,11 +50,16 @@ class TransactionController extends GetxController {
   }
 
   void getListOrder(int page) {
-    debugPrint('getListOrder page: $page');
+    if (curPage == page) {
+      return;
+    } else {
+      curPage = page;
+    }
+
     datasource
         .getListOrder(
       GetListOrderParams(
-        status: transactionStatuses?.toParam().status,
+        status: transactionStatuses.toParam().status,
         keyword: '',
         page: page,
       ),

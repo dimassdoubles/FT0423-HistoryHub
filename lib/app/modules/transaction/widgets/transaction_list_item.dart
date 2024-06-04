@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/core/extensions/int_extension.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
+import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/transaction_controller.dart';
 import 'package:history_hub_v2/app/presentation/widgets/button/primary_button.dart';
 
@@ -55,7 +56,10 @@ class TransactionListItem extends GetView<TransactionController> {
                 width: 150.w,
                 child: PrimaryButton(
                   height: 36,
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Get.toNamed(PaymentPage.routeName, arguments: data);
+                    controller.onPageRefresh();
+                  },
                   name: 'Bayar',
                 ),
               ),
