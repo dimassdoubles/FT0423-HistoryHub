@@ -7,10 +7,12 @@ import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 class PrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String name;
+  final double height;
   const PrimaryButton({
     super.key,
     required this.onPressed,
     required this.name,
+    this.height = 59,
   });
 
   static const backgroundColor = AppColors.primary500;
@@ -24,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.w),
         ),
-        minimumSize: Size.fromHeight(59.w),
+        minimumSize: Size.fromHeight(height.w),
         elevation: 0,
       ),
       child: Center(

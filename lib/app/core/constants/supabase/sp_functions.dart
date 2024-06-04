@@ -12,4 +12,5 @@ class SpFunctions {
   static const getListEvent = "get_list_event";
   static const getTransactionToken = "get_transaction_token";
   static const createNewOrder = "create_new_order";
+  static const getListOrder = "get_list_order";
 }

@@ -13,6 +13,7 @@ import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
 import 'package:history_hub_v2/app/data/params/order/create_new_order_params.dart';
+import 'package:history_hub_v2/app/data/params/order/get_list_order_params.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -42,6 +43,7 @@ abstract class AppDatasource {
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
+  Future<List<OrderModel>> getListOrder(GetListOrderParams params);
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -202,5 +204,17 @@ class AppDatasourceImpl implements AppDatasource {
     );
 
     return OrderModel.fromJson(response.first);
+  }
+
+  @override
+  Future<List<OrderModel>> getListOrder(GetListOrderParams params) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getListOrder,
+      params: params.toJson(),
+    );
+
+    return List<OrderModel>.from(
+      response.map((json) => OrderModel.fromJson(json)),
+    );
   }
 }
