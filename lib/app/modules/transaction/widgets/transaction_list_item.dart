@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:history_hub_v2/app/core/constants/transaction_statuses.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/core/extensions/int_extension.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
@@ -36,6 +37,8 @@ class TransactionListItem extends GetView<TransactionController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(data.id),
+          Gap(16.w),
           Text(data.eventNama),
           Gap(4.w),
           Text(data.createdAt.display()),
@@ -49,22 +52,26 @@ class TransactionListItem extends GetView<TransactionController> {
               Text(data.totalAmount.toIDR()),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                width: 150.w,
-                child: PrimaryButton(
-                  height: 36,
-                  onPressed: () async {
-                    await Get.toNamed(PaymentPage.routeName, arguments: data);
-                    controller.onPageRefresh();
-                  },
-                  name: 'Bayar',
+          Obx(() {
+            if (controller.transactionStatuses !=
+                TransactionStatuses.belumBayar) return const SizedBox.shrink();
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 150.w,
+                  child: PrimaryButton(
+                    height: 36,
+                    onPressed: () async {
+                      await Get.toNamed(PaymentPage.routeName, arguments: data);
+                      controller.onPageRefresh();
+                    },
+                    name: 'Bayar',
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            );
+          }),
         ],
       ),
     );

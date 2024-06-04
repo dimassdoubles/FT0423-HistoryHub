@@ -33,6 +33,12 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
           TransactionStatuses.values[transactionTabController.index];
     });
 
+    ever(_navBarIndex, (callback) {
+      if (navBarIndex == 1) {
+        Get.find<TransactionController>().onPageRefresh();
+      }
+    });
+
     super.onInit();
   }
 
