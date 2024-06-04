@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
+import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
+import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 
@@ -44,11 +46,17 @@ class _CommentButtonState extends State<CommentButton> {
               AppColors.neutral400,
               BlendMode.srcIn,
             ),
+            height: 20,
           ),
         ),
         if (commentCount > 0)
           Text(
             commentCount.toString(),
+            style: AppTexts.primary.copyWith(
+              color: const Color.fromARGB(255, 183, 183, 183),
+              fontWeight: TextWeights.semiBold,
+              fontSize: 12,
+            ),
           ),
       ],
     );

@@ -21,102 +21,119 @@ class PostListItem extends GetView<PostController> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          SizedBox(
-            width: 47.w,
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/cd05/live/7b2cff30-c423-11ee-97bb-5d4fd58ca91c.jpg',
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 47.w,
+                child: const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/cd05/live/7b2cff30-c423-11ee-97bb-5d4fd58ca91c.jpg',
+                  ),
+                ),
               ),
-            ),
-          ),
-          Gap(4.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+              Gap(4.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        Text(
+                          post.namaUser,
+                          style: AppTexts.primary.copyWith(
+                            fontWeight: TextWeights.black,
+                            color: AppColors.neutral400,
+                          ),
+                        ),
+                        Gap(4.w),
+                        Text(
+                          '| ${post.tanggal.timeAgo()}',
+                          style: AppTexts.primary.copyWith(
+                            fontSize: 10,
+                            fontWeight: TextWeights.semiBold,
+                            color: AppColors.neutral300,
+                          ),
+                        ),
+                      ],
+                    ),
                     Text(
-                      post.namaUser,
+                      post.content,
                       style: AppTexts.primary.copyWith(
-                        fontWeight: TextWeights.black,
                         color: AppColors.neutral400,
                       ),
                     ),
                     Gap(4.w),
-                    Text(
-                      '| ${post.tanggal.timeAgo()}',
-                      style: AppTexts.primary.copyWith(
-                        fontSize: 10,
-                        fontWeight: TextWeights.semiBold,
-                        color: AppColors.neutral300,
+                    InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => Stack(
+                            children: [
+                              PhotoView(
+                                imageProvider: NetworkImage(post.imageUrl),
+                              ),
+                              IconButton(
+                                onPressed: Get.back,
+                                style: IconButton.styleFrom(
+                                  backgroundColor:
+                                      AppColors.black.withOpacity(0.1),
+                                ),
+                                icon: const Icon(
+                                  Icons.clear_rounded,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 1.sw,
+                        height: (3 / 4).sw,
+                        decoration: BoxDecoration(
+                          color: AppColors.neutral200,
+                          borderRadius: BorderRadius.circular(10.w),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.w),
+                          child: Image.network(
+                            post.imageUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Center(
+                              child: Icon(
+                                Icons.image_not_supported_rounded,
+                                size: 56,
+                                color: AppColors.neutral300,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
+                    ),
+                    Gap(16.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        LikeButton(post, index),
+                        CommentButton(post, index),
+                        SvgPicture.asset(
+                          'assets/icons/share.svg',
+                          height: 20,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Text(
-                  post.content,
-                  style: AppTexts.primary.copyWith(
-                    color: AppColors.neutral400,
-                  ),
-                ),
-                Gap(4.w),
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Stack(
-                        children: [
-                          PhotoView(
-                            imageProvider: NetworkImage(post.imageUrl),
-                          ),
-                          IconButton(
-                            onPressed: Get.back,
-                            style: IconButton.styleFrom(
-                              backgroundColor: AppColors.black.withOpacity(0.1),
-                            ),
-                            icon: const Icon(
-                              Icons.clear_rounded,
-                              color: AppColors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  child: SizedBox(
-                    width: 1.sw,
-                    height: (3 / 4).sw,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10.w),
-                      child: Image.network(
-                        post.imageUrl,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Center(
-                                child:
-                                    Text('Error Image!')), // TODO image error
-                      ),
-                    ),
-                  ),
-                ),
-                Gap(24.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    LikeButton(post, index),
-                    CommentButton(post, index),
-                    SvgPicture.asset('assets/icons/share.svg'),
-                  ],
-                ),
-                const Divider(
-                  color: AppColors.neutral200,
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
+          Gap(4.w),
+          const Divider(
+            color: AppColors.neutral200,
           ),
         ],
       ),
