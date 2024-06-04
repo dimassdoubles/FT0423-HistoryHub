@@ -45,7 +45,7 @@ class PostListItem extends GetView<PostController> {
                           post.namaUser,
                           style: AppTexts.primary.copyWith(
                             fontWeight: TextWeights.black,
-                            color: AppColors.neutral400,
+                            color: const Color.fromARGB(255, 63, 63, 63),
                           ),
                         ),
                         Gap(4.w),
