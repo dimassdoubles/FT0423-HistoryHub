@@ -10,6 +10,7 @@ class AppListView<ItemType> extends StatelessWidget {
       itemBuilder;
   final Widget? separator;
   final String errorDescription;
+  final bool showLoading;
 
   /// error deskripsi biasanya
   /// 'Data \<nama_data> belum tersedia di masjid \<nama_masjid>'
@@ -20,6 +21,7 @@ class AppListView<ItemType> extends StatelessWidget {
     this.separator,
     required this.itemBuilder,
     this.errorDescription = 'Data belum tersedia',
+    this.showLoading = true,
   });
 
   @override
@@ -44,7 +46,8 @@ class AppListView<ItemType> extends StatelessWidget {
             }
             return itemBuilder(context, item, index);
           },
-          firstPageProgressIndicatorBuilder: (context) => const _Loading(),
+          firstPageProgressIndicatorBuilder: (context) =>
+              showLoading ? const _Loading() : const SizedBox(),
           newPageProgressIndicatorBuilder: (context) => const SizedBox(),
           firstPageErrorIndicatorBuilder: (context) => const _Error(),
           noItemsFoundIndicatorBuilder: (context) => const _Empty(),

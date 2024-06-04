@@ -12,12 +12,15 @@ class TransactionListView extends GetView<TransactionController> {
 
   @override
   Widget build(BuildContext context) {
-    return AppListView(
-      key: controller.listKey,
-      onRefresh: controller.onPageRefresh,
-      pagingController: controller.pagingController,
-      separator: const SizedBox.shrink(),
-      itemBuilder: (context, item, index) => TransactionListItem(item, index),
-    );
+    return Obx(() {
+      if (status != controller.transactionStatuses) return const SizedBox();
+      return AppListView(
+        showLoading: false,
+        onRefresh: controller.onPageRefresh,
+        pagingController: controller.pagingController,
+        separator: const SizedBox.shrink(),
+        itemBuilder: (context, item, index) => TransactionListItem(item, index),
+      );
+    });
   }
 }
