@@ -82,6 +82,7 @@ class ProfilePage extends GetView<ProfileController> {
                       offset: const Offset(0, -24),
                       child: UserAvatar(
                         controller.userProfile.data!.avatarUrl,
+                        paddingSize: 4.w,
                         size: 75.w,
                       ),
                     ),

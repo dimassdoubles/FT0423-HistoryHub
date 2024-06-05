@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/profile/user_profile_model.dart';
 import 'package:history_hub_v2/app/data/models/result_model.dart';
@@ -83,7 +84,10 @@ class ProfileController extends GetxController {
   }
 
   void editUserProfile() {
-    datasource.editUserProfile(
+    FocusScope.of(Get.context!).unfocus();
+    DialogHelper.showLoading();
+    datasource
+        .editUserProfile(
       EditUserProfileParams(
         image: newProfileImage,
         name: namaController.text,
@@ -91,6 +95,13 @@ class ProfileController extends GetxController {
         kelurahanId: newKelurahanId ?? userProfile.data!.kelurahanId,
         userId: userId,
       ),
-    );
+    )
+        .then((value) {
+      DialogHelper.dismiss();
+      userProfile = ResultModel.success(value);
+      Get.back();
+    }).catchError((e) {
+      DialogHelper.showError(e.toString());
+    });
   }
 }
