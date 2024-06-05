@@ -18,6 +18,7 @@ import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/models/profile/user_profile_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
+import 'package:history_hub_v2/app/data/params/event/get_list_event_params.dart';
 import 'package:history_hub_v2/app/data/params/order/create_new_order_params.dart';
 import 'package:history_hub_v2/app/data/params/order/get_list_order_params.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
@@ -54,10 +55,7 @@ abstract class AppDatasource {
 
   // event
   Future<void> createEvent(CreateEventParams params);
-  Future<List<EventModel>> getListEvent(
-    int page, {
-    int pageSize = 10,
-  }); // intial page = 0
+  Future<List<EventModel>> getListEvent(GetListEventParams params); // intial page = 0
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
@@ -204,13 +202,10 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<List<EventModel>> getListEvent(int page, {int pageSize = 10}) async {
+  Future<List<EventModel>> getListEvent(GetListEventParams params) async {
     final response = await _supabaseClient.rpc(
       SpFunctions.getListEvent,
-      params: {
-        'page_size': pageSize,
-        'page': page,
-      },
+      params: params.toJson(),
     );
 
     return List<EventModel>.from(

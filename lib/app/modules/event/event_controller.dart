@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
+import 'package:history_hub_v2/app/data/params/event/get_list_event_params.dart';
 import 'package:history_hub_v2/app/modules/event/detail/event_detail_page.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class EventController extends GetxController {
@@ -39,7 +41,20 @@ class EventController extends GetxController {
 
   void getListEvent(int page) {
     debugPrint('getListEvent page: $page');
-    datasource.getListEvent(page).then((value) {
+
+    String? keyword;
+    try {
+      keyword = Get.find<HomeController>().acaraQuery;
+    } catch (_) {}
+
+    datasource
+        .getListEvent(
+      GetListEventParams(
+        keyword: keyword,
+        offset: page,
+      ),
+    )
+        .then((value) {
       appendPage(page, value);
     }).catchError((e) {
       pagingController.error = e;
