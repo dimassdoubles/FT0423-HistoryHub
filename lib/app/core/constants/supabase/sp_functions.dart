@@ -13,4 +13,6 @@ class SpFunctions {
   static const getTransactionToken = "get_transaction_token";
   static const createNewOrder = "create_new_order";
   static const getListOrder = "get_list_order";
+  static const editUserProfile = "edit_user_profile";
+  static const editUserProfileNoImage = "edit_user_profile_no_image";
 }

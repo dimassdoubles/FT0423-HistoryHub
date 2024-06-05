@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +7,8 @@ import 'package:history_hub_v2/app/modules/profile/profile_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/widgets/button_edit_action.dart';
 import 'package:history_hub_v2/app/modules/profile/widgets/button_edit_avatar.dart';
 import 'package:history_hub_v2/app/modules/profile/widgets/form_edit_profile.dart';
+
+import '../select_address/select_address_page.dart';
 
 class EditProfilePage extends GetView<ProfileController> {
   const EditProfilePage({super.key});
@@ -35,7 +36,7 @@ class EditProfilePage extends GetView<ProfileController> {
                             controller.newAlamat.isEmpty ||
                             controller.newTelepon.isEmpty
                         ? null
-                        : () {},
+                        : controller.editUserProfile,
                     label: 'Simpan',
                   ),
                 ],
@@ -57,6 +58,7 @@ class EditProfilePage extends GetView<ProfileController> {
             ),
             FormEditProfile(
               textEditingController: controller.alamatController,
+              onTap: () => Get.toNamed(SelectAddressPage.routeName),
               label: 'Alamat',
             ),
           ],

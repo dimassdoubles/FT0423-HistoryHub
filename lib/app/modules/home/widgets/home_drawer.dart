@@ -30,7 +30,10 @@ class HomeDrawer extends GetView<HomeController> {
           children: [
             InkWell(
               onTap: () {
-                Get.toNamed(ProfilePage.routeName);
+                Get.toNamed(
+                  ProfilePage.routeName,
+                  arguments: controller.currentUser.id,
+                );
               },
               child: Container(
                 color: AppColors.white,
@@ -70,7 +73,10 @@ class HomeDrawer extends GetView<HomeController> {
                   HomeDrawerMenuItem(
                     label: 'Profile',
                     onTap: () {
-                      Get.toNamed(ProfilePage.routeName);
+                      Get.toNamed(
+                        ProfilePage.routeName,
+                        arguments: controller.currentUser.id,
+                      );
                     },
                     icon: const Icon(
                       Icons.person_outline_rounded,

@@ -15,6 +15,10 @@ import 'package:history_hub_v2/app/modules/starter/splash/splash_binding.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_binding.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
+import 'package:history_hub_v2/app/modules/profile/select_address/select_address_page.dart'
+    as profile_page;
+import 'package:history_hub_v2/app/modules/profile/select_address/select_address_binding.dart'
+    as profile_binding;
 
 class AppPages {
   AppPages._();
@@ -62,6 +66,11 @@ class AppPages {
       name: ProfilePage.routeName,
       page: () => const ProfilePage(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: profile_page.SelectAddressPage.routeName,
+      page: () => const profile_page.SelectAddressPage(),
+      binding: profile_binding.SelectAddressBinding(),
     ),
   ];
 }

@@ -7,11 +7,13 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/helpers/image_helper.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_controller.dart';
+import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 
 class ButtonEditAvatar extends GetView<ProfileController> {
   const ButtonEditAvatar({super.key});
 
   static double radius = 32.w;
+  static double size = 75.w;
   static final decoration = BoxDecoration(
     shape: BoxShape.circle,
     border: Border.all(
@@ -33,30 +35,18 @@ class ButtonEditAvatar extends GetView<ProfileController> {
         child: Stack(
           children: [
             if (controller.newProfileImage == null)
-              Container(
-                decoration: decoration,
-                child: CircleAvatar(
-                  radius: radius,
-                  backgroundColor: AppColors.neutral300,
-                  backgroundImage: const NetworkImage(
-                    'https://www.benarnews.org/indonesian/opini/opini-prabowo-ke-as-10152020224352.html/201015_ID_Prabowo_1000.jpg/@@images/a32d7d84-9c9e-4f74-b00e-b45ea75eb40f.jpeg',
-                  ),
-                ),
-              ),
+              UserAvatar(controller.userProfile.data!.avatarUrl, size: 75.w),
             if (controller.newProfileImage != null)
-              Container(
-                decoration: decoration,
-                child: CircleAvatar(
-                  radius: radius,
-                  backgroundColor: AppColors.neutral300,
-                  backgroundImage: FileImage(
-                    File(controller.newProfileImage!.path),
-                  ),
-                ),
+              UserAvatar(
+                '',
+                size: size,
+                file: File(controller.newProfileImage!.path),
               ),
             if (controller.newProfileImage == null)
               Container(
                 decoration: decoration,
+                width: size,
+                height: size,
                 child: CircleAvatar(
                   radius: radius,
                   backgroundColor: AppColors.black.withOpacity(0.3),

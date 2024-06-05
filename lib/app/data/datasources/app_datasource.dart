@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:history_hub_v2/app/core/constants/base_url.dart';
 import 'package:history_hub_v2/app/core/constants/supabase/sp_functions.dart';
+import 'package:history_hub_v2/app/core/constants/supabase/sp_storages.dart';
 import 'package:history_hub_v2/app/core/constants/supabase/sp_tables.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/kabupaten_model.dart';
@@ -21,6 +25,7 @@ import 'package:history_hub_v2/app/data/params/post/get_user_liked_list_post_par
 import 'package:history_hub_v2/app/data/params/post/get_user_list_post_params.dart';
 import 'package:history_hub_v2/app/data/params/profile/edit_user_profile_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:path/path.dart' as path;
 
 abstract class AppDatasource {
   // auth
@@ -57,7 +62,7 @@ abstract class AppDatasource {
   Future<List<OrderModel>> getListOrder(GetListOrderParams params);
 
   // profiles
-  Future<UserProfileModel> getUserProfile(String userid);
+  Future<UserProfileModel> getUserProfile(String userId);
   Future<UserProfileModel> editUserProfile(EditUserProfileParams params);
 }
 
@@ -240,9 +245,36 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<UserProfileModel> editUserProfile(EditUserProfileParams params) {
-    // TODO: implement editUserProfile
-    throw UnimplementedError();
+  Future<UserProfileModel> editUserProfile(EditUserProfileParams params) async {
+    String imageUrl = '';
+
+    if (params.image != null) {
+      String fileName =
+          "${DateTime.now().millisecondsSinceEpoch}${path.extension(params.image!.path)}"; // 01 adalah urutan photo
+      debugPrint(fileName);
+      final uploadPath = '${params.userId}/$fileName';
+      debugPrint('upload gambar');
+      imageUrl = await _supabaseClient.storage.from(SpStorages.avatar).upload(
+            uploadPath,
+            File(params.image!.path),
+          );
+    }
+
+    final response = await _supabaseClient.rpc(
+      params.image != null
+          ? SpFunctions.editUserProfile
+          : SpFunctions.editUserProfileNoImage,
+      params: params.image != null
+          ? {
+              'p_avatar_url': '$baseUrl/storage/v1/object/public/$imageUrl',
+              ...params.toJson(),
+            }
+          : params.toJson(),
+    );
+
+    _localDatasource.login(UserModel.fromJson(response.first));
+
+    return UserProfileModel.fromJson(response.first);
   }
 
   @override
@@ -259,8 +291,9 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<UserProfileModel> getUserProfile(String userid) {
-    // TODO: implement getUserProfile
-    throw UnimplementedError();
+  Future<UserProfileModel> getUserProfile(String userId) async {
+    final userProfile = await _supabaseClient.rpc(SpFunctions.getUserProfile);
+    debugPrint('Sampai sini bro');
+    return UserProfileModel.fromJson(userProfile.first);
   }
 }
