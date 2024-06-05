@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
+import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/post/comment/comment_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
@@ -75,10 +77,17 @@ class PostController extends GetxController {
     }
 
     String? userId;
+    String? keyword;
 
     if (Get.currentRoute == ProfilePage.routeName) {
       try {
         userId = Get.find<ProfileController>().userId;
+      } catch (_) {}
+    }
+
+    if (Get.currentRoute == HomePage.routeName) {
+      try {
+        keyword = Get.find<HomeController>().postinganQuery;
       } catch (_) {}
     }
 
@@ -87,7 +96,7 @@ class PostController extends GetxController {
         .getListPost(
       GetListPostParams(
         userId: userId,
-        keyword: '',
+        keyword: keyword,
         listTagId: [],
         offset: page,
       ),
