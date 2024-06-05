@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/transaction_statuses.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
+import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/modules/auth/login/login_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/transaction_controller.dart';
 
@@ -60,7 +61,9 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   int get navBarIndex => _navBarIndex.value;
   set navBarIndex(int value) => _navBarIndex.value = value;
 
-  late final currentUser = localDatasource.getCurrentUser()!;
+  late final _currentUser = Rx<UserModel?>(localDatasource.getCurrentUser());
+  UserModel? get currentUser => _currentUser.value;
+  set currentUser(UserModel? value) => _currentUser.value = value;
 
   final GlobalKey<SliderDrawerState> sliderDrawerKey =
       GlobalKey<SliderDrawerState>();

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/base_url.dart';
 import 'package:history_hub_v2/app/core/constants/supabase/sp_functions.dart';
 import 'package:history_hub_v2/app/core/constants/supabase/sp_storages.dart';
@@ -24,6 +25,7 @@ import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_user_liked_list_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_user_list_post_params.dart';
 import 'package:history_hub_v2/app/data/params/profile/edit_user_profile_params.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart' as path;
 
@@ -273,6 +275,11 @@ class AppDatasourceImpl implements AppDatasource {
     );
 
     _localDatasource.login(UserModel.fromJson(response.first));
+
+    try {
+      Get.find<HomeController>().currentUser =
+          UserModel.fromJson(response.first);
+    } catch (_) {}
 
     return UserProfileModel.fromJson(response.first);
   }

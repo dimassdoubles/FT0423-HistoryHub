@@ -99,6 +99,7 @@ class ProfileController extends GetxController {
         .then((value) {
       DialogHelper.dismiss();
       userProfile = ResultModel.success(value);
+      try {} catch (_) {}
       Get.back();
     }).catchError((e) {
       DialogHelper.showError(e.toString());
