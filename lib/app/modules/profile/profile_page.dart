@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/data/models/result_model.dart';
+import 'package:history_hub_v2/app/modules/post/widgets/post_list_view.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/widgets/button_edit_profile.dart';
 import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
@@ -131,7 +132,7 @@ class ProfilePage extends GetView<ProfileController> {
               ),
               Gap(16.w),
               const Expanded(
-                child: Column(),
+                child: PostListView(),
               ),
             ],
           ],

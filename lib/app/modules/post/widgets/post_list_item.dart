@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -17,7 +16,7 @@ import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:readmore/readmore.dart';
 
-class PostListItem extends GetView<PostController> {
+class PostListItem extends StatelessWidget {
   final PostModel post;
   final int index;
   const PostListItem(this.post, this.index, {super.key});
@@ -31,8 +30,12 @@ class PostListItem extends GetView<PostController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
-                onTap: () {
-                  Get.toNamed(ProfilePage.routeName, arguments: post.userId);
+                onTap: () async {
+                  await Get.toNamed(ProfilePage.routeName,
+                      arguments: post.userId);
+                  try {
+                    Get.find<PostController>().onPageRefresh();
+                  } catch (_) {}
                 },
                 child: UserAvatar(
                   post.avatarUser,

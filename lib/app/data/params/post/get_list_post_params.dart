@@ -1,5 +1,6 @@
 class GetListPostParams {
   final String keyword;
+  final String? userId;
   final List<String> listTagId;
   final int offset; // initial is 0
 
@@ -9,12 +10,14 @@ class GetListPostParams {
     required this.keyword,
     required this.listTagId,
     required this.offset,
+    this.userId,
   });
 
   Map<String, dynamic> toJson() {
     return {
       // 'keyword': keyword,
       // 'list_tag_id': listTagId,
+      'p_user_id': userId,
       'page_size': limit,
       'page': offset,
     };

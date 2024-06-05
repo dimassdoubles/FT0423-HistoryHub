@@ -8,6 +8,7 @@ import 'package:history_hub_v2/app/core/constants/styles/common_sizes.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_drawer_menu_item.dart';
+import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
 import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 
@@ -31,11 +32,16 @@ class HomeDrawer extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () {
-                  Get.toNamed(
+                onTap: () async {
+                  await Get.toNamed(
                     ProfilePage.routeName,
                     arguments: controller.currentUser!.id,
                   );
+
+                  controller.sliderDrawerKey.currentState!.closeSlider();
+                  try {
+                    Get.find<PostController>().onPageRefresh();
+                  } catch (_) {}
                 },
                 child: Container(
                   color: AppColors.white,
@@ -68,11 +74,16 @@ class HomeDrawer extends GetView<HomeController> {
                     Gap(24.w),
                     HomeDrawerMenuItem(
                       label: 'Profile',
-                      onTap: () {
-                        Get.toNamed(
+                      onTap: () async {
+                        await Get.toNamed(
                           ProfilePage.routeName,
                           arguments: controller.currentUser!.id,
                         );
+
+                        controller.sliderDrawerKey.currentState!.closeSlider();
+                        try {
+                          Get.find<PostController>().onPageRefresh();
+                        } catch (_) {}
                       },
                       icon: const Icon(
                         Icons.person_outline_rounded,

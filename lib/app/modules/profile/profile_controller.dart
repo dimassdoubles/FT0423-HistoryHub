@@ -3,9 +3,13 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
+import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/models/profile/user_profile_model.dart';
 import 'package:history_hub_v2/app/data/models/result_model.dart';
+import 'package:history_hub_v2/app/data/params/post/get_user_list_post_params.dart';
 import 'package:history_hub_v2/app/data/params/profile/edit_user_profile_params.dart';
+import 'package:history_hub_v2/app/modules/post/post_controller.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class ProfileController extends GetxController {
   final AppDatasource datasource;
@@ -13,6 +17,10 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
+    try {
+      Get.find<PostController>().onPageRefresh();
+    } catch (_) {}
+
     namaController.addListener(() {
       newNama = namaController.text;
     });
@@ -21,6 +29,10 @@ class ProfileController extends GetxController {
     });
     phoneController.addListener(() {
       newTelepon = phoneController.text;
+    });
+
+    pagingController.addPageRequestListener((page) async {
+      getListPost(page);
     });
 
     getUserProfile();
@@ -103,6 +115,65 @@ class ProfileController extends GetxController {
       Get.back();
     }).catchError((e) {
       DialogHelper.showError(e.toString());
+    });
+  }
+
+  void updateCommentCounter(PostModel post, int index, int newCommentCount) {
+    pagingController.itemList![index] = post.copyWith(
+      commentCount: newCommentCount,
+    );
+  }
+
+  // jika sudah like otomatis unlike
+  void like(PostModel post, int index, void Function()? onError) {
+    pagingController.itemList![index] = post.copyWith(
+        isLikedByMe: !post.isLikedByMe,
+        likeCount: post.isLikedByMe ? post.likeCount - 1 : post.likeCount + 1);
+    debugPrint('liked: ${pagingController.itemList![index].isLikedByMe}');
+    datasource.like(post.id).catchError((e) {
+      pagingController.itemList![index] = post;
+      debugPrint(
+        'unliked bcs error: ${pagingController.itemList![index].isLikedByMe}',
+      );
+      onError?.call();
+    });
+  }
+
+  final listKey = const PageStorageKey("list_post_key");
+
+  Future<void> onPageRefresh() async {
+    pagingController.refresh();
+  }
+
+  final PagingController<int, PostModel> pagingController = PagingController(
+    firstPageKey: 0,
+  );
+
+  final pageSize = GetUserListPostParams.limit;
+
+  void appendPage(int page, List<PostModel> data) {
+    final isLastPage = data.length < pageSize;
+    if (isLastPage) {
+      pagingController.appendLastPage(data);
+    } else {
+      pagingController.appendPage(data, page + 1);
+    }
+  }
+
+  void getListPost(int page) {
+    debugPrint('getListPost page: $page');
+    datasource
+        .getUserListPost(
+      GetUserListPostParams(
+        keyword: '',
+        listTagId: [],
+        offset: page,
+      ),
+    )
+        .then((value) {
+      appendPage(page, value);
+    }).catchError((e) {
+      pagingController.error = e;
     });
   }
 }
