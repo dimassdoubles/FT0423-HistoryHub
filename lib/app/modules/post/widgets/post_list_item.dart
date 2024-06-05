@@ -32,7 +32,6 @@ class PostListItem extends GetView<PostController> {
             children: [
               GestureDetector(
                 onTap: () {
-                  debugPrint(' di  klik ${post.userId}');
                   Get.toNamed(ProfilePage.routeName, arguments: post.userId);
                 },
                 child: UserAvatar(
@@ -56,7 +55,7 @@ class PostListItem extends GetView<PostController> {
                         ),
                         Gap(4.w),
                         Text(
-                          '| ${post.tanggal.timeAgo()}',
+                          ' ${post.tanggal.timeAgo()}',
                           style: AppTexts.primary.copyWith(
                             fontSize: 10,
                             fontWeight: TextWeights.semiBold,
