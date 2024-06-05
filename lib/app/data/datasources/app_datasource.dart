@@ -10,12 +10,16 @@ import 'package:history_hub_v2/app/data/models/event/event_model.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
+import 'package:history_hub_v2/app/data/models/profile/user_profile_model.dart';
 import 'package:history_hub_v2/app/data/params/auth/register_user_params.dart';
 import 'package:history_hub_v2/app/data/params/event/create_event_params.dart';
 import 'package:history_hub_v2/app/data/params/order/create_new_order_params.dart';
 import 'package:history_hub_v2/app/data/params/order/get_list_order_params.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
+import 'package:history_hub_v2/app/data/params/post/get_user_liked_list_post_params.dart';
+import 'package:history_hub_v2/app/data/params/post/get_user_list_post_params.dart';
+import 'package:history_hub_v2/app/data/params/profile/edit_user_profile_params.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class AppDatasource {
@@ -33,6 +37,13 @@ abstract class AppDatasource {
   Future<void> like(String postId);
   Future<void> comment(String postId, String comment);
   Future<List<CommentModel>> geListComment(String postId);
+  Future<List<PostModel>> getUserListPost(
+    GetUserListPostParams params,
+  );
+  Future<List<PostModel>> getUserLikedListPost(
+    GetUserLikedListPostParams params,
+  );
+  Future<void> deletePost(String postId);
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -44,6 +55,10 @@ abstract class AppDatasource {
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
   Future<List<OrderModel>> getListOrder(GetListOrderParams params);
+
+  // profiles
+  Future<UserProfileModel> getUserProfile(String userid);
+  Future<UserProfileModel> editUserProfile(EditUserProfileParams params);
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -216,5 +231,36 @@ class AppDatasourceImpl implements AppDatasource {
     return List<OrderModel>.from(
       response.map((json) => OrderModel.fromJson(json)),
     );
+  }
+
+  @override
+  Future<void> deletePost(String postId) {
+    // TODO: implement deletePost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserProfileModel> editUserProfile(EditUserProfileParams params) {
+    // TODO: implement editUserProfile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<PostModel>> getUserLikedListPost(
+      GetUserLikedListPostParams params) {
+    // TODO: implement getUserLikedListPost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<PostModel>> getUserListPost(GetUserListPostParams params) {
+    // TODO: implement getUserListPost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<UserProfileModel> getUserProfile(String userid) {
+    // TODO: implement getUserProfile
+    throw UnimplementedError();
   }
 }
