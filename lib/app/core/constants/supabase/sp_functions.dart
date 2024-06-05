@@ -15,4 +15,5 @@ class SpFunctions {
   static const getListOrder = "get_list_order";
   static const editUserProfile = "edit_user_profile";
   static const editUserProfileNoImage = "edit_user_profile_no_image";
+  static const getMyUserProfile = "get_my_user_profile";
 }

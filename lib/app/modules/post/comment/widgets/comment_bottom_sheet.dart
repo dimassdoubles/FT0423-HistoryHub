@@ -16,36 +16,44 @@ class CommentBottomSheet extends GetView<CommentController> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Gap(16.w),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Obx(() {
-                return Text(
-                  '${controller.commentCounter > 0 ? '${controller.commentCounter} ' : ''}Komentar',
-                  style: AppTexts.primary.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: TextWeights.bold,
-                  ),
-                );
-              }),
-              IconButton(
-                onPressed: Get.back,
-                icon: const Icon(Icons.clear),
-              ),
-            ],
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xffFFFFFF),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.w),
+        ),
+      ),
+      child: Column(
+        children: [
+          Gap(16.w),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Obx(() {
+                  return Text(
+                    '${controller.commentCounter > 0 ? '${controller.commentCounter} ' : ''}Komentar',
+                    style: AppTexts.primary.copyWith(
+                      fontSize: 12.sp,
+                      fontWeight: TextWeights.bold,
+                    ),
+                  );
+                }),
+                IconButton(
+                  onPressed: Get.back,
+                  icon: const Icon(Icons.clear),
+                ),
+              ],
+            ),
           ),
-        ),
-        Gap(8.w),
-        Expanded(
-          child: CommentListView(post),
-        ),
-        InputKomentar(post),
-      ],
+          Gap(8.w),
+          Expanded(
+            child: CommentListView(post),
+          ),
+          InputKomentar(post),
+        ],
+      ),
     );
   }
 }

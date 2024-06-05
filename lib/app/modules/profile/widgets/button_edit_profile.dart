@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
+import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/widgets/edit_profile_dialog.dart';
 
@@ -12,6 +13,10 @@ class ButtonEditProfile extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    if (controller.userId != Get.find<LocalDatasource>().getCurrentUser()?.id) {
+      return const SizedBox.shrink();
+    }
+
     return Transform.translate(
       offset: const Offset(0, -10),
       child: InkWell(

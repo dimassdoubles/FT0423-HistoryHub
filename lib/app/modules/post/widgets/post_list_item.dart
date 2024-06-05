@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -11,7 +12,10 @@ import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/post/widgets/comment_button.dart';
 import 'package:history_hub_v2/app/modules/post/widgets/like_button.dart';
+import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
+import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:readmore/readmore.dart';
 
 class PostListItem extends GetView<PostController> {
   final PostModel post;
@@ -26,15 +30,17 @@ class PostListItem extends GetView<PostController> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 47.w,
-                child: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/cd05/live/7b2cff30-c423-11ee-97bb-5d4fd58ca91c.jpg',
-                  ),
+              GestureDetector(
+                onTap: () {
+                  debugPrint(' di  klik ${post.userId}');
+                  Get.toNamed(ProfilePage.routeName, arguments: post.userId);
+                },
+                child: UserAvatar(
+                  post.avatarUser,
+                  size: 45.w,
                 ),
               ),
-              Gap(4.w),
+              Gap(12.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,8 +65,20 @@ class PostListItem extends GetView<PostController> {
                         ),
                       ],
                     ),
-                    Text(
+                    ReadMoreText(
                       post.content,
+                      trimMode: TrimMode.Line,
+                      trimLines: 6,
+                      trimCollapsedText: 'Selengkapnya',
+                      trimExpandedText: 'Tampilkanlebih sedikit',
+                      moreStyle: AppTexts.primary.copyWith(
+                        fontWeight: TextWeights.semiBold,
+                        color: AppColors.primary500,
+                      ),
+                      lessStyle: AppTexts.primary.copyWith(
+                        fontWeight: TextWeights.semiBold,
+                        color: AppColors.primary500,
+                      ),
                       style: AppTexts.primary.copyWith(
                         color: AppColors.neutral400,
                       ),
@@ -68,26 +86,30 @@ class PostListItem extends GetView<PostController> {
                     Gap(4.w),
                     InkWell(
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => Stack(
-                            children: [
-                              PhotoView(
-                                imageProvider: NetworkImage(post.imageUrl),
-                              ),
-                              IconButton(
-                                onPressed: Get.back,
-                                style: IconButton.styleFrom(
-                                  backgroundColor:
-                                      AppColors.black.withOpacity(0.1),
+                        Get.bottomSheet(
+                          SafeArea(
+                            child: Stack(
+                              children: [
+                                PhotoView(
+                                  imageProvider: NetworkImage(post.imageUrl),
                                 ),
-                                icon: const Icon(
-                                  Icons.clear_rounded,
-                                  color: AppColors.white,
+                                IconButton(
+                                  onPressed: Get.back,
+                                  style: IconButton.styleFrom(
+                                    backgroundColor:
+                                        AppColors.black.withOpacity(0.1),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.clear_rounded,
+                                    color: AppColors.white,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
+                          persistent: false,
+                          isScrollControlled: true,
+                          ignoreSafeArea: false,
                         );
                       },
                       child: Container(
@@ -95,10 +117,10 @@ class PostListItem extends GetView<PostController> {
                         height: (3 / 4).sw,
                         decoration: BoxDecoration(
                           color: AppColors.neutral200,
-                          borderRadius: BorderRadius.circular(10.w),
+                          borderRadius: BorderRadius.circular(15.w),
                         ),
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.w),
+                          borderRadius: BorderRadius.circular(15.w),
                           child: Image.network(
                             post.imageUrl,
                             fit: BoxFit.cover,

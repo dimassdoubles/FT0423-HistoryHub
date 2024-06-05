@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
+import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 
 class CommentListItem extends StatelessWidget {
   final CommentModel data;
@@ -18,15 +19,7 @@ class CommentListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // TODO avatar user
-          SizedBox(
-            width: 36.w,
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/cd05/live/7b2cff30-c423-11ee-97bb-5d4fd58ca91c.jpg',
-              ),
-            ),
-          ),
+          UserAvatar(data.userAvatarUrl, size: 30.w),
           Gap(8.w),
           Expanded(
             child: Column(

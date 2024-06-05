@@ -145,7 +145,7 @@ class AppDatasourceImpl implements AppDatasource {
     debugPrint('login');
     await _supabaseClient.auth
         .signInWithPassword(email: email, password: password);
-    final userProfile = await _supabaseClient.rpc(SpFunctions.getUserProfile);
+    final userProfile = await _supabaseClient.rpc(SpFunctions.getMyUserProfile);
     _localDatasource.login(UserModel.fromJson(userProfile.first));
     return UserModel.fromJson(userProfile.first);
   }
@@ -299,7 +299,10 @@ class AppDatasourceImpl implements AppDatasource {
 
   @override
   Future<UserProfileModel> getUserProfile(String userId) async {
-    final userProfile = await _supabaseClient.rpc(SpFunctions.getUserProfile);
+    final userProfile =
+        await _supabaseClient.rpc(SpFunctions.getUserProfile, params: {
+      "p_user_id": userId,
+    });
     debugPrint('Sampai sini bro');
     return UserProfileModel.fromJson(userProfile.first);
   }

@@ -27,17 +27,16 @@ class InputKomentar extends GetView<CommentController> {
         style: AppTexts.primary.copyWith(
           fontWeight: TextWeights.semiBold,
           fontSize: 12,
-          color: const Color.fromARGB(255, 68, 68, 68),
+          color: const Color(0xff536470),
         ),
         decoration: InputDecoration(
           hintText: 'Tambah komentar ...',
           hintStyle: AppTexts.primary.copyWith(
             fontSize: 12,
-            color: const Color.fromARGB(255, 163, 162, 162),
+            color: const Color(0xff536470),
           ), // Optional: customize hint text style
           filled: true,
-          fillColor: const Color.fromARGB(
-              255, 218, 216, 216), // Set the gray background color
+          fillColor: const Color(0xffEFF3F4), // Set the gray background color
           contentPadding: const EdgeInsets.symmetric(
             vertical: 8,
             horizontal: 12,
@@ -45,13 +44,12 @@ class InputKomentar extends GetView<CommentController> {
           border: const OutlineInputBorder(
             borderRadius:
                 BorderRadius.all(Radius.circular(20)), // Rounded shape
-            borderSide: BorderSide.none, // Remove border side
+            borderSide: BorderSide.none,
           ),
           focusedBorder: const OutlineInputBorder(
             borderRadius:
                 BorderRadius.all(Radius.circular(20)), // Rounded shape
-            borderSide:
-                BorderSide.none, // Customize the border color when focused
+            borderSide: BorderSide.none,
           ),
         ),
       ),

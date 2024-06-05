@@ -9,6 +9,7 @@ import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_drawer_menu_item.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
+import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 
 class HomeDrawer extends GetView<HomeController> {
   const HomeDrawer({super.key});
@@ -41,13 +42,7 @@ class HomeDrawer extends GetView<HomeController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(
-                        radius: 16.w,
-                        backgroundColor: AppColors.neutral300,
-                        backgroundImage: const NetworkImage(
-                          'https://www.benarnews.org/indonesian/opini/opini-prabowo-ke-as-10152020224352.html/201015_ID_Prabowo_1000.jpg/@@images/a32d7d84-9c9e-4f74-b00e-b45ea75eb40f.jpeg',
-                        ),
-                      ),
+                      UserAvatar(controller.currentUser!.avatarUrl, size: 50.w),
                       Gap(8.w),
                       Text(
                         controller.currentUser!.fullName,

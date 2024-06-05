@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
@@ -25,7 +24,7 @@ class CommentController extends GetxController {
     getListComment(post);
     await Get.bottomSheet(
       CommentBottomSheet(post),
-      backgroundColor: AppColors.white,
+      backgroundColor: const Color(0xffFFFFFF),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(15),
