@@ -4,6 +4,7 @@ import 'package:history_hub_v2/app/core/constants/transaction_statuses.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:history_hub_v2/app/data/params/order/get_list_order_params.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class TransactionController extends GetxController {
@@ -56,11 +57,16 @@ class TransactionController extends GetxController {
       curPage = page;
     }
 
+    String? keyword;
+    try {
+      keyword = Get.find<HomeController>().orderQuery;
+    } catch (_) {}
+
     datasource
         .getListOrder(
       GetListOrderParams(
         status: transactionStatuses.toParam().status,
-        keyword: '',
+        keyword: keyword ?? '',
         page: page,
       ),
     )

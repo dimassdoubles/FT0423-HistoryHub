@@ -6,6 +6,8 @@ import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/modules/auth/login/login_page.dart';
+import 'package:history_hub_v2/app/modules/event/event_controller.dart';
+import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/transaction/transaction_controller.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
@@ -40,8 +42,73 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       }
     });
 
+    queryController.addListener(() {
+      final text = queryController.text;
+      if (navBarIndex == 0) {
+        if (postTabIndex == 0) {
+          postinganQuery = text;
+        } else if (postTabIndex == 1) {
+          acaraQuery = text;
+        }
+      } else if (navBarIndex == 1) {
+        orderQuery = text;
+      }
+    });
+
+    ever(_navBarIndex, (callback) {
+      if (navBarIndex == 0) {
+        if (postTabIndex == 0) {
+          queryController.text = postinganQuery;
+        } else if (postTabIndex == 1) {
+          queryController.text = acaraQuery;
+        }
+      } else if (navBarIndex == 1) {
+        queryController.text = orderQuery;
+      }
+    });
+
+    ever(_postTabIndex, (callback) {
+      if (postTabIndex == 0) {
+        queryController.text = postinganQuery;
+      } else if (postTabIndex == 1) {
+        queryController.text = acaraQuery;
+      }
+    });
+
+    debounce(_postinganQuery, (callback) {
+      try {
+        Get.find<PostController>().onPageRefresh();
+      } catch (_) {}
+    }, time: const Duration(seconds: 1));
+
+    debounce(_acaraQuery, (callback) {
+      try {
+        Get.find<EventController>().onPageRefresh();
+      } catch (_) {}
+    }, time: const Duration(seconds: 1));
+
+    debounce(_orderQuery, (callback) {
+      try {
+        Get.find<TransactionController>().onPageRefresh();
+      } catch (_) {}
+    }, time: const Duration(seconds: 1));
+
     super.onInit();
   }
+
+  final queryController = TextEditingController();
+
+  final _postinganQuery = ''.obs;
+  get postinganQuery => _postinganQuery.value;
+  set postinganQuery(value) => _postinganQuery.value = value;
+
+  final _acaraQuery = ''.obs;
+  get acaraQuery => _acaraQuery.value;
+  set acaraQuery(value) => _acaraQuery.value = value;
+
+  final _orderQuery = ''.obs;
+  get orderQuery => _orderQuery.value;
+  set orderQuery(value) => _orderQuery.value = value;
 
   final _postTabIndex = 0.obs;
   int get postTabIndex => _postTabIndex.value;

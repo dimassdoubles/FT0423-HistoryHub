@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
+import 'package:history_hub_v2/app/modules/home/widgets/app_search_bar.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_drawer.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_post_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_transaction_view.dart';
@@ -30,10 +31,17 @@ class HomePage extends GetView<HomeController> {
           isTitleCenter: true,
         ),
         slider: const HomeDrawer(),
-        child: Obx(
-          () => controller.navBarIndex == 0
-              ? const HomePostView()
-              : const HomeTransactionView(),
+        child: Column(
+          children: [
+            AppSearchBar(),
+            Expanded(
+              child: Obx(
+                () => controller.navBarIndex == 0
+                    ? const HomePostView()
+                    : const HomeTransactionView(),
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: Container(
