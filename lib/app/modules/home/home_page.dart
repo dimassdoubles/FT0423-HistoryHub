@@ -10,6 +10,7 @@ import 'package:history_hub_v2/app/modules/home/widgets/app_search_bar.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_drawer.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_post_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_transaction_view.dart';
+import 'package:history_hub_v2/app/modules/member/member_page.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -24,9 +25,14 @@ class HomePage extends GetView<HomeController> {
         appBar: SliderAppBar(
           appBarColor: AppColors.white,
           appBarHeight: 86,
-          title: Image.asset(
-            'assets/logos/colored_logo.webp',
-            width: 36.w,
+          title: GestureDetector(
+            onTap: () {
+              Get.toNamed(MemberPage.routeName);
+            },
+            child: Image.asset(
+              'assets/logos/colored_logo.webp',
+              width: 36.w,
+            ),
           ),
           isTitleCenter: true,
         ),
