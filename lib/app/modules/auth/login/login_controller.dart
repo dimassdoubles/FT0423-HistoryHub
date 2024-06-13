@@ -26,6 +26,7 @@ class LoginController extends GetxController {
   set isKeyboardOpen(value) => _isKeyboardOpen.value = value;
 
   void login() {
+    FocusScope.of(Get.context!).unfocus();
     if (!formKey.currentState!.validate()) return;
 
     DialogHelper.showLoading();

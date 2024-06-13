@@ -149,7 +149,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void logout() {
-    // TODO buat logic yang benar
-    Get.toNamed(LoginPage.routeName);
+    datasource.logout();
+    Get.offAllNamed(LoginPage.routeName);
   }
 }

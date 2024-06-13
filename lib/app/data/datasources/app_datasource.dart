@@ -34,6 +34,7 @@ abstract class AppDatasource {
   // auth
   Future<void> registerUser(RegisterUserParams params);
   Future<UserModel> login(String email, String password);
+  Future<void> logout();
   Future<List<KabupatenModel>> getListKabupaten();
   Future<List<KecamatanModel>> getListKecamatan(int kabupatenId);
   Future<List<KelurahanModel>> getListKelurahan(int kecamatanId);
@@ -55,7 +56,8 @@ abstract class AppDatasource {
 
   // event
   Future<void> createEvent(CreateEventParams params);
-  Future<List<EventModel>> getListEvent(GetListEventParams params); // intial page = 0
+  Future<List<EventModel>> getListEvent(
+      GetListEventParams params); // intial page = 0
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
@@ -300,5 +302,11 @@ class AppDatasourceImpl implements AppDatasource {
     });
     debugPrint('Sampai sini bro');
     return UserProfileModel.fromJson(userProfile.first);
+  }
+
+  @override
+  Future<void> logout() async {
+    _localDatasource.logout();
+    _supabaseClient.auth.signOut();
   }
 }
