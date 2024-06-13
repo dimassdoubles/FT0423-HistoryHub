@@ -45,6 +45,17 @@ class HomePostView extends GetView<HomeController> {
           child: Padding(
             padding: EdgeInsets.all(CommonSizes.pagePadding),
             child: Obx(() {
+              if (controller.postTabIndex == 1 &&
+                  !(controller.currentUser!.isAdmin ||
+                      controller.currentUser!.isSuperAdmin)) {
+                return const SizedBox();
+              }
+
+              if (controller.postTabIndex == 0 &&
+                  !controller.currentUser!.isCanPost) {
+                return const SizedBox();
+              }
+
               return FloatingActionButton(
                 onPressed: controller.createPost,
                 shape: const CircleBorder(),
