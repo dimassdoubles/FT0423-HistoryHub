@@ -8,6 +8,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/app_search_bar.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_drawer.dart';
+import 'package:history_hub_v2/app/modules/home/widgets/home_member_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_post_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_transaction_view.dart';
 import 'package:history_hub_v2/app/modules/member/member_page.dart';
@@ -39,12 +40,18 @@ class HomePage extends GetView<HomeController> {
         slider: const HomeDrawer(),
         child: Column(
           children: [
-            AppSearchBar(),
+            const AppSearchBar(),
             Expanded(
               child: Obx(
-                () => controller.navBarIndex == 0
-                    ? const HomePostView()
-                    : const HomeTransactionView(),
+                () {
+                  if (controller.navBarIndex == 0) {
+                    return const HomePostView();
+                  } else if (controller.navBarIndex == 1) {
+                    return const HomeTransactionView();
+                  } else {
+                    return const HomeMemberView();
+                  }
+                },
               ),
             ),
           ],
@@ -75,43 +82,58 @@ class HomePage extends GetView<HomeController> {
                   case 1:
                     controller.navBarIndex = 1;
                     break;
+                  case 2:
+                    controller.navBarIndex = 2;
+                    break;
                   default:
                     controller.navBarIndex = 0;
                 }
               },
               items: [
-                BottomNavigationBarItem(
-                  label: 'Home',
-                  icon: SvgPicture.asset(
-                    controller.navBarIndex == 0
-                        ? 'assets/icons/home_fill.svg'
-                        : 'assets/icons/home.svg',
-                    colorFilter: ColorFilter.mode(
-                        controller.navBarIndex == 0
-                            ? AppColors.primary500
-                            : AppColors.neutral300,
-                        BlendMode.srcIn),
-                    width: controller.navBarIndex == 0 ? 34.w : 32.w,
-                  ),
+                _getBottomNavBarItem(
+                  'Home',
+                  'assets/icons/home_fill.svg',
+                  'assets/icons/home.svg',
+                  0,
                 ),
-                BottomNavigationBarItem(
-                  label: 'Transaksi',
-                  icon: SvgPicture.asset(
-                    controller.navBarIndex == 1
-                        ? 'assets/icons/ticket_fill.svg'
-                        : 'assets/icons/ticket.svg',
-                    colorFilter: ColorFilter.mode(
-                        controller.navBarIndex == 1
-                            ? AppColors.primary500
-                            : AppColors.neutral300,
-                        BlendMode.srcIn),
-                    width: 30.w,
-                  ),
+                _getBottomNavBarItem(
+                  'Transaksi',
+                  'assets/icons/ticket_fill.svg',
+                  'assets/icons/ticket.svg',
+                  1,
+                ),
+                _getBottomNavBarItem(
+                  'Anggota',
+                  'assets/icons/member_fill.svg',
+                  'assets/icons/member.svg',
+                  2,
                 ),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem _getBottomNavBarItem(
+    String label,
+    String selectedIcon,
+    String unselectedIcon,
+    int index, {
+    double width = 28,
+  }) {
+    const selectedColor = Color.fromARGB(255, 48, 48, 48);
+    const unselectedColor = Color.fromARGB(255, 48, 48, 48);
+
+    return BottomNavigationBarItem(
+      label: label,
+      icon: SvgPicture.asset(
+        controller.navBarIndex == index ? selectedIcon : unselectedIcon,
+        colorFilter: ColorFilter.mode(
+            controller.navBarIndex == index ? selectedColor : unselectedColor,
+            BlendMode.srcIn),
+        width: width,
       ),
     );
   }

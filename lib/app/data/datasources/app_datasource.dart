@@ -66,6 +66,9 @@ abstract class AppDatasource {
   // profiles
   Future<UserProfileModel> getUserProfile(String userId);
   Future<UserProfileModel> editUserProfile(EditUserProfileParams params);
+
+  // member
+  Future<List<UserModel>> getListMember(String keyword);
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -308,5 +311,17 @@ class AppDatasourceImpl implements AppDatasource {
   Future<void> logout() async {
     _localDatasource.logout();
     _supabaseClient.auth.signOut();
+  }
+
+  @override
+  Future<List<UserModel>> getListMember(String keyword) async {
+    final response =
+        await _supabaseClient.rpc(SpFunctions.getListMember, params: {
+      "p_keyword": keyword,
+    });
+
+    return List<UserModel>.from(
+      response.map((json) => UserModel.fromJson(json)),
+    );
   }
 }
