@@ -99,7 +99,7 @@ class ProfilePage extends GetView<ProfileController> {
                     Transform.translate(
                       offset: const Offset(0, -10),
                       child: Text(
-                        controller.userProfile.data!.name,
+                        controller.userProfile.data!.fullName,
                         style: AppTexts.primary.copyWith(
                           fontWeight: TextWeights.black,
                         ),
@@ -112,7 +112,7 @@ class ProfilePage extends GetView<ProfileController> {
                       ),
                     ),
                     Text(
-                      controller.userProfile.data!.telepon,
+                      controller.userProfile.data!.phoneNumber,
                       style: AppTexts.primary.copyWith(
                         color: AppColors.neutral400,
                       ),

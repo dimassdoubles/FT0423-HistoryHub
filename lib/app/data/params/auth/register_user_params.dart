@@ -21,8 +21,6 @@ class RegisterUserParams {
         'full_name': fullName,
         'email': email,
         'phone_number': phoneNumber,
-        'id_kabupaten': kabupatenId,
-        'id_kecamatan': kecamatanId,
         'id_kelurahan': kelurahanId,
         'avatar_url': '',
       };

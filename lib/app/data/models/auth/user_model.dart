@@ -3,10 +3,12 @@ class UserModel {
   final String fullName;
   final String email;
   final String phoneNumber;
-  final String namaKabupaten;
-  final String namaKecamatan;
-  final String namaKelurahan;
+  final String alamatText;
+  final int alamatId;
   final String avatarUrl;
+  final bool isSuperAdmin;
+  final bool isAdmin;
+  final bool isCanPost;
 
   UserModel({
     required this.id,
@@ -14,9 +16,11 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.avatarUrl,
-    required this.namaKabupaten,
-    required this.namaKecamatan,
-    required this.namaKelurahan,
+    required this.alamatText,
+    required this.alamatId,
+    required this.isAdmin,
+    required this.isCanPost,
+    required this.isSuperAdmin,
   });
 
   // from json
@@ -26,10 +30,12 @@ class UserModel {
       fullName: json['full_name'],
       email: json['email'],
       phoneNumber: json['phone_number'],
-      namaKabupaten: json['nama_kabupaten'],
-      namaKecamatan: json['nama_kecamatan'],
-      namaKelurahan: json['nama_kelurahan'],
-      avatarUrl: json['avatar_url'],
+      alamatId: json['alamat_id'],
+      alamatText: json['alamat_text'],
+      isAdmin: json['is_admin'],
+      isSuperAdmin: json['is_super_admin'],
+      isCanPost: json['is_can_post'],
+      avatarUrl: json['avatar_url'] ?? '',
     );
   }
 
@@ -39,9 +45,11 @@ class UserModel {
       'full_name': fullName,
       'email': email,
       'phone_number': phoneNumber,
-      'nama_kabupaten': namaKabupaten,
-      'nama_kecamatan': namaKecamatan,
-      'nama_kelurahan': namaKelurahan,
+      'alamat_text': alamatText,
+      'alamat_id': alamatId,
+      'is_super_admin': isSuperAdmin,
+      'is_admin': isAdmin,
+      'is_can_post': isCanPost,
       'avatar_url': avatarUrl,
     };
   }

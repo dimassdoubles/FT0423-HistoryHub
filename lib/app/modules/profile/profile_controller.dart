@@ -85,10 +85,10 @@ class ProfileController extends GetxController {
       (value) {
         debugPrint('Sampai Sini');
         userProfile = ResultModel.success(value);
-        namaController.text = value.name;
+        namaController.text = value.fullName;
         alamatController.text = value.alamatText;
-        newKelurahanId = value.kelurahanId;
-        phoneController.text = value.telepon;
+        newKelurahanId = value.alamatId;
+        phoneController.text = value.phoneNumber;
       },
     ).catchError((e) {
       userProfile = ResultModel.error(e);
@@ -104,7 +104,7 @@ class ProfileController extends GetxController {
         image: newProfileImage,
         name: namaController.text,
         telepon: phoneController.text,
-        kelurahanId: newKelurahanId ?? userProfile.data!.kelurahanId,
+        kelurahanId: newKelurahanId ?? userProfile.data!.alamatId,
         userId: userId,
       ),
     )

@@ -38,6 +38,7 @@ class LoginController extends GetxController {
     }).catchError((e) {
       DialogHelper.dismiss();
       DialogHelper.showError(e.toString());
+      throw e;
     });
   }
 
