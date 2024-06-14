@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
+import 'package:history_hub_v2/app/modules/member/member_controller.dart';
 import 'package:history_hub_v2/app/modules/member/widgets/admin_action_item.dart';
 
-class AdminActions extends StatelessWidget {
+class AdminActions extends GetView<MemberController> {
   const AdminActions({super.key});
 
   @override
@@ -20,7 +21,10 @@ class AdminActions extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('1 Orang dipilih'),
+              Obx(() {
+                return Text(
+                    '${controller.selectedMember.length} Orang dipilih');
+              }),
               IconButton(
                 onPressed: Get.back,
                 icon: const Icon(

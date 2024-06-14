@@ -101,29 +101,32 @@ class MemberListView extends GetView<MemberController> {
             ),
           ),
           const Gap(16),
-          GetBuilder<HomeController>(builder: (homeController) {
-            if (!(homeController.currentUser!.isAdmin ||
-                homeController.currentUser!.isSuperAdmin)) {
-              return const SizedBox();
-            }
-            return GestureDetector(
-              onTap: () {
-                Get.bottomSheet(const AdminActions());
-              },
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.keyboard_arrow_up_rounded,
+          Obx(() {
+            if (controller.selectedMember.isEmpty) return const SizedBox();
+            return GetBuilder<HomeController>(builder: (homeController) {
+              if (!(homeController.currentUser!.isAdmin ||
+                  homeController.currentUser!.isSuperAdmin)) {
+                return const SizedBox();
+              }
+              return GestureDetector(
+                onTap: () {
+                  Get.bottomSheet(const AdminActions());
+                },
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Center(
+                    child: Icon(
+                      Icons.keyboard_arrow_up_rounded,
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            });
           }),
         ],
       );

@@ -27,9 +27,11 @@ class MemberController extends GetxController {
       _listMember.value = value;
   void getListMember() {
     String keyword = '';
+    String currentUserId = '';
 
     try {
       keyword = Get.find<HomeController>().memberQuery;
+      currentUserId = Get.find<HomeController>().currentUser!.id;
     } catch (_) {}
 
     selectedMember.value = [];
@@ -39,7 +41,9 @@ class MemberController extends GetxController {
 
     datasource.getListMember(keyword).then((value) {
       debugPrint('getListMember sukses');
-      listMember = ResultModel.success(value);
+      listMember = ResultModel.success(
+        value.where((element) => element.id != currentUserId).toList(),
+      );
     }).catchError((e) {
       debugPrint('getListMember error ${e.runtimeType}');
       listMember = ResultModel.error(e);
