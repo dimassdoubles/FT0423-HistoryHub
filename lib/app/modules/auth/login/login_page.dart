@@ -84,23 +84,25 @@ class LoginPage extends GetView<LoginController> {
                   onFieldSubmitted: (_) => controller.login(),
                 ),
                 Gap(4.h),
-                TextButton(
-                  onPressed: controller.forgotPassword,
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.w),
+                if (false)
+                  // ignore: dead_code
+                  TextButton(
+                    onPressed: controller.forgotPassword,
+                    style: TextButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.w),
+                      ),
+                    ),
+                    child: Text(
+                      'Lupa kata sandi?',
+                      style: AppTexts.primary.copyWith(
+                        fontWeight: TextWeights.semiBold,
+                        fontSize: 14.sp,
+                        color: AppColors.primary500,
+                      ),
                     ),
                   ),
-                  child: Text(
-                    'Lupa kata sandi?',
-                    style: AppTexts.primary.copyWith(
-                      fontWeight: TextWeights.semiBold,
-                      fontSize: 14.sp,
-                      color: AppColors.primary500,
-                    ),
-                  ),
-                ),
-                Gap(12.h),
+                Gap(36.h), // TODO set to 12
                 PrimaryButton(
                   onPressed: controller.login,
                   name: 'Masuk',

@@ -17,4 +17,5 @@ class SpFunctions {
   static const editUserProfileNoImage = "edit_user_profile_no_image";
   static const getMyUserProfile = "get_my_user_profile";
   static const getListMember = "get_list_member";
+  static const createPost = "create_post";
 }

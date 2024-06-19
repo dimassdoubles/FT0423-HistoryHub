@@ -432,6 +432,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  image_sketcher:
+    dependency: "direct main"
+    description:
+      name: image_sketcher
+      sha256: c50245c7b1b6959e20733005a8c6f37de679ebf8f0939abaf6419dd0e8edeac3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   infinite_scroll_pagination:
     dependency: "direct main"
     description:
@@ -545,7 +553,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: c9e7d3a4cd1410877472158bee69963a4579f78b68c65a2b7d40d1a7a88bb161
@@ -664,6 +672,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  screenshot:
+    dependency: "direct main"
+    description:
+      name: screenshot
+      sha256: d448f43130f49bc7eead1b267b3ea0291cb2450f037bb0a0ecce7aa4c65e2aee
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
   shared_preferences:
     dependency: transitive
     description:

@@ -11,6 +11,10 @@ import 'package:history_hub_v2/app/modules/home/home_binding.dart';
 import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/member/member_binding.dart';
 import 'package:history_hub_v2/app/modules/member/member_page.dart';
+import 'package:history_hub_v2/app/modules/photo_editor/presentation/photo_editor_binding.dart';
+import 'package:history_hub_v2/app/modules/photo_editor/presentation/photo_editor_page.dart';
+import 'package:history_hub_v2/app/modules/post/create_post/create_post_binding.dart';
+import 'package:history_hub_v2/app/modules/post/create_post/create_post_page.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_binding.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_binding.dart';
@@ -78,6 +82,16 @@ class AppPages {
       name: MemberPage.routeName,
       page: () => const MemberPage(),
       binding: MemberBinding(),
+    ),
+    GetPage(
+      name: PhotoEditorPage.routeName,
+      page: () => const PhotoEditorPage(),
+      binding: PhotoEditorBinding(),
+    ),
+    GetPage(
+      name: CreatePostPage.routeName,
+      page: () => const CreatePostPage(),
+      binding: CreatePostBinding(),
     ),
   ];
 }

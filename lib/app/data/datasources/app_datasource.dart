@@ -29,6 +29,7 @@ import 'package:history_hub_v2/app/data/params/profile/edit_user_profile_params.
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:path/path.dart' as path;
+import 'package:uuid/uuid.dart';
 
 abstract class AppDatasource {
   // auth
@@ -87,9 +88,29 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<void> createPost(CreatePostParams params) {
-    // TODO: implement createPost
-    throw UnimplementedError();
+  Future<void> createPost(CreatePostParams params) async {
+    String imageUrl = "";
+    const uuid = Uuid();
+    final postId = uuid.v4();
+
+    if (params.image != null) {
+      debugPrint('image path: ${params.image!.path}');
+
+      String fileName =
+          "$postId-01${path.extension(params.image!.path)}"; // 01 adalah urutan photo
+      debugPrint(fileName);
+      final uploadPath = '${params.userId}/$fileName';
+      imageUrl = await _supabaseClient.storage.from(SpStorages.post).upload(
+            uploadPath,
+            params.image!,
+          );
+    }
+
+    await _supabaseClient.rpc(SpFunctions.createPost, params: {
+      'p_id': postId,
+      'p_image_url': imageUrl,
+      ...params.toMap(),
+    });
   }
 
   @override

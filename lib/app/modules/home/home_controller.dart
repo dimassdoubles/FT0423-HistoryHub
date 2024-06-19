@@ -8,6 +8,7 @@ import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/modules/auth/login/login_page.dart';
 import 'package:history_hub_v2/app/modules/event/event_controller.dart';
 import 'package:history_hub_v2/app/modules/member/member_controller.dart';
+import 'package:history_hub_v2/app/modules/post/create_post/create_post_page.dart';
 import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/transaction/transaction_controller.dart';
 
@@ -139,7 +140,9 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   late TabController transactionTabController;
 
-  void createPost() {}
+  void createPost() {
+    Get.toNamed(CreatePostPage.routeName);
+  }
 
   final _navBarIndex = 0.obs;
   int get navBarIndex => _navBarIndex.value;
