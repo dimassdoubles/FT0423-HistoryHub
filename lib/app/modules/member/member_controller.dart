@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/data/models/result_model.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
+import 'package:history_hub_v2/app/modules/home/home_page.dart';
 
 class MemberController extends GetxController {
   final AppDatasource datasource;
@@ -19,6 +21,21 @@ class MemberController extends GetxController {
 
   void onPageRefresh() {
     getListMember();
+  }
+
+  void removeAdmin() {
+    Get.until((route) => Get.currentRoute == HomePage.routeName);
+    DialogHelper.showLoading();
+    datasource
+        .removeAdmin(selectedMember.map((element) => element.id).toList())
+        .then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil menghapus admin');
+      getListMember();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal menghapus admin: ${e.toString()}');
+    });
   }
 
   final _listMember = ResultModel<List<UserModel>>.initial().obs;

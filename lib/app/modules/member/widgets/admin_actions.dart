@@ -1,7 +1,10 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/member/member_controller.dart';
 import 'package:history_hub_v2/app/modules/member/widgets/admin_action_item.dart';
 
@@ -39,10 +42,17 @@ class AdminActions extends GetView<MemberController> {
               color: AdminActionItems.bgColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Column(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Gap(10),
+                if (Get.find<HomeController>().currentUser!.isSuperAdmin) ...[
+                  AdminActionItems(label: 'Hapus Dari Admin', onTap: controller.removeAdmin,),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Divider(color: AppColors.white),
+                  ),
+                ],
                 AdminActionItems(label: 'Jadikan Admin'),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
@@ -54,6 +64,12 @@ class AdminActions extends GetView<MemberController> {
                   child: Divider(color: AppColors.white),
                 ),
                 AdminActionItems(label: 'Larang Posting'),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Divider(color: AppColors.white),
+                ),
+                AdminActionItems(label: 'Izinkan Posting'),
+                Gap(10),
               ],
             ),
           ),

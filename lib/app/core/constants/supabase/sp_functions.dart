@@ -19,4 +19,8 @@ class SpFunctions {
   static const getListMember = "get_list_member";
   static const createPost = "create_post";
   static const createEvent = "create_event";
+  static const removeAdmin = "remove_admin";
+  static const addAdmin = "add_admin";
+  static const allowtoPost = "allow_to_post";
+  static const prohibitToPost = "prohibit_to_post";
 }

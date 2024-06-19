@@ -70,6 +70,10 @@ abstract class AppDatasource {
 
   // member
   Future<List<UserModel>> getListMember(String keyword);
+  Future<void> removeAdmin(List<String> listUserId);
+  Future<void> addAdmin(List<String> listUserId);
+  Future<void> allowToPost(List<String> listUserId);
+  Future<void> prohibitToPost(List<String> listUserId);
 }
 
 class AppDatasourceImpl implements AppDatasource {
@@ -368,5 +372,30 @@ class AppDatasourceImpl implements AppDatasource {
     return List<UserModel>.from(
       response.map((json) => UserModel.fromJson(json)),
     );
+  }
+
+  @override
+  Future<void> addAdmin(List<String> listUserId) {
+    // TODO: implement addAdmin
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> allowToPost(List<String> listUserId) {
+    // TODO: implement allowToPost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> prohibitToPost(List<String> listUserId) {
+    // TODO: implement prohibitToPost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> removeAdmin(List<String> listUserId) async {
+    await _supabaseClient.rpc(SpFunctions.removeAdmin, params: {
+      "p_list_user_id": listUserId,
+    });
   }
 }
