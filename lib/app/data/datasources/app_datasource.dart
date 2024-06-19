@@ -12,6 +12,7 @@ import 'package:history_hub_v2/app/data/models/auth/kecamatan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/kelurahan_model.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/data/models/event/event_model.dart';
+import 'package:history_hub_v2/app/data/models/event/event_participant_model.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:history_hub_v2/app/data/models/post/comment_model.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
@@ -61,6 +62,8 @@ abstract class AppDatasource {
     GetListEventParams params, // intial page = 0
   );
   Future<EventModel> getEvent(String id);
+  Future<int> countEventParticipant(String eventId);
+  Future<List<EventParticipantModel>> getListEventParticipant(String eventId);
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
@@ -412,5 +415,17 @@ class AppDatasourceImpl implements AppDatasource {
     );
 
     return EventModel.fromJson(response.first);
+  }
+  
+  @override
+  Future<int> countEventParticipant(String eventId) {
+    // TODO: implement countEventParticipant
+    throw UnimplementedError();
+  }
+  
+  @override
+  Future<List<EventParticipantModel>> getListEventParticipant(String eventId) {
+    // TODO: implement getListEventParticipant
+    throw UnimplementedError();
   }
 }

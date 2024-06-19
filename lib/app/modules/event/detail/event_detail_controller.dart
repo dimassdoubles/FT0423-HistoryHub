@@ -36,7 +36,6 @@ class EventDetailController extends GetxController {
     datasource
         .creaetNewOrder(
       CreateNewOrderParams(
-        price: event.data!.hargaTiket,
         eventId: event.data!.id,
       ),
     )

@@ -1,11 +1,9 @@
 class CreateNewOrderParams {
   final String eventId;
-  final int price;
 
-  CreateNewOrderParams({required this.eventId, required this.price});
+  CreateNewOrderParams({required this.eventId});
 
   Map<String, dynamic> toJson() => {
-        "in_event_id": eventId,
-        "in_total_amount": price,
+        "p_event_id": eventId,
       };
 }

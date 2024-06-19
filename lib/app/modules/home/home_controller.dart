@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:get/get.dart';
-import 'package:history_hub_v2/app/core/constants/transaction_statuses.dart';
+import 'package:history_hub_v2/app/core/constants/order_statuses.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/datasources/local_datasource.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
@@ -29,14 +29,14 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
     });
 
     transactionTabController = TabController(
-      length: TransactionStatuses.values.length,
+      length: OrderStatuses.values.length,
       vsync: this,
       initialIndex: 1,
     );
     transactionTabController.addListener(() {
       debugPrint('transaction tab listener');
       Get.find<TransactionController>().transactionStatuses =
-          TransactionStatuses.values[transactionTabController.index];
+          OrderStatuses.values[transactionTabController.index];
     });
 
     ever(_navBarIndex, (callback) {

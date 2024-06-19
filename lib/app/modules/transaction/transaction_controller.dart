@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:history_hub_v2/app/core/constants/transaction_statuses.dart';
+import 'package:history_hub_v2/app/core/constants/order_statuses.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
 import 'package:history_hub_v2/app/data/params/order/get_list_order_params.dart';
@@ -21,9 +21,9 @@ class TransactionController extends GetxController {
 
   int curPage = -1;
 
-  final _transactionStatuses = TransactionStatuses.aktif.obs;
-  TransactionStatuses get transactionStatuses => _transactionStatuses.value;
-  set transactionStatuses(TransactionStatuses value) {
+  final _transactionStatuses = OrderStatuses.aktif.obs;
+  OrderStatuses get transactionStatuses => _transactionStatuses.value;
+  set transactionStatuses(OrderStatuses value) {
     _transactionStatuses.value = value;
     onPageRefresh();
   }
