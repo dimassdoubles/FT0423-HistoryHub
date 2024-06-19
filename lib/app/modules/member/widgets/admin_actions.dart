@@ -47,13 +47,19 @@ class AdminActions extends GetView<MemberController> {
               children: [
                 Gap(10),
                 if (Get.find<HomeController>().currentUser!.isSuperAdmin) ...[
-                  AdminActionItems(label: 'Hapus Dari Admin', onTap: controller.removeAdmin,),
+                  AdminActionItems(
+                    label: 'Hapus Dari Admin',
+                    onTap: controller.removeAdmin,
+                  ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: Divider(color: AppColors.white),
                   ),
                 ],
-                AdminActionItems(label: 'Jadikan Admin'),
+                AdminActionItems(
+                  label: 'Jadikan Admin',
+                  onTap: controller.addAdmin,
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(color: AppColors.white),

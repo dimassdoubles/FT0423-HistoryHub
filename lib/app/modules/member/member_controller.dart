@@ -23,7 +23,23 @@ class MemberController extends GetxController {
     getListMember();
   }
 
+  void addAdmin() {
+    Get.back();
+    DialogHelper.showLoading();
+    datasource
+        .addAdmin(selectedMember.map((element) => element.id).toList())
+        .then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil menjadikan admin');
+      getListMember();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal menjadikan admin: ${e.toString()}');
+    });
+  }
+
   void removeAdmin() {
+    Get.back();
     Get.until((route) => Get.currentRoute == HomePage.routeName);
     DialogHelper.showLoading();
     datasource

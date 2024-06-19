@@ -375,9 +375,10 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<void> addAdmin(List<String> listUserId) {
-    // TODO: implement addAdmin
-    throw UnimplementedError();
+  Future<void> addAdmin(List<String> listUserId) async {
+    await _supabaseClient.rpc(SpFunctions.addAdmin, params: {
+      "p_list_user_id": listUserId,
+    });
   }
 
   @override
