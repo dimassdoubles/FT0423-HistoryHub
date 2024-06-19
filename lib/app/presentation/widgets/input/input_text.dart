@@ -15,6 +15,7 @@ class InputText extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final Widget? suffixIcon;
+  final Widget? preffixIcon;
   final bool obsecureText;
   final bool autoFocus;
   final bool readOnly;
@@ -32,6 +33,7 @@ class InputText extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.suffixIcon,
+    this.preffixIcon,
     this.obsecureText = false,
     required this.name,
     this.autoFocus = false,
@@ -82,6 +84,7 @@ class InputText extends StatelessWidget {
       style: textStyle.copyWith(color: Colors.black),
       obscureText: obsecureText,
       decoration: InputDecoration(
+        prefix: preffixIcon,
         hintText: name,
         hintStyle: textStyle.copyWith(color: AppColors.neutral300),
         filled: true,

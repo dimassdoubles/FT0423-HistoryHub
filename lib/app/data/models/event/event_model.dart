@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:history_hub_v2/app/core/constants/base_url.dart';
 
 class EventModel {
   final String id;
@@ -37,16 +36,11 @@ class EventModel {
   });
 
   factory EventModel.fromJson(Map<String, dynamic> json) {
-    String imageUrl = json['image_url'];
-    if (imageUrl.isNotEmpty) {
-      imageUrl = '$baseUrl/storage/v1/object/public/$imageUrl';
-    }
-
     return EventModel(
       id: json['id'],
       idPenyelenggara: json['user_id'],
       namaPenyelenggara: json['full_name'],
-      image: imageUrl,
+      image: json['image_url'] ?? '',
       nama: json['name'],
       tanggalMulai: DateTime.parse(json['date_start']),
       tanggalAkhir:

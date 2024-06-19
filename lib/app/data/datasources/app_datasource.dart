@@ -82,9 +82,31 @@ class AppDatasourceImpl implements AppDatasource {
   late final SupabaseClient _supabaseClient;
 
   @override
-  Future<void> createEvent(CreateEventParams params) {
-    // TODO: implement createEvent
-    throw UnimplementedError();
+  Future<void> createEvent(CreateEventParams params) async {
+    String imageUrl = "";
+    const uuid = Uuid();
+    final eventId = uuid.v4();
+
+    if (params.image != null) {
+      debugPrint('image path: ${params.image!.path}');
+
+      String fileName =
+          "$eventId-01${path.extension(params.image!.path)}"; // 01 adalah urutan photo
+      debugPrint(fileName);
+      final uploadPath = '${params.userId}/$fileName';
+      imageUrl = await _supabaseClient.storage.from(SpStorages.event).upload(
+            uploadPath,
+            params.image!,
+          );
+
+      debugPrint('imageUrl: $imageUrl');
+    }
+
+    await _supabaseClient.rpc(SpFunctions.createEvent, params: {
+      'p_id': eventId,
+      'p_image_url': '$baseUrl/storage/v1/object/public/$imageUrl',
+      ...params.toMap(),
+    });
   }
 
   @override

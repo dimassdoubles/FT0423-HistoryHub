@@ -36,18 +36,17 @@ class CreateEventParams {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': nama,
-      'user_id': userId,
-      'date_start': tanggalMulai.toIso8601String(),
-      'date_end': tanggalAkhir?.toIso8601String(),
-      'time_start': jamMulai.toPostgresTime(),
-      'time_end': jamAkhir.toPostgresTime(),
-      'date_buy_start': tanggalMulaiJual.toIso8601String(),
-      'date_buy_end': tanggalAkhirJual.toIso8601String(),
-      'location': lokasi,
-      'description': deskripsi,
-      'price': hargaTiket,
-      'quota': jumlahTiket,
+      'p_name': nama,
+      'p_date_start': tanggalMulai.toIso8601String(),
+      'p_date_end': tanggalAkhir?.toIso8601String(),
+      'p_time_start': jamMulai.toPostgresTime(),
+      'p_time_end': jamAkhir.toPostgresTime(),
+      'p_date_buy_start': tanggalMulaiJual.toIso8601String(),
+      'p_date_buy_end': tanggalAkhirJual.toIso8601String(),
+      'p_location': lokasi,
+      'p_description': deskripsi,
+      'p_quota': jumlahTiket,
+      'p_price': hargaTiket,
     };
   }
 }
