@@ -108,7 +108,7 @@ class AppDatasourceImpl implements AppDatasource {
 
     await _supabaseClient.rpc(SpFunctions.createPost, params: {
       'p_id': postId,
-      'p_image_url': imageUrl,
+      'p_image_url': '$baseUrl/storage/v1/object/public/$imageUrl',
       ...params.toMap(),
     });
   }
