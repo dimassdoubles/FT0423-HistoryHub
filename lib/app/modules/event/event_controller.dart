@@ -64,7 +64,7 @@ class EventController extends GetxController {
   void goingToDetail(EventModel event) {
     Get.toNamed(
       EventDetailPage.routeName,
-      arguments: event,
+      arguments: event.id,
     );
   }
 }

@@ -58,7 +58,9 @@ abstract class AppDatasource {
   // event
   Future<void> createEvent(CreateEventParams params);
   Future<List<EventModel>> getListEvent(
-      GetListEventParams params); // intial page = 0
+    GetListEventParams params, // intial page = 0
+  );
+  Future<EventModel> getEvent(String id);
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
@@ -400,5 +402,15 @@ class AppDatasourceImpl implements AppDatasource {
     await _supabaseClient.rpc(SpFunctions.removeAdmin, params: {
       "p_list_user_id": listUserId,
     });
+  }
+
+  @override
+  Future<EventModel> getEvent(String id) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.getEvent,
+      params: {"p_id": id},
+    );
+
+    return EventModel.fromJson(response.first);
   }
 }
