@@ -64,7 +64,10 @@ class AdminActions extends GetView<MemberController> {
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(color: AppColors.white),
                 ),
-                AdminActionItems(label: 'Larang Posting'),
+                AdminActionItems(
+                  label: 'Larang Posting',
+                  onTap: controller.prohibitToPost,
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(color: AppColors.white),

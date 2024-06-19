@@ -23,6 +23,21 @@ class MemberController extends GetxController {
     getListMember();
   }
 
+  void prohibitToPost() {
+    Get.back();
+    DialogHelper.showLoading();
+    datasource
+        .prohibitToPost(selectedMember.map((element) => element.id).toList())
+        .then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil melarang posting');
+      getListMember();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal melarang posting: ${e.toString()}');
+    });
+  }
+
   void allowToPost() {
     Get.back();
     DialogHelper.showLoading();
