@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/params/post/create_post_params.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
+import 'package:history_hub_v2/app/modules/home/home_page.dart';
 
 class CreatePostController extends GetxController {
   final AppDatasource _datasource;
@@ -20,18 +21,13 @@ class CreatePostController extends GetxController {
   final _selectedImage = Rx<File?>(null);
   File? get selectedImage => _selectedImage.value;
   set selectedImage(File? value) {
-    DialogHelper.showSuccess('selectedImage value == null ${value == null}');
     _selectedImage.value = value;
-
-    Future.delayed(const Duration(seconds: 5), () {
-      DialogHelper.showSuccess(
-          'selectedImage value == null ? ${_selectedImage.value == null}');
-    });
   }
 
   final contentController = TextEditingController();
 
   void createPost() async {
+    FocusScope.of(Get.context!).unfocus();
     DialogHelper.showLoading();
     _datasource
         .createPost(
@@ -44,6 +40,7 @@ class CreatePostController extends GetxController {
         .then((value) {
       DialogHelper.dismiss();
       DialogHelper.showSuccess('Berhsail membuat postingan baru');
+      Get.until((route) => Get.currentRoute == HomePage.routeName);
     }).catchError((e) {
       DialogHelper.dismiss();
       DialogHelper.showError('Gagal membuat postingan: ${e.toString()}');

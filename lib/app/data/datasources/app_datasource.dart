@@ -104,6 +104,8 @@ class AppDatasourceImpl implements AppDatasource {
             uploadPath,
             params.image!,
           );
+
+      debugPrint('imageUrl: $imageUrl');
     }
 
     await _supabaseClient.rpc(SpFunctions.createPost, params: {

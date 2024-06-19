@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:history_hub_v2/app/core/constants/base_url.dart';
 
 class PostModel extends Equatable {
   final String id;
@@ -7,7 +6,6 @@ class PostModel extends Equatable {
   final String namaUser;
   final String avatarUser;
   final DateTime tanggal;
-  final List<String> listTagId;
   final String content;
   final String imageUrl;
   final int likeCount;
@@ -21,7 +19,6 @@ class PostModel extends Equatable {
     required this.namaUser,
     required this.avatarUser,
     required this.tanggal,
-    required this.listTagId,
     required this.content,
     required this.imageUrl,
     required this.likeCount,
@@ -29,20 +26,14 @@ class PostModel extends Equatable {
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
-    String imageUrl = json['image_url'];
-    if (imageUrl.isNotEmpty) {
-      imageUrl = '$baseUrl/storage/v1/object/public/$imageUrl';
-    }
-
     return PostModel(
       id: json['id'],
       userId: json['user_id'],
       namaUser: json['nama_user'],
       avatarUser: json['avatar_user'],
       tanggal: DateTime.parse(json['tanggal']).toLocal(),
-      listTagId: List<String>.from(json['list_tag_id']),
       content: json['content'],
-      imageUrl: imageUrl,
+      imageUrl: json['image_url'],
       likeCount: json['like_count'],
       commentCount: json['comment_count'],
       isLikedByMe: json['is_liked_by_me'],
@@ -69,7 +60,6 @@ class PostModel extends Equatable {
       namaUser: namaUser ?? this.namaUser,
       avatarUser: avatarUser ?? this.avatarUser,
       tanggal: tanggal ?? this.tanggal,
-      listTagId: listTagId ?? this.listTagId,
       content: content ?? this.content,
       imageUrl: imageUrl ?? this.imageUrl,
       likeCount: likeCount ?? this.likeCount,
@@ -84,7 +74,6 @@ class PostModel extends Equatable {
         namaUser,
         avatarUser,
         tanggal,
-        listTagId,
         content,
         imageUrl,
         likeCount,

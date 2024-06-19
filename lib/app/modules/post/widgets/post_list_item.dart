@@ -86,58 +86,59 @@ class PostListItem extends StatelessWidget {
                       ),
                     ),
                     Gap(4.w),
-                    InkWell(
-                      onTap: () {
-                        Get.bottomSheet(
-                          SafeArea(
-                            child: Stack(
-                              children: [
-                                PhotoView(
-                                  imageProvider: NetworkImage(post.imageUrl),
-                                ),
-                                IconButton(
-                                  onPressed: Get.back,
-                                  style: IconButton.styleFrom(
-                                    backgroundColor:
-                                        AppColors.black.withOpacity(0.1),
+                    if (post.imageUrl.isNotEmpty)
+                      InkWell(
+                        onTap: () {
+                          Get.bottomSheet(
+                            SafeArea(
+                              child: Stack(
+                                children: [
+                                  PhotoView(
+                                    imageProvider: NetworkImage(post.imageUrl),
                                   ),
-                                  icon: const Icon(
-                                    Icons.clear_rounded,
-                                    color: AppColors.white,
+                                  IconButton(
+                                    onPressed: Get.back,
+                                    style: IconButton.styleFrom(
+                                      backgroundColor:
+                                          AppColors.black.withOpacity(0.1),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.clear_rounded,
+                                      color: AppColors.white,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            persistent: false,
+                            isScrollControlled: true,
+                            ignoreSafeArea: false,
+                          );
+                        },
+                        child: Container(
+                          width: 1.sw,
+                          height: (3 / 4).sw,
+                          decoration: BoxDecoration(
+                            color: AppColors.neutral200,
+                            borderRadius: BorderRadius.circular(15.w),
                           ),
-                          persistent: false,
-                          isScrollControlled: true,
-                          ignoreSafeArea: false,
-                        );
-                      },
-                      child: Container(
-                        width: 1.sw,
-                        height: (3 / 4).sw,
-                        decoration: BoxDecoration(
-                          color: AppColors.neutral200,
-                          borderRadius: BorderRadius.circular(15.w),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.w),
-                          child: Image.network(
-                            post.imageUrl,
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) =>
-                                const Center(
-                              child: Icon(
-                                Icons.image_not_supported_rounded,
-                                size: 56,
-                                color: AppColors.neutral300,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.w),
+                            child: Image.network(
+                              post.imageUrl,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(
+                                child: Icon(
+                                  Icons.image_not_supported_rounded,
+                                  size: 56,
+                                  color: AppColors.neutral300,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                     Gap(16.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
