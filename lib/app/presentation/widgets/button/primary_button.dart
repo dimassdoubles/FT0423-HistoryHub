@@ -5,7 +5,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 
 class PrimaryButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String name;
   final double height;
   const PrimaryButton({

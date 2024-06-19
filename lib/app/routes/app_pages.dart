@@ -9,6 +9,8 @@ import 'package:history_hub_v2/app/modules/event/create_event/create_event_bindi
 import 'package:history_hub_v2/app/modules/event/create_event/create_event_page.dart';
 import 'package:history_hub_v2/app/modules/event/detail/event_detail_binding.dart';
 import 'package:history_hub_v2/app/modules/event/detail/event_detail_page.dart';
+import 'package:history_hub_v2/app/modules/event/list_participant/list_participant_binding.dart';
+import 'package:history_hub_v2/app/modules/event/list_participant/list_participant_page.dart';
 import 'package:history_hub_v2/app/modules/home/home_binding.dart';
 import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/member/member_binding.dart';
@@ -97,8 +99,13 @@ class AppPages {
     ),
     GetPage(
       name: CreateEventPage.routeName,
-      page: () => CreateEventPage(),
+      page: () => const CreateEventPage(),
       binding: CreateEventBinding(),
+    ),
+    GetPage(
+      name: ListParticipantPage.routeName,
+      page: () => const ListParticipantPage(),
+      binding: ListParticipantBinding(),
     ),
   ];
 }

@@ -63,7 +63,10 @@ abstract class AppDatasource {
   );
   Future<EventModel> getEvent(String id);
   Future<int> countEventParticipant(String eventId);
-  Future<List<EventParticipantModel>> getListEventParticipant(String eventId);
+  Future<List<EventParticipantModel>> getListEventParticipant(
+    String eventId,
+    String keyword,
+  );
 
   // transactions
   Future<OrderModel> creaetNewOrder(CreateNewOrderParams params);
@@ -416,16 +419,30 @@ class AppDatasourceImpl implements AppDatasource {
 
     return EventModel.fromJson(response.first);
   }
-  
+
   @override
-  Future<int> countEventParticipant(String eventId) {
-    // TODO: implement countEventParticipant
-    throw UnimplementedError();
+  Future<int> countEventParticipant(String eventId) async {
+    final response = await _supabaseClient.rpc(
+      SpFunctions.countEventParticipant,
+      params: {"p_event_id": eventId},
+    );
+
+    return response;
   }
-  
+
   @override
-  Future<List<EventParticipantModel>> getListEventParticipant(String eventId) {
-    // TODO: implement getListEventParticipant
-    throw UnimplementedError();
+  Future<List<EventParticipantModel>> getListEventParticipant(
+    String eventId,
+    String keyword,
+  ) async {
+    final response =
+        await _supabaseClient.rpc(SpFunctions.getListEventParticipant, params: {
+      "p_event_id": eventId,
+      "p_keyword": keyword,
+    });
+
+    return List<EventParticipantModel>.from(
+      response.map((json) => EventParticipantModel.fromJson(json)),
+    );
   }
 }

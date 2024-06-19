@@ -12,8 +12,24 @@ class EventDetailController extends GetxController {
 
   @override
   void onInit() {
-    getEvent();
+    onPageRefresh();
     super.onInit();
+  }
+
+  void onPageRefresh() {
+    getEvent();
+    countEventParticipant();
+  }
+
+  final _participantCounter = Rx<int?>(null);
+  int? get participantCounter => _participantCounter.value;
+  set participantCounter(int? value) => _participantCounter.value = value;
+
+  void countEventParticipant() {
+    participantCounter = null;
+    datasource.countEventParticipant(eventId).then((value) {
+      participantCounter = value;
+    });
   }
 
   final String eventId = Get.arguments;
@@ -39,9 +55,10 @@ class EventDetailController extends GetxController {
         eventId: event.data!.id,
       ),
     )
-        .then((value) {
+        .then((value) async {
       DialogHelper.dismiss();
-      Get.toNamed(PaymentPage.routeName, arguments: value);
+      await Get.toNamed(PaymentPage.routeName, arguments: value);
+      onPageRefresh();
     }).catchError((e) {
       DialogHelper.dismiss();
       DialogHelper.showError(e.toString());

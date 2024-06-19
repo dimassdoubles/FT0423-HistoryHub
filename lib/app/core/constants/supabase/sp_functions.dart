@@ -24,4 +24,6 @@ class SpFunctions {
   static const allowtoPost = "allow_to_post";
   static const prohibitToPost = "prohibit_to_post";
   static const getEvent = "get_event";
+  static const countEventParticipant = "count_event_participant";
+  static const getListEventParticipant = "get_list_event_participant";
 }

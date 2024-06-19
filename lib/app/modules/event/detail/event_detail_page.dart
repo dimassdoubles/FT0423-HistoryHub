@@ -12,6 +12,8 @@ import 'package:history_hub_v2/app/core/extensions/time_of_day_extension.dart';
 import 'package:history_hub_v2/app/data/models/result_model.dart';
 import 'package:history_hub_v2/app/modules/event/detail/event_detail_controller.dart';
 import 'package:history_hub_v2/app/modules/event/detail/widgets/beli_tiket_button.dart';
+import 'package:history_hub_v2/app/modules/event/list_participant/list_participant_page.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:photo_view/photo_view.dart';
 
 class EventDetailPage extends GetView<EventDetailController> {
@@ -172,6 +174,49 @@ class EventDetailPage extends GetView<EventDetailController> {
                           ),
                         ],
                       ),
+                      Gap(8.w),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/member.svg',
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.black,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              Gap(8.w),
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 4.w),
+                                child: Text(
+                                  '${controller.participantCounter ?? '-'} / ${controller.event.data!.jumlahTiket} Pendaftar',
+                                  style: AppTexts.primary.copyWith(
+                                    color: AppColors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (Get.find<HomeController>().currentUser!.isAdmin ||
+                              Get.find<HomeController>()
+                                  .currentUser!
+                                  .isSuperAdmin)
+                            IconButton(
+                              onPressed: () {
+                                Get.toNamed(
+                                  ListParticipantPage.routeName,
+                                  arguments: controller.eventId,
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.chevron_right_rounded,
+                              ),
+                            ),
+                        ],
+                      ),
                       Gap(24.w),
                       const Divider(color: AppColors.neutral200),
                       Gap(16.w),
@@ -190,6 +235,7 @@ class EventDetailPage extends GetView<EventDetailController> {
                           fontSize: 14.sp,
                         ),
                       ),
+                      const Gap(64),
                     ],
                   ),
                 ),
@@ -198,35 +244,69 @@ class EventDetailPage extends GetView<EventDetailController> {
             Container(
               padding: const EdgeInsets.all(16),
               color: AppColors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
+                  // jika harinya adalah hari penjualan tiket
+                  if (!(DateTime.now().isAfter(controller
+                          .event.data!.tanggalMulaiJual
+                          .subtract(const Duration(days: 1))) &&
+                      DateTime.now().isBefore(controller
+                          .event.data!.tanggalAkhirJual
+                          .add(const Duration(days: 1))))) ...[
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Harga',
-                          style: AppTexts.primary.copyWith(
-                            fontWeight: TextWeights.medium,
-                            color: AppColors.neutral300,
-                          ),
+                        const Icon(
+                          Icons.info_outlined,
+                          size: 16,
+                          color: AppColors.neutral400,
                         ),
-                        Text(
-                          controller.event.data!.hargaTiket.toIDR(),
-                          style: AppTexts.primary.copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: TextWeights.semiBold,
-                            color: const Color.fromARGB(255, 40, 40, 40),
+                        const Gap(4),
+                        Expanded(
+                          child: Text(
+                            'Pendaftaran dilakukan pada tanggal ${controller.event.data!.tanggalMulai.display()}${controller.event.data!.tanggalAkhir != null ? ' s/d ${controller.event.data!.tanggalAkhir.display()}' : ''}',
+                            style: AppTexts.primary.copyWith(
+                              fontSize: 12,
+                              color: AppColors.neutral400,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    width: 157.w,
-                    child: const BeliTiketButton(),
+                    const Gap(8),
+                  ],
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Harga',
+                              style: AppTexts.primary.copyWith(
+                                fontWeight: TextWeights.medium,
+                                color: AppColors.neutral300,
+                              ),
+                            ),
+                            Text(
+                              controller.event.data!.hargaTiket.toIDR(),
+                              style: AppTexts.primary.copyWith(
+                                fontSize: 16.sp,
+                                fontWeight: TextWeights.semiBold,
+                                color: const Color.fromARGB(255, 40, 40, 40),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 157.w,
+                        child: const BeliTiketButton(),
+                      ),
+                    ],
                   ),
                 ],
               ),

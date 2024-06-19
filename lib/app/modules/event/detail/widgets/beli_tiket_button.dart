@@ -9,12 +9,26 @@ class BeliTiketButton extends GetView<EventDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40.w,
-      child: PrimaryButton(
-        onPressed: controller.getTransactionToken,
-        name: 'Beli Tiket',
-      ),
-    );
+    return Obx(() {
+      bool canBuyTicket = false;
+
+      if (controller.participantCounter != null) {
+        bool isNotFull =
+            controller.participantCounter! < controller.event.data!.jumlahTiket;
+        canBuyTicket = isNotFull &&
+            DateTime.now().isAfter(controller.event.data!.tanggalMulaiJual
+                .subtract(const Duration(days: 1))) &&
+            DateTime.now().isBefore(controller.event.data!.tanggalAkhirJual
+                .add(const Duration(days: 1)));
+      }
+
+      return SizedBox(
+        height: 40.w,
+        child: PrimaryButton(
+          onPressed: canBuyTicket ? controller.getTransactionToken : null,
+          name: 'Beli Tiket',
+        ),
+      );
+    });
   }
 }
