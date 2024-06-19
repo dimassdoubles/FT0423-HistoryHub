@@ -64,11 +64,6 @@ class AdminActions extends GetView<MemberController> {
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(color: AppColors.white),
                 ),
-                AdminActionItems(label: 'Keluarkan Dari Komunitas'),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(color: AppColors.white),
-                ),
                 AdminActionItems(label: 'Larang Posting'),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
