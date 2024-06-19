@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
+import 'package:history_hub_v2/app/modules/home/home_page.dart';
 import 'package:history_hub_v2/app/modules/post/create_post/widgets/add_image_button.dart';
 import 'package:history_hub_v2/app/modules/post/create_post/create_post_controller.dart';
 import 'package:history_hub_v2/app/modules/post/create_post/widgets/edited_image.dart';
@@ -28,7 +29,8 @@ class CreatePostPage extends GetView<CreatePostController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: Get.back,
+                    onPressed: () => Get.until(
+                        (route) => Get.currentRoute == HomePage.routeName),
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
