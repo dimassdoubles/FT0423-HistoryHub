@@ -65,6 +65,7 @@ class CreateEventController extends GetxController {
         hargaTiket: int.parse(hargaCtrl.text.replaceAll('.', '')),
         tanggalMulaiJual: tanggalMulaiJual!,
         tanggalAkhirJual: tanggalAkhirJual!,
+        deskripsi: deskripsiCtrl.text,
       ),
     )
         .then((value) {

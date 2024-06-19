@@ -39,12 +39,25 @@ class EventListItem extends GetView<EventController> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(15.w)),
-              child: SizedBox(
+              child: Container(
                 width: 1.sw,
                 height: 161.w,
+                decoration: BoxDecoration(
+                  color: AppColors.neutral200,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(15.w),
+                  ),
+                ),
                 child: Image.network(
                   data.image,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Center(
+                    child: Icon(
+                      Icons.image_not_supported_rounded,
+                      size: 56,
+                      color: AppColors.neutral300,
+                    ),
+                  ),
                 ),
               ),
             ),
