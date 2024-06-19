@@ -382,9 +382,10 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<void> allowToPost(List<String> listUserId) {
-    // TODO: implement allowToPost
-    throw UnimplementedError();
+  Future<void> allowToPost(List<String> listUserId) async {
+    await _supabaseClient.rpc(SpFunctions.allowtoPost, params: {
+      "p_list_user_id": listUserId,
+    });
   }
 
   @override

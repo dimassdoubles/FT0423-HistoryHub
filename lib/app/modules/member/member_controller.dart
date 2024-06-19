@@ -23,6 +23,21 @@ class MemberController extends GetxController {
     getListMember();
   }
 
+  void allowToPost() {
+    Get.back();
+    DialogHelper.showLoading();
+    datasource
+        .allowToPost(selectedMember.map((element) => element.id).toList())
+        .then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil mengizinkan posting');
+      getListMember();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal mengizinkan posting: ${e.toString()}');
+    });
+  }
+
   void addAdmin() {
     Get.back();
     DialogHelper.showLoading();

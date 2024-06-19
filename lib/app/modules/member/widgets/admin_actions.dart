@@ -74,7 +74,10 @@ class AdminActions extends GetView<MemberController> {
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Divider(color: AppColors.white),
                 ),
-                AdminActionItems(label: 'Izinkan Posting'),
+                AdminActionItems(
+                  label: 'Izinkan Posting',
+                  onTap: controller.allowToPost,
+                ),
                 Gap(10),
               ],
             ),
