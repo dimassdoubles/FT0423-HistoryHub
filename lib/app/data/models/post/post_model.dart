@@ -11,6 +11,7 @@ class PostModel extends Equatable {
   final int likeCount;
   final int commentCount;
   final bool isLikedByMe;
+  final bool isPinned;
 
   const PostModel({
     required this.isLikedByMe,
@@ -23,6 +24,7 @@ class PostModel extends Equatable {
     required this.imageUrl,
     required this.likeCount,
     required this.commentCount,
+    this.isPinned = false,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
@@ -52,6 +54,7 @@ class PostModel extends Equatable {
     String? imageUrl,
     int? likeCount,
     int? commentCount,
+    bool? isPinned,
   }) {
     return PostModel(
       isLikedByMe: isLikedByMe ?? this.isLikedByMe,
@@ -64,6 +67,7 @@ class PostModel extends Equatable {
       imageUrl: imageUrl ?? this.imageUrl,
       likeCount: likeCount ?? this.likeCount,
       commentCount: commentCount ?? this.commentCount,
+      isPinned: isPinned ?? this.isPinned,
     );
   }
 

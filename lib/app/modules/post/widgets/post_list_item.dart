@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -28,6 +26,26 @@ class PostListItem extends StatelessWidget {
       padding: EdgeInsets.only(top: 16.w, right: 16.w, left: 16.w),
       child: Column(
         children: [
+          if (post.isPinned)
+            Row(
+              children: [
+                const Icon(
+                  Icons.push_pin_rounded,
+                  size: 16,
+                  color: AppColors.neutral400,
+                ),
+                Gap(4.w),
+                Text(
+                  'Disematkan',
+                  style: AppTexts.primary.copyWith(
+                    color: AppColors.neutral400,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          Gap(16.w),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,12 +137,60 @@ class PostListItem extends StatelessWidget {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 const Gap(10),
-                                                if (Get.find<HomeController>()
-                                                        .currentUser!
-                                                        .isSuperAdmin ||
-                                                    Get.find<HomeController>()
-                                                        .currentUser!
-                                                        .isSuperAdmin) ...[
+                                                if ((Get.find<HomeController>()
+                                                            .currentUser!
+                                                            .isSuperAdmin ||
+                                                        Get.find<
+                                                                HomeController>()
+                                                            .currentUser!
+                                                            .isSuperAdmin) &&
+                                                    post.isPinned) ...[
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.back();
+                                                      Get.find<PostController>()
+                                                          .removePinned();
+                                                    },
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xffDFE6E8),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Hapus sematan postingan'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8),
+                                                    child: Divider(
+                                                        color: AppColors.white),
+                                                  ),
+                                                ],
+                                                if ((Get.find<HomeController>()
+                                                            .currentUser!
+                                                            .isSuperAdmin ||
+                                                        Get.find<
+                                                                HomeController>()
+                                                            .currentUser!
+                                                            .isSuperAdmin) &&
+                                                    !post.isPinned) ...[
                                                   GestureDetector(
                                                     onTap: () {
                                                       Get.back();

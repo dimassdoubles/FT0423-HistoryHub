@@ -31,4 +31,5 @@ class SpFunctions {
   static const deletePost = "delete_post";
   static const pinNewPost = "pin_new_post";
   static const getPinnedPost = "get_pinned_post";
+  static const removePinned = "remove_pinned";
 }

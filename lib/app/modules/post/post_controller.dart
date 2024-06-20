@@ -25,6 +25,19 @@ class PostController extends GetxController {
     super.onInit();
   }
 
+  void removePinned() {
+    DialogHelper.showLoading();
+    datasource.removePinned().then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil menghapus sematan postingan');
+      onPageRefresh();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError(
+          'Gagal menghapus sematan postingan: ${e.toString()}');
+    });
+  }
+
   void pinNewPost(String postId) {
     DialogHelper.showLoading();
     datasource.pinNewPost(postId).then((value) {

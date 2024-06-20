@@ -57,6 +57,7 @@ abstract class AppDatasource {
   Future<void> deletePost(String postId);
   Future<void> pinNewPost(String postId);
   Future<PostModel?> getPinnedPost();
+  Future<void> removePinned();
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -485,8 +486,13 @@ class AppDatasourceImpl implements AppDatasource {
     final response = await _supabaseClient.rpc(SpFunctions.getPinnedPost);
 
     if (response.isNotEmpty) {
-      return PostModel.fromJson(response.first);
+      return PostModel.fromJson(response.first).copyWith(isPinned: true);
     }
     return null;
+  }
+
+  @override
+  Future<void> removePinned() async {
+    await _supabaseClient.rpc(SpFunctions.removePinned);
   }
 }
