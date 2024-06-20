@@ -57,7 +57,9 @@ class EventDetailController extends GetxController {
     )
         .then((value) async {
       DialogHelper.dismiss();
-      await Get.toNamed(PaymentPage.routeName, arguments: value);
+      if (event.data!.hargaTiket > 0) {
+        await Get.toNamed(PaymentPage.routeName, arguments: value);
+      }
       onPageRefresh();
     }).catchError((e) {
       DialogHelper.dismiss();
