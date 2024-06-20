@@ -55,6 +55,8 @@ abstract class AppDatasource {
     GetUserLikedListPostParams params,
   );
   Future<void> deletePost(String postId);
+  Future<void> pinNewPost(String postId);
+  Future<PostModel?> getPinnedPost();
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -146,7 +148,9 @@ class AppDatasourceImpl implements AppDatasource {
 
     await _supabaseClient.rpc(SpFunctions.createPost, params: {
       'p_id': postId,
-      'p_image_url': '$baseUrl/storage/v1/object/public/$imageUrl',
+      'p_image_url': imageUrl.isNotEmpty
+          ? '$baseUrl/storage/v1/object/public/$imageUrl'
+          : '',
       ...params.toMap(),
     });
   }
@@ -467,5 +471,22 @@ class AppDatasourceImpl implements AppDatasource {
     );
 
     return EventModel.fromJson(response.first);
+  }
+
+  @override
+  Future<void> pinNewPost(String postId) async {
+    await _supabaseClient.rpc(SpFunctions.pinNewPost, params: {
+      "p_post_id": postId,
+    });
+  }
+
+  @override
+  Future<PostModel?> getPinnedPost() async {
+    final response = await _supabaseClient.rpc(SpFunctions.getPinnedPost);
+
+    if (response.isNotEmpty) {
+      return PostModel.fromJson(response.first);
+    }
+    return null;
   }
 }

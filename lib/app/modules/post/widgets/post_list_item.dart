@@ -127,7 +127,9 @@ class PostListItem extends StatelessWidget {
                                                         .isSuperAdmin) ...[
                                                   GestureDetector(
                                                     onTap: () {
-                                                      // TODO sematkan postingan
+                                                      Get.back();
+                                                      Get.find<PostController>()
+                                                          .pinNewPost(post.id);
                                                     },
                                                     child: Container(
                                                       padding: const EdgeInsets

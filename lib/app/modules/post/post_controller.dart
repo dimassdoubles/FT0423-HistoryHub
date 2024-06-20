@@ -25,6 +25,18 @@ class PostController extends GetxController {
     super.onInit();
   }
 
+  void pinNewPost(String postId) {
+    DialogHelper.showLoading();
+    datasource.pinNewPost(postId).then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil menyematkan postingan');
+      onPageRefresh();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal menyematkan postingan: ${e.toString()}');
+    });
+  }
+
   void deletePost(String postId) {
     DialogHelper.showLoading();
     datasource.deletePost(postId).then((value) {
@@ -82,7 +94,7 @@ class PostController extends GetxController {
     }
   }
 
-  void getListPost(int page) {
+  void getListPost(int page) async {
     if (curPage == page) {
       return;
     } else {
@@ -104,6 +116,16 @@ class PostController extends GetxController {
       } catch (_) {}
     }
 
+    PostModel? pinnedPost;
+
+    if (page == 0 && userId == null) {
+      try {
+        pinnedPost = await datasource.getPinnedPost();
+      } catch (e) {
+        pagingController.error = e;
+      }
+    }
+
     debugPrint('getListPost page: $page');
     datasource
         .getListPost(
@@ -115,9 +137,12 @@ class PostController extends GetxController {
       ),
     )
         .then((value) {
-      appendPage(page, value);
+      debugPrint('pinned post: ${pinnedPost?.content}');
+      debugPrint(
+          '${(pinnedPost != null ? [pinnedPost, ...value] : value).length}');
+      appendPage(page, pinnedPost != null ? [pinnedPost, ...value] : value);
     }).catchError((e) {
-      pagingController.error = e;
+      pagingController.error = Exception(e.toString());
     });
   }
 }
