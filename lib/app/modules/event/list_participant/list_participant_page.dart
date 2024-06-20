@@ -99,30 +99,33 @@ class ListParticipantPage extends GetView<ListParticipantController> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/icons/scan.svg',
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.black,
-                            BlendMode.srcIn,
+                  GestureDetector(
+                    onTap: controller.scanQr,
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/scan.svg',
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.black,
+                              BlendMode.srcIn,
+                            ),
                           ),
-                        ),
-                        const Gap(8),
-                        Text(
-                          'Scan Kedatangan',
-                          style: AppTexts.primary
-                              .copyWith(fontWeight: FontWeight.w600),
-                        ),
-                      ],
+                          const Gap(8),
+                          Text(
+                            'Scan Kedatangan',
+                            style: AppTexts.primary
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

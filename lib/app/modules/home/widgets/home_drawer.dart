@@ -91,14 +91,14 @@ class HomeDrawer extends GetView<HomeController> {
                         size: 21,
                       ),
                     ),
-                    const HomeDrawerMenuItem(
-                      label: 'Disukai',
-                      icon: Icon(
-                        Icons.favorite_outline_rounded,
-                        color: AppColors.neutral400,
-                        size: 21,
-                      ),
-                    ),
+                    // const HomeDrawerMenuItem(
+                    //   label: 'Disukai',
+                    //   icon: Icon(
+                    //     Icons.favorite_outline_rounded,
+                    //     color: AppColors.neutral400,
+                    //     size: 21,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -23,6 +23,8 @@ import 'package:history_hub_v2/app/modules/profile/profile_binding.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_binding.dart';
 import 'package:history_hub_v2/app/modules/starter/splash/splash_page.dart';
+import 'package:history_hub_v2/app/modules/transaction/detail/detail_transaction_binding.dart';
+import 'package:history_hub_v2/app/modules/transaction/detail/detail_transaction_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_binding.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
 import 'package:history_hub_v2/app/modules/profile/select_address/select_address_page.dart'
@@ -106,6 +108,11 @@ class AppPages {
       name: ListParticipantPage.routeName,
       page: () => const ListParticipantPage(),
       binding: ListParticipantBinding(),
+    ),
+    GetPage(
+      name: DetailTransactionPage.routeName,
+      page: () => const DetailTransactionPage(),
+      binding: DetailTransactionBinding(),
     ),
   ];
 }

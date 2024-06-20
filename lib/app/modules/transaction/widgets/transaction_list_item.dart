@@ -6,6 +6,7 @@ import 'package:history_hub_v2/app/core/constants/order_statuses.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/core/extensions/int_extension.dart';
 import 'package:history_hub_v2/app/data/models/order/order_model.dart';
+import 'package:history_hub_v2/app/modules/transaction/detail/detail_transaction_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/payment/payment_page.dart';
 import 'package:history_hub_v2/app/modules/transaction/transaction_controller.dart';
 import 'package:history_hub_v2/app/presentation/widgets/button/primary_button.dart';
@@ -17,62 +18,71 @@ class TransactionListItem extends GetView<TransactionController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(16.w, 16.w, 16.w, 0),
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(
-                0.2), // You can adjust the shadow color and opacity here
-            blurRadius: 20, // Increase the blur radius for a smoother shadow
-            spreadRadius:
-                1, // Optional, adjust the spread radius to control the size of the shadow
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(data.id),
-          Gap(16.w),
-          Text(data.eventNama),
-          Gap(4.w),
-          Text(data.createdAt.display()),
-          Gap(8.w),
-          const Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Text('Total Pesanan'),
-              Gap(4.w),
-              Text(data.totalAmount.toIDR()),
-            ],
-          ),
-          Obx(() {
-            if (controller.transactionStatuses !=
-                OrderStatuses.belumBayar) return const SizedBox.shrink();
-            return Row(
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(
+          DetailTransactionPage.routeName,
+          arguments: data.id,
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(16.w, 16.w, 16.w, 0),
+        padding: EdgeInsets.all(16.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(
+                  0.2), // You can adjust the shadow color and opacity here
+              blurRadius: 20, // Increase the blur radius for a smoother shadow
+              spreadRadius:
+                  1, // Optional, adjust the spread radius to control the size of the shadow
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(data.id),
+            Gap(16.w),
+            Text(data.eventNama),
+            Gap(4.w),
+            Text(data.createdAt.display()),
+            Gap(8.w),
+            const Divider(),
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SizedBox(
-                  width: 150.w,
-                  child: PrimaryButton(
-                    height: 36,
-                    onPressed: () async {
-                      await Get.toNamed(PaymentPage.routeName, arguments: data);
-                      controller.onPageRefresh();
-                    },
-                    name: 'Bayar',
-                  ),
-                ),
+                const Text('Total Pesanan'),
+                Gap(4.w),
+                Text(data.totalAmount.toIDR()),
               ],
-            );
-          }),
-        ],
+            ),
+            Obx(() {
+              if (controller.transactionStatuses != OrderStatuses.belumBayar)
+                return const SizedBox.shrink();
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 150.w,
+                    child: PrimaryButton(
+                      height: 36,
+                      onPressed: () async {
+                        await Get.toNamed(PaymentPage.routeName,
+                            arguments: data);
+                        controller.onPageRefresh();
+                      },
+                      name: 'Bayar',
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ],
+        ),
       ),
     );
   }
