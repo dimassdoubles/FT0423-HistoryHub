@@ -12,6 +12,7 @@ import 'package:history_hub_v2/app/modules/home/widgets/home_member_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_post_view.dart';
 import 'package:history_hub_v2/app/modules/home/widgets/home_transaction_view.dart';
 import 'package:history_hub_v2/app/modules/member/member_page.dart';
+import 'package:history_hub_v2/app/modules/post/widgets/list_trending.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -41,6 +42,16 @@ class HomePage extends GetView<HomeController> {
         child: Column(
           children: [
             const AppSearchBar(),
+            if (controller.postTabIndex == 0)
+              Obx(() {
+                if (controller.postTabIndex == 0 &&
+                    controller.navBarIndex == 0) {
+                  return ListTrending((selectedWord) {
+                    controller.queryController.text = selectedWord;
+                  });
+                }
+                return const SizedBox();
+              }),
             Expanded(
               child: Obx(
                 () {

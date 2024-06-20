@@ -25,6 +25,15 @@ class PostController extends GetxController {
     super.onInit();
   }
 
+  final listTrends = <String>[].obs;
+
+  void getListTrends() {
+    listTrends.value = [];
+    datasource.getListTrends().then((value) {
+      listTrends.value = value;
+    });
+  }
+
   void removePinned() {
     DialogHelper.showLoading();
     datasource.removePinned().then((value) {
@@ -89,6 +98,7 @@ class PostController extends GetxController {
 
   Future<void> onPageRefresh() async {
     curPage = -1;
+    getListTrends();
     pagingController.refresh();
   }
 

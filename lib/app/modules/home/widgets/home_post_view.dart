@@ -57,7 +57,9 @@ class HomePostView extends GetView<HomeController> {
               }
 
               return FloatingActionButton(
-                onPressed: controller.postTabIndex == 0 ? controller.createPost : controller.createEvent,
+                onPressed: controller.postTabIndex == 0
+                    ? controller.createPost
+                    : controller.createEvent,
                 shape: const CircleBorder(),
                 backgroundColor: AppColors.primary500,
                 foregroundColor: AppColors.white,

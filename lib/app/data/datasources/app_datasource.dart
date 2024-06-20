@@ -58,6 +58,7 @@ abstract class AppDatasource {
   Future<void> pinNewPost(String postId);
   Future<PostModel?> getPinnedPost();
   Future<void> removePinned();
+  Future<List<String>> getListTrends();
 
   // event
   Future<void> createEvent(CreateEventParams params);
@@ -494,5 +495,12 @@ class AppDatasourceImpl implements AppDatasource {
   @override
   Future<void> removePinned() async {
     await _supabaseClient.rpc(SpFunctions.removePinned);
+  }
+
+  @override
+  Future<List<String>> getListTrends() async {
+    final response = await _supabaseClient.rpc(SpFunctions.getListTrends);
+
+    return List<String>.from(response.map((e) => e['word']));
   }
 }
