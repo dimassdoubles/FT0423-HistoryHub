@@ -28,4 +28,5 @@ class SpFunctions {
   static const getListEventParticipant = "get_list_event_participant";
   static const checkIn = "check_in";
   static const getEventByOrderId = "get_event_by_order_id";
+  static const deletePost = "delete_post";
 }

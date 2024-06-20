@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:history_hub_v2/app/core/helpers/dialog_helper.dart';
 import 'package:history_hub_v2/app/data/datasources/app_datasource.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
 import 'package:history_hub_v2/app/data/params/post/get_list_post_params.dart';
@@ -22,6 +23,18 @@ class PostController extends GetxController {
     });
 
     super.onInit();
+  }
+
+  void deletePost(String postId) {
+    DialogHelper.showLoading();
+    datasource.deletePost(postId).then((value) {
+      DialogHelper.dismiss();
+      DialogHelper.showSuccess('Berhasil menghapus postingan');
+      onPageRefresh();
+    }).catchError((e) {
+      DialogHelper.dismiss();
+      DialogHelper.showError('Gagal menghapus postingan: ${e.toString()}');
+    });
   }
 
   int curPage = -1;

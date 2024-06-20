@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
@@ -8,6 +9,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/constants/styles/text_weights.dart';
 import 'package:history_hub_v2/app/core/extensions/date_time_extension.dart';
 import 'package:history_hub_v2/app/data/models/post/post_model.dart';
+import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/post/widgets/comment_button.dart';
 import 'package:history_hub_v2/app/modules/post/widgets/like_button.dart';
@@ -48,21 +50,169 @@ class PostListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          post.namaUser,
-                          style: AppTexts.primary.copyWith(
-                            fontWeight: TextWeights.black,
-                            color: const Color.fromARGB(255, 63, 63, 63),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                post.namaUser,
+                                style: AppTexts.primary.copyWith(
+                                  fontWeight: TextWeights.black,
+                                  color: const Color.fromARGB(255, 63, 63, 63),
+                                ),
+                              ),
+                              Gap(4.w),
+                              Text(
+                                ' ${post.tanggal.timeAgo()}',
+                                style: AppTexts.primary.copyWith(
+                                  fontSize: 10,
+                                  fontWeight: TextWeights.semiBold,
+                                  color: AppColors.neutral300,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Gap(4.w),
-                        Text(
-                          ' ${post.tanggal.timeAgo()}',
-                          style: AppTexts.primary.copyWith(
-                            fontSize: 10,
-                            fontWeight: TextWeights.semiBold,
-                            color: AppColors.neutral300,
+                        GestureDetector(
+                          onTap: (Get.find<
+                                          HomeController>()
+                                      .currentUser!
+                                      .isSuperAdmin ||
+                                  Get.find<HomeController>()
+                                      .currentUser!
+                                      .isSuperAdmin ||
+                                  Get.find<HomeController>().currentUser!.id ==
+                                      post.userId)
+                              ? () {
+                                  Get.bottomSheet(
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 8),
+                                      decoration: const BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.vertical(
+                                              top: Radius.circular(16))),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              IconButton(
+                                                onPressed: Get.back,
+                                                icon: const Icon(
+                                                  Icons.clear_rounded,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const Gap(4),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffDFE6E8),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Gap(10),
+                                                if (Get.find<HomeController>()
+                                                        .currentUser!
+                                                        .isSuperAdmin ||
+                                                    Get.find<HomeController>()
+                                                        .currentUser!
+                                                        .isSuperAdmin) ...[
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      // TODO sematkan postingan
+                                                    },
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xffDFE6E8),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Sematkan postingan'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 8),
+                                                    child: Divider(
+                                                        color: AppColors.white),
+                                                  ),
+                                                ],
+                                                if (Get.find<HomeController>().currentUser!.isSuperAdmin ||
+                                                    Get.find<HomeController>()
+                                                        .currentUser!
+                                                        .isSuperAdmin ||
+                                                    Get.find<HomeController>()
+                                                            .currentUser!
+                                                            .id ==
+                                                        post.userId)
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.back();
+                                                      Get.find<PostController>()
+                                                          .deletePost(post.id);
+                                                    },
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        horizontal: 16,
+                                                        vertical: 8,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        color: const Color(
+                                                            0xffDFE6E8),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      child: const Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              'Hapus postingan'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                const Gap(10),
+                                              ],
+                                            ),
+                                          ),
+                                          const Gap(16),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                              : null,
+                          child: const Icon(
+                            Icons.more_vert_rounded,
+                            size: 20,
                           ),
                         ),
                       ],
@@ -144,11 +294,8 @@ class PostListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         LikeButton(post, index),
-                        CommentButton(post, index),
-                        SvgPicture.asset(
-                          'assets/icons/share.svg',
-                          height: 20,
-                        ),
+                        Gap(0.2.sw),
+                        Expanded(child: CommentButton(post, index)),
                       ],
                     ),
                   ],

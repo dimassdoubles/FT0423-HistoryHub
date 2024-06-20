@@ -300,9 +300,13 @@ class AppDatasourceImpl implements AppDatasource {
   }
 
   @override
-  Future<void> deletePost(String postId) {
-    // TODO: implement deletePost
-    throw UnimplementedError();
+  Future<void> deletePost(String postId) async {
+    await _supabaseClient.rpc(
+      SpFunctions.deletePost,
+      params: {
+        "p_post_id": postId,
+      },
+    );
   }
 
   @override
