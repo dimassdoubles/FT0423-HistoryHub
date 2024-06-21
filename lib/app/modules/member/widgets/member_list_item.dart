@@ -7,6 +7,7 @@ import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/data/models/auth/user_model.dart';
 import 'package:history_hub_v2/app/modules/home/home_controller.dart';
 import 'package:history_hub_v2/app/modules/member/member_controller.dart';
+import 'package:history_hub_v2/app/modules/post/post_controller.dart';
 import 'package:history_hub_v2/app/modules/profile/profile_page.dart';
 import 'package:history_hub_v2/app/presentation/widgets/user_avatar.dart';
 
@@ -17,11 +18,13 @@ class MemberListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(
+      onTap: () async {
+        await Get.toNamed(
           ProfilePage.routeName,
           arguments: data.id,
         );
+
+        Get.find<PostController>().onPageRefresh();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
