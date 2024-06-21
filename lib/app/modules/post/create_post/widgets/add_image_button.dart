@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_colors.dart';
 import 'package:history_hub_v2/app/core/constants/styles/app_texts.dart';
 import 'package:history_hub_v2/app/core/helpers/image_helper.dart';
-import 'package:history_hub_v2/app/modules/photo_editor/presentation/photo_editor_page.dart';
 import 'package:history_hub_v2/app/modules/post/create_post/create_post_controller.dart';
 
 class AddImageButton extends GetView<CreatePostController> {
@@ -23,10 +22,7 @@ class AddImageButton extends GetView<CreatePostController> {
           ImageHelper.pickImage(
             context: context,
             onImagePicked: (imagePicked) {
-              Get.toNamed(PhotoEditorPage.routeName, arguments: {
-                'rawImage': File(imagePicked.path),
-                'onImageSelected': (image) => controller.selectedImage = image,
-              });
+              controller.selectedImage = File(imagePicked.path);
             },
           );
         },
