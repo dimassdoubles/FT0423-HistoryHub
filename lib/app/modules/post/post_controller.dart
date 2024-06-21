@@ -22,6 +22,8 @@ class PostController extends GetxController {
       getListPost(page);
     });
 
+    getListTrends();
+
     super.onInit();
   }
 
@@ -97,9 +99,10 @@ class PostController extends GetxController {
   final listKey = const PageStorageKey("list_post_key");
 
   Future<void> onPageRefresh() async {
+    debugPrint('Post Controller on page refresh');
     curPage = -1;
-    getListTrends();
     pagingController.refresh();
+    getListTrends();
   }
 
   final PagingController<int, PostModel> pagingController = PagingController(

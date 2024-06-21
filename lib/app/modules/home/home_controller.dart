@@ -64,6 +64,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
     ever(_navBarIndex, (callback) {
       if (navBarIndex == 0) {
+        Get.find<PostController>().onPageRefresh();
         if (postTabIndex == 0) {
           queryController.text = postinganQuery;
         } else if (postTabIndex == 1) {
