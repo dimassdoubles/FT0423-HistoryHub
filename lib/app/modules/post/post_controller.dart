@@ -32,7 +32,11 @@ class PostController extends GetxController {
   void getListTrends() {
     listTrends.value = [];
     datasource.getListTrends().then((value) {
+      debugPrint('getListTrends berhasil');
+      debugPrint('getListTrends lenght : ${value.length}');
       listTrends.value = value;
+    }).catchError((e) {
+      DialogHelper.showError(e.toString());
     });
   }
 
